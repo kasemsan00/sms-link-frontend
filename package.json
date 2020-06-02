@@ -1,0 +1,55 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "resolutions": {
+    "@babel/preset-env": "7.5.5"
+   },
+  "dependencies": {
+    "@babel/compat-data": "7.8.0",
+    "@babel/runtime": "^7.9.6",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.1.2",
+    "bootstrap": "^4.4.1",
+    "detect-browser": "^5.0.0",
+    "jssip": "^3.4.3",
+    "needle": "^2.4.1",
+    "node-datetime": "^2.1.2",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.0.1",
+    "react-device-detect": "^1.12.0",
+    "react-dom": "^16.13.1",
+    "react-hook-form": "^4.10.2",
+    "react-icons": "^3.10.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.3.1",
+    "react-timer-hook": "^2.0.2",
+    "redux": "^4.0.5",
+    "sip.js": "^0.15.10",
+    "webrtc-adapter": "^7.5.1",
+    "xml-js": "^1.6.11"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

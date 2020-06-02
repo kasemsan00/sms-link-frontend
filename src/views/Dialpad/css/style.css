@@ -1,0 +1,29 @@
+.shortcuts-box {
+    height: 60px !important;
+}
+/* .shortcuts {
+    margin-top: 29px !important;
+} */
+
+.delete-callnumber {
+    cursor: pointer;
+}
+
+.vdo-calling .incoming-sec .incoming-calls .function-calls li .icon-hangup::before {
+    width: 35px !important;
+    background-size: 35px !important;
+}
+.input-setting{
+    width: 100%;
+}
+
+.custom-control {
+    width: 50% !important;
+    display: inline-block !important;
+}
+/* .ipad-control {
+
+} */
+.iphone-control {
+    margin-top: 320px;
+}

@@ -1,0 +1,25 @@
+version: "3"
+services:
+    webrtc_frontend_react:
+        image  : registry.gitlab.spinsoft.co.th/voip/webrtc_frontend_react:latest
+        container_name: webrtc_frontend_react
+        restart: always
+        labels:
+            - "traefik.enabled=true"
+            - "traefik.backend=webrtc_frontend_react"
+            - "traefik.docker.network=traefik_default"
+            - "traefik.frontend.rule=Host:vrsweb.ttrs.in.th, webrtc.ttrs.in.th"
+            - "traefik.frontend.redirect.entryPoint=https"
+            - "traefik.frontend.entryPoint=http,https"
+            - "traefik.port=80"
+        ports : 
+            - "8888:80"
+        networks:
+            - traefik_default
+            - default
+networks:
+    traefik_default:
+        external:
+            name: traefik_default
+    default:
+        driver: bridge
