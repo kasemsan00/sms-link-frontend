@@ -1,8 +1,6 @@
 {
     "name": "webrtc-app",
     "version": "3.0.0",
-    "author": "Spinsoft",
-    "license": "",
     "private": true,
     "scripts": {
         "dev": "next dev",
