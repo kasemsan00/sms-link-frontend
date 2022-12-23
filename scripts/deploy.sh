@@ -1,2 +1,2 @@
-docker build --platform=linux/amd64 -t registry.gitlab.spinsoft.co.th/d1669/frontend/webrtc-and-location:dev-3.0.0 .
-docker push registry.gitlab.spinsoft.co.th/d1669/frontend/webrtc-and-location:dev-3.0.0
+docker build --platform=linux/amd64 -t registry.gitlab.spinsoft.co.th/d1669/frontend/webrtc-and-location:develop-3.1 .
+docker push registry.gitlab.spinsoft.co.th/d1669/frontend/webrtc-and-location:develop-3.1

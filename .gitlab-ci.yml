@@ -1,0 +1,9 @@
+stages:
+    - build
+
+docker_build:
+    stage: build
+    image: docker:latest
+    script:
+        - docker build -t registry.gitlab.spinsoft.co.th/d1669/frontend/webrtc-and-location:dev-3.0.0 .
+        - docker push registry.gitlab.spinsoft.co.th/d1669/frontend/webrtc-and-location:dev-3.0.0
