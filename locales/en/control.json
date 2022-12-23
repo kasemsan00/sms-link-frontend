@@ -1,0 +1,19 @@
+{
+    "camera": {
+        "on": "Camera",
+        "off": "Camera off"
+    },
+    "microphone": {
+        "on": "Mic",
+        "off": "Mic off"
+    },
+    "audio": {
+        "on": "Voice",
+        "off": "Voice off"
+    },
+    "chat": {
+        "on": "Message",
+        "off": "Message off"
+    },
+    "terminate": "End Call"
+}

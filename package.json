@@ -1,55 +1,58 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
-  "private": true,
-  "resolutions": {
-    "@babel/preset-env": "7.5.5"
-   },
-  "dependencies": {
-    "@babel/compat-data": "7.8.0",
-    "@babel/runtime": "^7.9.6",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.1.2",
-    "bootstrap": "^4.4.1",
-    "detect-browser": "^5.0.0",
-    "jssip": "^3.4.3",
-    "needle": "^2.4.1",
-    "node-datetime": "^2.1.2",
-    "react": "^16.13.1",
-    "react-bootstrap": "^1.0.1",
-    "react-device-detect": "^1.12.0",
-    "react-dom": "^16.13.1",
-    "react-hook-form": "^4.10.2",
-    "react-icons": "^3.10.0",
-    "react-redux": "^7.2.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.1",
-    "react-timer-hook": "^2.0.2",
-    "redux": "^4.0.5",
-    "sip.js": "^0.15.10",
-    "webrtc-adapter": "^7.5.1",
-    "xml-js": "^1.6.11"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "webrtc-app",
+    "version": "3.0.0",
+    "author": "Spinsoft",
+    "license": "",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+        "lint:fix": "eslint --fix . --ext .js,.jsx,.ts,.tsx",
+        "vercel": "vercel build --prod && vercel deploy --prebuilt --prod",
+        "docker:deploy": "sh scripts/deploy.sh"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.10.5",
+        "@emotion/styled": "^11.10.5",
+        "@mui/icons-material": "^5.11.0",
+        "@mui/material": "^5.11.1",
+        "@reduxjs/toolkit": "^1.9.1",
+        "axios": "^1.2.1",
+        "daisyui": "^2.46.0",
+        "detect-browser": "^5.3.0",
+        "framer-motion": "^8.0.1",
+        "jssip": "^3.10.0",
+        "next": "^13.1.0",
+        "next-translate": "^1.6.0",
+        "punycode": "^2.1.1",
+        "react": "18.2.0",
+        "react-device-detect": "^2.2.2",
+        "react-dom": "18.2.0",
+        "react-query": "^3.39.2",
+        "react-redux": "^8.0.5",
+        "react-spinners": "^0.13.7",
+        "realtime-text": "^1.0.1",
+        "redux": "^4.2.0",
+        "redux-thunk": "^2.4.2",
+        "sharp": "^0.31.3",
+        "use-isomorphic-layout-effect": "^1.1.2",
+        "webrtc-adapter": "^8.2.0",
+        "xml-js": "^1.6.11"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.20.7",
+        "@next/eslint-plugin-next": "^13.1.0",
+        "autoprefixer": "^10.4.13",
+        "eslint": "^8.30.0",
+        "eslint-config-next": "13.1.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-react": "^7.31.11",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "postcss": "^8.4.20",
+        "prettier": "2.8.1",
+        "tailwindcss": "^3.2.4",
+        "typescript": "^4.9.4"
+    }
 }

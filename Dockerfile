@@ -1,13 +1,32 @@
-FROM node:13.8.0 as build-stage
-WORKDIR /usr/src/app
-COPY package.json package.json
-RUN yarn install
+
+FROM node:lts-alpine AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN yarn global add pnpm && pnpm i
+
+FROM node:lts-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN yarn run build
+RUN yarn global add pnpm && pnpm build
 
-FROM nginx:alpine
-COPY --from=build-stage /usr/src/app/build /usr/share/nginx/html
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+FROM node:lts-alpine AS runner
+WORKDIR /app
 
-EXPOSE 80 443
-CMD ["nginx", "-g", "daemon off;"]
+ENV NODE_ENV production
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT 3000
+
+CMD ["node", "server.js"]

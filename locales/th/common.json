@@ -1,0 +1,15 @@
+{
+    "title": "สถาบันการแพทย์ฉุกเฉินแห่งชาติ",
+    "link-call": "กดเพื่อสนทนาวิดีโอ",
+    "end-call": "จบการสนทนา",
+    "send-location-success": "ส่งพิกัดเรียบร้อย",
+    "url-expired": "ลิ้งค์หมดอายุการใช้งาน",
+    "please-allow-location": "กรุณาเปิดใช้งานการเรียกตำแหน่งปัจจุบัน",
+    "search-map-input": "ค้นหา...",
+    "start-record": "เริ่มบันทึกวิดีโอ",
+    "start-chat": "เริ่มสนทนา",
+    "uploading": "อัพโหลด",
+    "upload-complete": "อัพโหลดเสร็จสิ้น",
+    "front-camera": "กล้องหน้า",
+    "back-camera": "กล้องหลัง"
+}
