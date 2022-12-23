@@ -10,7 +10,6 @@
         "start": "next start",
         "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
         "lint:fix": "eslint --fix . --ext .js,.jsx,.ts,.tsx",
-        "vercel": "vercel build --prod && vercel deploy --prebuilt --prod",
         "docker:deploy": "sh scripts/deploy.sh"
     },
     "dependencies": {
