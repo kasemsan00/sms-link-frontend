@@ -8,24 +8,24 @@ import URLExpired from "./URLExpired";
 import Loading from "./Loading";
 
 const LocationView = ({ uuid, status }) => {
-    const location = useSelector((state) => state.location);
+  const location = useSelector((state) => state.location);
 
-    return (
-        <>
-            <StatusbarGeo show={true} uuid={uuid} />
-            <Header />
-            <div className="flex flex-1 h-[calc(100vh-100px)] justify-center items-center">
-                {status === "ERROR" ? <URLExpired /> : null}
-                {status === "close" ? <URLExpired /> : null}
-                {status !== "close" && status !== "ERROR" ? (
-                    <>
-                        {location.status === "Success" ? <SendLocationSuccess /> : <Loading />}
-                        {location.status === "User denied Geolocation" ? <DeniedLocation /> : null}
-                    </>
-                ) : null}
-            </div>
-            <Footer />
-        </>
-    );
+  return (
+    <>
+      <StatusbarGeo show={true} uuid={uuid} />
+      <Header />
+      <div className="flex flex-1 h-[calc(100vh-100px)] justify-center items-center">
+        {status === "ERROR" ? <URLExpired /> : null}
+        {status === "close" ? <URLExpired /> : null}
+        {status !== "close" && status !== "ERROR" ? (
+          <>
+            {location.status === "Success" ? <SendLocationSuccess /> : <Loading />}
+            {location.status === "User denied Geolocation" ? <DeniedLocation /> : null}
+          </>
+        ) : null}
+      </div>
+      <Footer />
+    </>
+  );
 };
 export default LocationView;

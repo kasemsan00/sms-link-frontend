@@ -18,116 +18,116 @@ const DynamicEndCall = dynamic(() => import("../../components/LinkCall/EndCall")
 let userAgent = null;
 
 export default function Chat() {
-    const router = useRouter();
-    const dispatch = useDispatch();
-    const uuid = router.query.uuid || "";
-    const { t } = useTranslation("common");
-    const webStatus = useSelector((state) => state.webStatus);
-    const queryExtension = useQuery([uuid], () => getExtensionDetail(uuid), {
-        enabled: uuid !== "",
-        staleTime: Infinity,
-    });
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const uuid = router.query.uuid || "";
+  const { t } = useTranslation("common");
+  const webStatus = useSelector((state) => state.webStatus);
+  const queryExtension = useQuery([uuid], () => getExtensionDetail(uuid), {
+    enabled: uuid !== "",
+    staleTime: Infinity,
+  });
 
-    useEffect(() => {
-        if (queryExtension.isSuccess) {
-            let { data } = queryExtension;
-            dispatch(setLinkDetail(data));
-            if (data.status !== "close" && data.status !== "ERROR" && userAgent === null) {
-                // สำหรับทดสอบ
-                // 1050
-                // const socket = new JsSIP.WebSocketInterface(data.wss);
-                // const configuration = {
-                //     sockets: [socket],
-                //     uri: "sip:1050@" + "sip-93.d1669.in.th",
-                //     password: "sN1T8NAwQagVeKcexdY8",
-                // };
-                // console.log("register");
-                // // const socket = new JsSIP.WebSocketInterface(data.wss);
-                // // const configuration = {
-                // //     sockets: [socket],
-                // //     uri: "sip:" + data.extension + "@" + "sip-93.d1669.in.th",
-                // //     password: data.password,
-                // // };
-                // userAgent = new JsSIP.UA(configuration);
-                // userAgent.on("unregistered", () => {
-                //     console.log("unregistered");
-                //     dispatch(setWebStatus("unregistered"));
-                //     dispatch(setUserActiveStatus("failed"));
-                // });
-                // userAgent.on("registered", () => {
-                //     console.log("registered");
-                //     dispatch(setUserAgent(userAgent));
-                //     dispatch(setWebStatus("registered"));
-                //     dispatch(setUserActiveStatus("open"));
-                // });
-                // userAgent.on("registrationFailed", () => {
-                //     console.log("registrationFailed");
-                //     dispatch(setWebStatus("registrationFailed"));
-                // });
-                // userAgent.start();
-            }
+  useEffect(() => {
+    if (queryExtension.isSuccess) {
+      let { data } = queryExtension;
+      dispatch(setLinkDetail(data));
+      if (data.status !== "close" && data.status !== "ERROR" && userAgent === null) {
+        // สำหรับทดสอบ
+        // 1050
+        // const socket = new JsSIP.WebSocketInterface(data.wss);
+        // const configuration = {
+        //     sockets: [socket],
+        //     uri: "sip:1050@" + "sip-93.d1669.in.th",
+        //     password: "sN1T8NAwQagVeKcexdY8",
+        // };
+        // console.log("register");
+        // // const socket = new JsSIP.WebSocketInterface(data.wss);
+        // // const configuration = {
+        // //     sockets: [socket],
+        // //     uri: "sip:" + data.extension + "@" + "sip-93.d1669.in.th",
+        // //     password: data.password,
+        // // };
+        // userAgent = new JsSIP.UA(configuration);
+        // userAgent.on("unregistered", () => {
+        //     console.log("unregistered");
+        //     dispatch(setWebStatus("unregistered"));
+        //     dispatch(setUserActiveStatus("failed"));
+        // });
+        // userAgent.on("registered", () => {
+        //     console.log("registered");
+        //     dispatch(setUserAgent(userAgent));
+        //     dispatch(setWebStatus("registered"));
+        //     dispatch(setUserActiveStatus("open"));
+        // });
+        // userAgent.on("registrationFailed", () => {
+        //     console.log("registrationFailed");
+        //     dispatch(setWebStatus("registrationFailed"));
+        // });
+        // userAgent.start();
+      }
 
-            // สำหรับทดสอบ
-            if (userAgent === null) {
-                console.log("register");
-                const socket = new JsSIP.WebSocketInterface("wss://sip-27.d1669.in.th:8002/ws");
-                const configuration = {
-                    sockets: [socket],
-                    uri: "sip:" + "1582172490" + "@" + "sip-27.d1669.in.th",
-                    password: "test1234",
-                };
-                userAgent = new JsSIP.UA(configuration);
-                userAgent.on("unregistered", () => {
-                    console.log("unregistered");
-                    dispatch(setWebStatus("unregistered"));
-                    dispatch(setUserActiveStatus("failed"));
-                });
-                userAgent.on("registered", () => {
-                    console.log("registered");
-                    dispatch(setUserAgent(userAgent));
-                    dispatch(setWebStatus("registered"));
-                    dispatch(setUserActiveStatus("open"));
-                });
-                userAgent.on("registrationFailed", () => {
-                    console.log("registrationFailed");
-                    dispatch(setWebStatus("registrationFailed"));
-                });
-                userAgent.start();
-            }
-        }
-    }, [dispatch, queryExtension.isSuccess, queryExtension]);
+      // สำหรับทดสอบ
+      if (userAgent === null) {
+        console.log("register");
+        const socket = new JsSIP.WebSocketInterface("wss://sip-27.d1669.in.th:8002/ws");
+        const configuration = {
+          sockets: [socket],
+          uri: "sip:" + "1582172490" + "@" + "sip-27.d1669.in.th",
+          password: "test1234",
+        };
+        userAgent = new JsSIP.UA(configuration);
+        userAgent.on("unregistered", () => {
+          console.log("unregistered");
+          dispatch(setWebStatus("unregistered"));
+          dispatch(setUserActiveStatus("failed"));
+        });
+        userAgent.on("registered", () => {
+          console.log("registered");
+          dispatch(setUserAgent(userAgent));
+          dispatch(setWebStatus("registered"));
+          dispatch(setUserActiveStatus("open"));
+        });
+        userAgent.on("registrationFailed", () => {
+          console.log("registrationFailed");
+          dispatch(setWebStatus("registrationFailed"));
+        });
+        userAgent.start();
+      }
+    }
+  }, [dispatch, queryExtension.isSuccess, queryExtension]);
 
-    return (
-        <>
-            <Head>
-                <title>{t("title")}</title>
-                <meta name="theme-color" content="#3A80DB" />
-            </Head>
-            <main>
-                {queryExtension.isSuccess === true ? (
-                    <>
-                        {queryExtension.data.status !== "close" && queryExtension.data.type === "chat" ? (
-                            <>
-                                {webStatus === "" || webStatus === "open" || webStatus === "registered" ? (
-                                    <Suspense fallback="Loading...">
-                                        <DynamicChat />
-                                    </Suspense>
-                                ) : null}
-                                {webStatus === "ended" ? (
-                                    <Suspense fallback="Loading...">
-                                        <DynamicEndCall />
-                                    </Suspense>
-                                ) : null}
-                            </>
-                        ) : null}
-                        {queryExtension.data.status === "close" ? (
-                            <Suspense fallback="Loading...">
-                                <DynamicEndCall />
-                            </Suspense>
-                        ) : null}
-                    </>
+  return (
+    <>
+      <Head>
+        <title>{t("title")}</title>
+        <meta name="theme-color" content="#3A80DB" />
+      </Head>
+      <main>
+        {queryExtension.isSuccess === true ? (
+          <>
+            {queryExtension.data.status !== "close" && queryExtension.data.type === "chat" ? (
+              <>
+                {webStatus === "" || webStatus === "open" || webStatus === "registered" ? (
+                  <Suspense fallback="Loading...">
+                    <DynamicChat />
+                  </Suspense>
                 ) : null}
-            </main>
-        </>
-    );
+                {webStatus === "ended" ? (
+                  <Suspense fallback="Loading...">
+                    <DynamicEndCall />
+                  </Suspense>
+                ) : null}
+              </>
+            ) : null}
+            {queryExtension.data.status === "close" ? (
+              <Suspense fallback="Loading...">
+                <DynamicEndCall />
+              </Suspense>
+            ) : null}
+          </>
+        ) : null}
+      </main>
+    </>
+  );
 }

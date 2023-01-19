@@ -6,57 +6,61 @@ import StatusBarVideo from "../Status/StatusBarVideo";
 import VideoContent from "./VideoContent";
 import ChatVideo from "../ChatVideo";
 import useUserAgentCall from "../../hooks/useUserAgentCall";
+import { log } from "sharp/lib/libvips";
 
 let constraints = initConstraints();
 
 export default function VideoCall() {
-    const localVideoRef = useRef(null);
-    const remoteVideoRef = useRef(null);
+  const localVideoRef = useRef(null);
+  const remoteVideoRef = useRef(null);
 
-    const { userAgent } = useSelector((state) => state.sip);
-    const controlVideo = useSelector((state) => state.controlVideo);
-    const [realtimeText, connection, peerConnection, setStartCall] = useUserAgentCall({ localVideoRef, remoteVideoRef });
+  const { userAgent } = useSelector((state) => state.sip);
+  const controlVideo = useSelector((state) => state.controlVideo);
+  const [realtimeText, connection, peerConnection, setStartCall] = useUserAgentCall({ localVideoRef, remoteVideoRef });
 
-    useEffect(() => {
-        setStartCall(true);
-    }, [setStartCall]);
+  useEffect(() => {
+    setStartCall(true);
+  }, [setStartCall]);
 
-    useLayoutEffect(() => {
-        if (remoteVideoRef !== null) {
-            remoteVideoRef.current.muted = controlVideo.openAudio;
-        }
-    }, [controlVideo.openAudio, remoteVideoRef]);
+  useLayoutEffect(() => {
+    if (remoteVideoRef !== null) {
+      remoteVideoRef.current.muted = controlVideo.openAudio;
+    }
+  }, [controlVideo.openAudio, remoteVideoRef]);
 
-    useEffect(() => {
-        if (controlVideo.facingMode !== "") {
-            localVideoRef.current.srcObject.getTracks().forEach(function (track) {
-                track.stop();
-            });
+  useEffect(() => {
+    if (controlVideo.facingMode !== "") {
+      localVideoRef.current.srcObject.getTracks().forEach(function (track) {
+        track.stop();
+      });
 
-            constraints.video.facingMode.exact = controlVideo.facingMode;
+      constraints.video.facingMode.exact = controlVideo.facingMode;
 
-            navigator.mediaDevices
-                .getUserMedia(constraints)
-                .then((stream) => {
-                    localVideoRef.current.srcObject = stream;
-                    peerConnection.peerconnection.getSenders().map(function (sender) {
-                        sender.replaceTrack(
-                            stream.getTracks().find(function (track) {
-                                return track.kind === sender.track.kind;
-                            }),
-                        );
-                    });
-                })
-                .catch((e) => console.error(e));
-        }
-    }, [controlVideo.facingMode, connection, peerConnection, userAgent]);
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then((stream) => {
+          localVideoRef.current.srcObject = stream;
+          peerConnection.peerconnection.getSenders().map(function (sender) {
+            sender
+              .replaceTrack(
+                stream.getTracks().find(function (track) {
+                  return track.kind === sender.track.kind;
+                }),
+              )
+              .then((r) => console.log(r))
+              .catch((e) => console.log(e));
+          });
+        })
+        .catch((e) => console.error(e));
+    }
+  }, [controlVideo.facingMode, connection, peerConnection, userAgent]);
 
-    return (
-        <>
-            <StatusBarVideo show={true} start={connection} />
-            <VideoContent localVideoRef={localVideoRef} remoteVideoRef={remoteVideoRef} />
-            <ChatVideo realtimeText={realtimeText} />
-            <ControlVideo />
-        </>
-    );
+  return (
+    <>
+      <StatusBarVideo show={true} start={connection} />
+      <VideoContent localVideoRef={localVideoRef} remoteVideoRef={remoteVideoRef} />
+      <ChatVideo realtimeText={realtimeText} />
+      <ControlVideo />
+    </>
+  );
 }
