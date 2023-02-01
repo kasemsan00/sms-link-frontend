@@ -5,5 +5,5 @@ export {
   sendLocation,
   getLocationName,
   uploadFile,
-  rerverseGeocoding,
+  reverseGeocode,
 } from "./request";

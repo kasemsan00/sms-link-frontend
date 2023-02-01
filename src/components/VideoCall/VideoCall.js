@@ -6,7 +6,6 @@ import StatusBarVideo from "../Status/StatusBarVideo";
 import VideoContent from "./VideoContent";
 import ChatVideo from "../ChatVideo";
 import useUserAgentCall from "../../hooks/useUserAgentCall";
-import { log } from "sharp/lib/libvips";
 
 let constraints = initConstraints();
 

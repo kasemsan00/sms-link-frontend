@@ -6,12 +6,12 @@ import MessageRight from "./MessageRight";
 import MessageLeft from "./MessageLeft";
 
 export default function Content({ realtimeText }) {
-  const messagesEndRef = useRef(null);
+  const messageEndRef = useRef(null);
   const messageData = useSelector((state) => state.messageData);
   const realtimePreviewRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "instant" });
+    messageEndRef.current.scrollIntoView({ behavior: "instant" });
   };
   useEffect(scrollToBottom, [messageData]);
 
@@ -45,7 +45,7 @@ export default function Content({ realtimeText }) {
         className="w-fit bg-gray-300 text-black px-2 py-1 rounded-xl right-0 text-left float-left shadow-sm drop-shadow-sm mb-[5px]"
         ref={realtimePreviewRef}
       ></div>
-      <div ref={messagesEndRef}></div>
+      <div ref={messageEndRef}></div>
     </motion.div>
   );
 }

@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
 import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
 import UploadComplete from "./UploadComplete";
 import useTranslation from "next-translate/useTranslation";
@@ -7,7 +6,6 @@ import useTranslation from "next-translate/useTranslation";
 export default function Uploading({ uploadProgress }) {
   const uploadProgressRef = useRef(null);
   const { t } = useTranslation("common");
-  const dispatch = useDispatch();
 
   useIsomorphicLayoutEffect(() => {
     if (uploadProgress > 0) {

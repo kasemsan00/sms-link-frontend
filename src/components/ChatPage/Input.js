@@ -5,8 +5,8 @@ import { addMessageData } from "../../redux/slices/messageDataSlice";
 import { motion } from "framer-motion";
 import SendIcon from "@mui/icons-material/Send";
 
-const initSequenNumber = () => Math.floor(Math.random() * 100000 + 1);
-let sequenceNumber = initSequenNumber();
+const initSequenceNumber = () => Math.floor(Math.random() * 100000 + 1);
+let sequenceNumber = initSequenceNumber();
 let eventRtt = "new";
 
 export default function Input({ writeMessage, setWriteMessage, realtimeText, setRealtimeText, setIsDisplayMap }) {
@@ -51,7 +51,7 @@ export default function Input({ writeMessage, setWriteMessage, realtimeText, set
     if (text.trim() !== "") {
       dispatch(addMessageData({ type: "local", body: text, date: "" }));
       setRealtimeWriteMessage(writeMessage);
-      sequenceNumber = initSequenNumber();
+      sequenceNumber = initSequenceNumber();
       eventRtt = "new";
     }
   };
@@ -71,7 +71,7 @@ export default function Input({ writeMessage, setWriteMessage, realtimeText, set
     >
       <div className="input-group flex flex-1 justify-center items-center">
         <span className=" cursor-pointer bg-transparent " style={{ borderRadius: "50%" }} onClick={() => setIsDisplayMap(true)}>
-          <Image width={50} height={50} alt="placelocation" src={require("../../assets/img/placeholder.png")} />
+          <Image width={50} height={50} alt="place-location" src={require("../../assets/img/placeholder.png")} />
         </span>
         <input
           className="input input-bordered w-full h-[44px] pl-0"
@@ -85,7 +85,7 @@ export default function Input({ writeMessage, setWriteMessage, realtimeText, set
         />
         <span
           className="bg-[#1976d2] text-white cursor-pointer -rotate-45 w-[40px] h-[40px] first-letter:
-                    flex flex-1 justify-center items-center m-1 hover:bg-blue-500 
+                    flex flex-1 justify-center items-center m-1 hover:bg-blue-500
                 "
           style={{ borderRadius: "50%" }}
           onClick={handleSendMessageButton}

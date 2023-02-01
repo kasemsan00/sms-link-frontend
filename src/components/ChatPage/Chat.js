@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addMessageData } from "../../redux/slices/messageDataSlice";
-import { rerverseGeocoding } from "../../request";
+import { reverseGeocode } from "../../request";
 import StatusBarGeo from "../Status/StatusBarGeo";
 import Input from "./Input";
 import Content from "./Content";
@@ -41,7 +41,7 @@ export default function Chat() {
     setIsDisplayMap(false);
     modalRef.current.classList.remove("modal-open");
     if (location !== undefined) {
-      const res = await rerverseGeocoding({ lat: location?.lat, lon: location?.lon });
+      const res = await reverseGeocode({ lat: location?.lat, lon: location?.lon });
       res.geocode = undefined;
       res.district = undefined;
       res.province = undefined;

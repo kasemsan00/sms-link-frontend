@@ -109,7 +109,7 @@ export const getLocationName = async ({ latitude, longitude, signal, language })
   }
   return response.json();
 };
-export const rerverseGeocoding = async ({ lat, lon }) => {
+export const reverseGeocode = async ({ lat, lon }) => {
   const response = await fetch(`https://api.longdo.com/map/services/address?lon=${lon}&lat=${lat}&key=${process.env.NEXT_PUBLIC_LONGDOO_KEY}`);
   if (!response.ok) {
     throw new Error("Get Geo Error");

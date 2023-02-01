@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import useTranslation from "next-translate/useTranslation";
 
-let longdo;
+let longDo;
 let map;
 
 export default function LongdooMap({ setLocation }) {
@@ -23,13 +23,13 @@ export default function LongdooMap({ setLocation }) {
       document.body.appendChild(script);
 
       script.onload = () => {
-        longdo = window.longdo;
+        longDo = window.longdo;
         map = new window.longdo.Map({
           placeholder: mapRef.current,
           language: lang,
         });
         map.zoom(16, false);
-        map.location(longdo.LocationMode.Geolocation);
+        map.location(longDo.LocationMode.Geolocation);
         map.Search.placeholder(searchResultRef.current);
         map.Event.bind("suggest", function (result) {
           if (result.data.length > 0) {

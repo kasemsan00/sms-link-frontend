@@ -4,13 +4,13 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN yarn global add pnpm && pnpm i
+RUN npm install
 
 FROM node:lts-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN yarn global add pnpm && pnpm build
+RUN npm run build
 
 FROM node:lts-alpine AS runner
 WORKDIR /app
