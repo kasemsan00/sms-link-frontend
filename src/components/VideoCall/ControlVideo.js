@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setControlVideo, setControlMicrophone, setControlAudio, setControlMessage } from "../../redux/slices/controlVideoSlice";
 import { setWebStatus } from "../../redux/slices/webStatusSlice";
-import { resetSip } from "../../redux/slices/sipSlice";
+import { resetUserAgent, resetSession } from "../../redux/slices/sipSlice";
 import ControlButton from "./ControlButton";
 import { motion } from "framer-motion";
 import useTranslation from "next-translate/useTranslation";
@@ -56,7 +56,8 @@ export default function ControlVideo() {
     sip.userAgent.unregister();
     sip.userAgent.stop();
     dispatch(setWebStatus("ended"));
-    dispatch(resetSip());
+    dispatch(resetUserAgent());
+    dispatch(resetSession());
   };
 
   return (

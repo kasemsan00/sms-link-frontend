@@ -13,10 +13,13 @@ const sipSlice = createSlice({
     setSession(state, action) {
       return { ...state, ["session"]: action.payload };
     },
-    resetSip() {
-      return initialState;
+    resetUserAgent(state) {
+      return { ...state, ["userAgent"]: null };
+    },
+    resetSession(state) {
+      return { ...state, ["session"]: null };
     },
   },
 });
-export const { setUserAgent, setSession, resetSip } = sipSlice.actions;
+export const { setUserAgent, setSession, resetUserAgent, resetSession } = sipSlice.actions;
 export default sipSlice.reducer;
