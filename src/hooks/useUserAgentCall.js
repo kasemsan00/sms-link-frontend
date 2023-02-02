@@ -4,7 +4,7 @@ import { setCallNumber } from "../redux/slices/linkDetailSlice";
 import { setControlVideo } from "../redux/slices/controlVideoSlice";
 import { DisplayBuffer } from "../components/ChatPage/realtime-text";
 import { ConvertToRTTEvent } from "../components/Utilities/ConvertToRTTEvent";
-import { resetSip, setSession } from "../redux/slices/sipSlice";
+import { setSession, resetSession } from "../redux/slices/sipSlice";
 import { setWebStatus } from "../redux/slices/webStatusSlice";
 import { setUserActiveStatus } from "../redux/slices/userActiveStatusSlice";
 import { addMessageData } from "../redux/slices/messageDataSlice";
@@ -16,7 +16,7 @@ let constraints = initConstraints();
 export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
   const dispatch = useDispatch();
 
-  const { userAgent } = useSelector((state) => state.sip);
+  const { userAgent, session } = useSelector((state) => state.sip);
   const { agent, domain } = useSelector((state) => state.linkDetail);
 
   const [connection, setConnection] = useState(false);
@@ -48,6 +48,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
         ],
         sessionTimersExpires: 9999,
       };
+      console.log("userAgentCall", userAgent);
       userAgent.on("newMessage", async (event) => {
         const messageBody = event.message._request.body;
         if (messageBody.startsWith("@MCU")) {
@@ -79,6 +80,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
         display.process(rttEvent);
       });
       userAgent.on("newRTCSession", (ev1) => {
+        if (session !== null) return;
         let newSession = ev1.session;
         dispatch(setSession(newSession));
 
@@ -92,15 +94,19 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
         newSession.on("connecting", () => {
           // dispatch(setUserActiveStatus("close"));
         });
-        newSession.on("ended", () => {
+        newSession.on("failed", (e) => {
+          console.log("failed", e);
+          alert(e.cause, e.message.reason_phrase);
+        });
+        newSession.on("ended", (e) => {
+          console.log(e);
           setStartCall(null);
           dispatch(setWebStatus("ended"));
         });
         newSession.on("failed", () => {
-          dispatch(resetSip());
           dispatch(setWebStatus(""));
-          localVideoRef.current.srcObject.getTracks()?.forEach((track) => track.stop());
-          remoteVideoRef.current.srcObject.getTracks()?.forEach((track) => track.stop());
+          localVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
+          remoteVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
         });
       });
       localVideoRef.current.srcObject = stream;

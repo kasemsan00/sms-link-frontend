@@ -55,12 +55,10 @@ const UUID = () => {
         };
         userAgent = new JsSIP.UA(configuration);
         userAgent.on("unregistered", () => {
-          console.log("unregistered");
           dispatch(setWebStatus("unregistered"));
           dispatch(setUserActiveStatus("failed"));
         });
         userAgent.on("registered", () => {
-          console.log("registered");
           dispatch(setUserAgent(userAgent));
           dispatch(setWebStatus("registered"));
           dispatch(setUserActiveStatus("open"));

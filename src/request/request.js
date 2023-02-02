@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export var urlapi = process.env.NEXT_PUBLIC_URL_API;
+export const URL_API = process.env.NEXT_PUBLIC_URL_API;
 
 export const uploadFile = async ({ file }) => {
   const formData = new FormData();
   formData.append("files", file);
   axios
-    .post(`${process.env.NEXT_PUBLIC_URL_API}/upload/file`, formData, {
+    .post(`${URL_API}/upload/file`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -23,7 +23,7 @@ export const updateUserActiveStatus = async ({ uuid, status, signal = undefined 
     return false;
   }
   if (status === false) return false;
-  // const response = await fetch(`${urlapi}/updatestatus`, {
+  // const response = await fetch(`${URL_API}/updatestatus`, {
   //     method: "POST",
   //     signal: signal !== undefined ? signal : null,
   //     headers: {
@@ -45,7 +45,7 @@ export const updateUserActiveStatus = async ({ uuid, status, signal = undefined 
 };
 
 export const getExtensionDetail = async (uuid) => {
-  const response = await fetch(`${urlapi}/detail`, {
+  const response = await fetch(`${URL_API}/detail`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -62,7 +62,7 @@ export const getExtensionDetail = async (uuid) => {
 };
 
 export const updateTerminateCall = async ({ uuid }) => {
-  const response = await fetch(`${urlapi}/close`, {
+  const response = await fetch(`${URL_API}/close`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -78,7 +78,7 @@ export const updateTerminateCall = async ({ uuid }) => {
   return response.json();
 };
 export const sendLocation = async ({ os, latitude, longitude, accuracy, uuid }) => {
-  const response = await fetch(`${urlapi}/savelocation`, {
+  const response = await fetch(`${URL_API}/savelocation`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -101,7 +101,7 @@ export const getLocationName = async ({ latitude, longitude, signal, language })
   if (signal.aborted) {
     return false;
   }
-  const response = await fetch(`${urlapi}/geolocation?latitude=${latitude}&longitude=${longitude}&token=9999&src=webrtc&language=${language}`, {
+  const response = await fetch(`${URL_API}/geolocation?latitude=${latitude}&longitude=${longitude}&token=9999&src=webrtc&language=${language}`, {
     signal,
   });
   if (!response.ok) {

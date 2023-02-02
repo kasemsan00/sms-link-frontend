@@ -41,8 +41,8 @@ export default function UUID() {
   return (
     <>
       <Head>
-        <link rel="icon" type="image/x-icon" href="../favicon.png" />
         <title>{t("title")}</title>
+        <meta name="theme-color" content="#3A80DB" />
       </Head>
       <main>
         {isSuccess && data.status !== "close" ? (
