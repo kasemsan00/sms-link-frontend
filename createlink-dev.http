@@ -8,5 +8,5 @@ Content-Type: application/json
   "province_id" : "27",
   "conference" : "false",
   "ippbx_id" : "IPPBX1.166927.1599625992.2400",
-  "type" : "webrtc"
+  "type" : "chat"
 }

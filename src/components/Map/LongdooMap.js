@@ -51,7 +51,7 @@ export default function LongdooMap({ setLocation }) {
     setSuggestionData();
   };
 
-  const handlSearchChange = (event) => {
+  const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
     if (event.target.value === "") {
       setSuggestionData();
@@ -74,7 +74,7 @@ export default function LongdooMap({ setLocation }) {
             style={{ outline: "none", borderRadius: "0px" }}
             placeholder={t("search-map-input")}
             className="input input-bordered w-full"
-            onChange={handlSearchChange}
+            onChange={handleSearchChange}
             ref={searchInputRef}
             value={searchValue}
           />
