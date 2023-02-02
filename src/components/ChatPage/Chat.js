@@ -42,10 +42,11 @@ export default function Chat() {
     modalRef.current.classList.remove("modal-open");
     if (location !== undefined) {
       const res = await reverseGeocode({ lat: location?.lat, lon: location?.lon });
-      res.geocode = undefined;
-      res.district = undefined;
-      res.province = undefined;
-      res.subdistrict = undefined;
+      res.geocode = res.geocode === undefined ? "" : res.geocode;
+      res.district = res.district === undefined ? "" : res.district;
+      res.province = res.province === undefined ? "" : res.province;
+      res.subdistrict = res.subdistrict === undefined ? "" : res.subdistrict;
+      res.road = res.road === undefined ? "" : res.road;
       let textView;
       if (res) {
         textView =
@@ -62,7 +63,9 @@ export default function Chat() {
           " " +
           res.country +
           " " +
-          res.geocode;
+          res.geocode +
+          " " +
+          res.road;
       } else {
         textView = "พิกัด " + location?.lat + ", " + location?.lon;
       }
