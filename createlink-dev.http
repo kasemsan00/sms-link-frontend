@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "phonenumber" : "0828955697",
-  "sms" : false,
+  "sms" : "false",
   "agent" : "9401",
   "province_id" : "27",
   "conference" : "false",
