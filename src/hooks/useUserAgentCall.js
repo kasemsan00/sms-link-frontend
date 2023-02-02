@@ -4,7 +4,7 @@ import { setCallNumber } from "../redux/slices/linkDetailSlice";
 import { setControlVideo } from "../redux/slices/controlVideoSlice";
 import { DisplayBuffer } from "../components/ChatPage/realtime-text";
 import { ConvertToRTTEvent } from "../components/Utilities/ConvertToRTTEvent";
-import { setSession, resetSession } from "../redux/slices/sipSlice";
+import { setSession } from "../redux/slices/sipSlice";
 import { setWebStatus } from "../redux/slices/webStatusSlice";
 import { setUserActiveStatus } from "../redux/slices/userActiveStatusSlice";
 import { addMessageData } from "../redux/slices/messageDataSlice";
@@ -79,36 +79,39 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
         const rttEvent = await ConvertToRTTEvent(messageBody);
         display.process(rttEvent);
       });
-      userAgent.on("newRTCSession", (ev1) => {
-        if (session !== null) return;
-        let newSession = ev1.session;
-        dispatch(setSession(newSession));
+      if (session === null) {
+        userAgent.on("newRTCSession", (ev1) => {
+          let newSession = ev1.session;
+          dispatch(setSession(newSession));
 
-        if (ev1.originator === "local") {
-          newSession.connection.addEventListener("addstream", (event) => {
-            dispatch(setUserActiveStatus("close"));
-            setConnection(true);
-            remoteVideoRef.current.srcObject = event.stream;
+          if (ev1.originator === "local") {
+            newSession.connection.addEventListener("addstream", (event) => {
+              dispatch(setUserActiveStatus("close"));
+              setConnection(true);
+              remoteVideoRef.current.srcObject = event.stream;
+            });
+          }
+          newSession.on("connecting", () => {
+            // dispatch(setUserActiveStatus("close"));
           });
-        }
-        newSession.on("connecting", () => {
-          // dispatch(setUserActiveStatus("close"));
+          newSession.on("failed", (e) => {
+            // newSession.terminate();
+            console.log("failed", e);
+            alert(e.cause, e.message.reason_phrase);
+          });
+          newSession.on("ended", (e) => {
+            console.log(e);
+            setStartCall(null);
+            dispatch(setWebStatus("ended"));
+          });
+          newSession.on("failed", () => {
+            dispatch(setWebStatus(""));
+            localVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
+            remoteVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
+          });
         });
-        newSession.on("failed", (e) => {
-          console.log("failed", e);
-          alert(e.cause, e.message.reason_phrase);
-        });
-        newSession.on("ended", (e) => {
-          console.log(e);
-          setStartCall(null);
-          dispatch(setWebStatus("ended"));
-        });
-        newSession.on("failed", () => {
-          dispatch(setWebStatus(""));
-          localVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
-          remoteVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
-        });
-      });
+      }
+
       localVideoRef.current.srcObject = stream;
       userAgent.call("sip:" + agent + "@" + domain, options);
     },
