@@ -1,9 +1,9 @@
 {
-  "locales": ["th", "en"],
-  "defaultLocale": "th",
-  "localeDetection": false,
-  "pages": {
-    "*": ["common", "header", "footer", "control"],
-    "/": ["common", "header", "footer", "control"]
-  }
+    "locales": ["th", "en"],
+    "defaultLocale": "th",
+    "localeDetection": false,
+    "pages": {
+        "*": ["common", "header", "footer", "control"],
+        "/": ["common", "header", "footer", "control"]
+    }
 }

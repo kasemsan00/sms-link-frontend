@@ -1,19 +1,25 @@
 {
-  "extends": ["next/core-web-vitals", "eslint:recommended", "plugin:react/recommended", "plugin:react-hooks/recommended", "prettier"],
-  "rules": {
-    "no-param-reassign": 0,
-    "no-console": "off",
-    "no-plusplus": "off",
-    "no-shadow": "off",
-    "max-len": ["error", { "code": 270 }],
-    "linebreak-style": ["error", "unix"],
-    "react/jsx-indent": ["error", 2],
-    "no-tabs": 0,
-    "space-before-blocks": "off",
-    "no-unused-vars": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/prop-types": ["off"],
-    "react/react-in-jsx-scope": "off",
-    "object-curly-newline": "off"
-  }
+    "extends": [
+        "next/core-web-vitals",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "prettier"
+    ],
+    "rules": {
+        "no-param-reassign": 0,
+        "no-console": "off",
+        "no-plusplus": "off",
+        "no-shadow": "off",
+        "max-len": ["error", { "code": 270 }],
+        "linebreak-style": ["error", "unix"],
+        "react/jsx-indent": ["error", 4],
+        "no-tabs": 0,
+        "space-before-blocks": "off",
+        "no-unused-vars": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/prop-types": ["off"],
+        "react/react-in-jsx-scope": "off",
+        "object-curly-newline": "off"
+    }
 }
