@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <div className="fixed flex flex-1 bg-secondary p-3 w-full justify-center items-center">
       <div className="m-2">
-        <Image alt="HeadLogo" width={60} height={60} src={require("../../assets/img/header/logo.png")} />
+        <Image alt="HeadLogo" width={80} height={80} src={require("../../assets/img/header/logo.png")} />
       </div>
       <div className="flex justify-center flex-col">
         <div className="text-[15px] font-bold mx-2 text-primary">{t("header1")}</div>
