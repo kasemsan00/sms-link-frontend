@@ -33,11 +33,11 @@ export default function VideoCall() {
         track.stop();
       });
 
-      console.log("constraints", constraints);
-      console.log(controlVideo);
-      console.log("controlVideo.facingMode", controlVideo.facingMode);
-      // constraints.video.facingMode.exact = controlVideo.facingMode;
-      constraints.video.facingMode["exact"] = controlVideo.facingMode;
+      // console.log("constraints", constraints);
+      // console.log(controlVideo);
+      // console.log(constraints.video);
+      // console.log(constraints.video.faceingMode.exact);
+      constraints.video.faceingMode.exact = controlVideo.facingMode;
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then((stream) => {
@@ -55,7 +55,7 @@ export default function VideoCall() {
         })
         .catch((e) => console.error(e));
     }
-  }, [controlVideo.facingMode, connection, peerConnection, userAgent]);
+  }, [controlVideo.facingMode, peerConnection.peerconnection]);
 
   return (
     <>
