@@ -42,6 +42,7 @@ export default function VideoCall() {
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then((stream) => {
+          console.log(stream, constraints);
           localVideoRef.current.srcObject = stream;
           peerConnection.peerconnection.getSenders().map(function (sender) {
             sender
