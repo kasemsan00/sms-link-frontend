@@ -86,8 +86,8 @@ export default function Input({ writeMessage, setWriteMessage, realtimeText, set
           ref={inputTextRef}
         />
         <span
-          className="bg-[#1976d2] text-white cursor-pointer -rotate-45 w-[40px] h-[40px] first-letter:
-                    flex flex-1 justify-center items-center m-1 hover:bg-blue-500
+          className="bg-primary text-white cursor-pointer -rotate-45 w-[40px] h-[40px] first-letter:
+                    flex flex-1 justify-center items-center m-1 hover:bg-focus
                 "
           style={{ borderRadius: "50%" }}
           onClick={handleSendMessageButton}

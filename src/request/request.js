@@ -57,10 +57,13 @@ export const getExtensionDetail = async (uuid) => {
   }
   return response.json();
 };
-
-export const updateTerminateCall = async ({ uuid }) => {
+export const updateTerminateCall = async ({ uuid, signal = undefined }) => {
+  if (signal !== undefined && signal.aborted) {
+    return false;
+  }
   const response = await fetch(`${URL_API}/close`, {
     method: "POST",
+    signal: signal !== undefined ? signal : null,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",

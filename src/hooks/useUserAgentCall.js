@@ -29,6 +29,10 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
       const display = new DisplayBuffer((resp) => {
         if (resp.drained) setRealtimeText(resp.text);
       });
+      const stopStream = () => {
+        localVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
+        remoteVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
+      };
       const eventHandlers = {
         peerconnection: (pc) => {
           setPeerConnection(pc);
@@ -88,19 +92,17 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
               remoteVideoRef.current.srcObject = event.stream;
             });
           }
-          ev1.session.on("failed", (e) => {
-            console.log("failed", e);
-            alert(e.cause, e.message.reason_phrase);
-          });
           ev1.session.on("ended", (e) => {
             console.log(e);
+            stopStream();
             setStartCall(null);
             dispatch(setWebStatus("ended"));
           });
-          ev1.session.on("failed", () => {
+          ev1.session.on("failed", (e) => {
             dispatch(setWebStatus(""));
-            localVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
-            remoteVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
+            console.log("failed", e);
+            stopStream();
+            alert(e.cause, e.message.reason_phrase);
           });
         });
       }
@@ -109,7 +111,6 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
     },
     [dispatch, localVideoRef, remoteVideoRef, userAgent, agent, domain],
   );
-
   useEffect(() => {
     if (startCall !== null) {
       setStartCall(true);

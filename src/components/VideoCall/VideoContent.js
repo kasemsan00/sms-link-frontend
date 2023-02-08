@@ -10,7 +10,7 @@ export default function VideoContent({ localVideoRef, remoteVideoRef }) {
   const localVideoSectionRef = useRef(null);
 
   return (
-    <div className="bg-gray-800 h-[calc(100vh)] ">
+    <div className="bg-video-call h-[calc(100vh)] ">
       <div ref={localVideoSectionRef}>
         <video ref={localVideoRef} className="max-h-32 max-w-32" alt="localvideo" muted autoPlay playsInline />
         {isMobile ? <SwitchCamera /> : null}

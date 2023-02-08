@@ -5,6 +5,8 @@ module.exports = {
       colors: {
         primary: "#2D683E",
         secondary: "#deffd2",
+        focus: "#1f4d2e",
+        "video-call": "#041309",
         "chat-page": "#BBCDF8",
         "chat-user-local": "#4C7ED4",
         "chat-realtime-preview": "#a84e32",

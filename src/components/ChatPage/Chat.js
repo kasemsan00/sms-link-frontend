@@ -16,7 +16,6 @@ import { ConvertToRTTEvent } from "../Utilities/ConvertToRTTEvent";
 import { DisplayBuffer } from "./realtime-text";
 
 export default function Chat() {
-  const { t } = useTransition("common");
   const dispatch = useDispatch();
   const chatRef = useRef(null);
   const modalRef = useRef(null);
@@ -51,8 +50,6 @@ export default function Chat() {
       let textView;
       if (res) {
         textView =
-          t("coordinates") +
-          " " +
           location?.lat +
           ", " +
           location?.lon +
@@ -69,7 +66,7 @@ export default function Chat() {
           " " +
           res.road;
       } else {
-        textView = t("coordinates") + " " + location?.lat + ", " + location?.lon;
+        textView = location?.lat + ", " + location?.lon;
       }
       dispatch(addMessageData({ type: "local", body: textView, date: "" }));
     }
