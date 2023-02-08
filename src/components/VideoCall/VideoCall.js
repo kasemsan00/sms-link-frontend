@@ -34,7 +34,8 @@ export default function VideoCall() {
       });
 
       constraints.video.facingMode.exact = controlVideo.facingMode;
-
+      console.log("constraints", constraints);
+      alert(constraints);
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then((stream) => {

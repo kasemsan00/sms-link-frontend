@@ -11,7 +11,7 @@ export default function Header() {
         <Image alt="HeadLogo" width={80} height={80} src={require("../../assets/img/header/logo.png")} />
       </div>
       <div className="flex justify-center flex-col">
-        <div className="text-[15px] font-bold mx-2 text-primary">{t("header1")}</div>
+        <div className="text-[16px] font-bold mx-2 text-primary">{t("header1")}</div>
         <div className="text-[15px] font-bold mx-2 text-primary">{t("header2")}</div>
       </div>
       <div className="fixed right-0 top-[24px]">
