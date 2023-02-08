@@ -1,26 +1,26 @@
 #img_videocallheader {
-    cursor: move;
+  cursor: move;
 }
 #img_videocall {
-    position: absolute !important;
+  position: absolute !important;
 }
 .vdo_call_show_pc {
-    max-height: 37vh;
-    position: absolute;
-    width: 70%;
-    margin-top: 10vh;
-    top: 35px;
-    z-index: 9999;
+  max-height: 37vh;
+  position: absolute;
+  width: 70%;
+  margin-top: 10vh;
+  top: 35px;
+  z-index: 9999;
 }
 .vdo_call_show_pc_local {
-    max-height: 20vh;
-    position: absolute;
-    width: 20%;
-    top: 24px;
-    z-index: 9999;
+  max-height: 20vh;
+  position: absolute;
+  width: 20%;
+  top: 24px;
+  z-index: 9999;
 }
 .vdo_call_show_pc_remote {
-    /* max-height: 37vh;
+  /* max-height: 37vh;
     position: absolute;
     width: 100%;
     margin-top: 21vh;
@@ -31,244 +31,244 @@
     justify-content: center;
     align-items: center; */
 
-    z-index: -1;
-    display: flex;
-    flex: 1 1;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    margin-top: 48px;
-    background-color: #1e252d;
+  z-index: -1;
+  display: flex;
+  flex: 1 1;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 48px;
+  background-color: #1e252d;
 }
 #waiting_mobile {
-    /* margin-bottom: 10px !important;
+  /* margin-bottom: 10px !important;
     margin-top: 132px !important; */
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 .vdocall-keypad {
-    overflow-y: hidden;
-    /* background: rgb(0 0 0 / 100%); */
-    opacity: 1;
+  overflow-y: hidden;
+  /* background: rgb(0 0 0 / 100%); */
+  opacity: 1;
 }
 .vdo-calling {
-    overflow-y: hidden;
+  overflow-y: hidden;
 }
 .remote-video-mobile {
-    /* max-height: 55vh; */
-    background-color: #1e252d;
+  /* max-height: 55vh; */
+  background-color: #1e252d;
 }
 .remote-video-mobile-with-keyboard-android {
-    /* max-height: 36vh; */
-    background-color: #c6defa2b;
+  /* max-height: 36vh; */
+  background-color: #c6defa2b;
 }
 .remote-video-mobile-with-keyboard-ios {
-    /* max-height: 36vh !important; */
-    /* background-color: #c6defa2b; */
-    width: 100%;
+  /* max-height: 36vh !important; */
+  /* background-color: #c6defa2b; */
+  width: 100%;
 }
 @media only screen and (min-width: 412px) and (orientation: portrait) {
-    .remote-video {
-        max-height: 60vh;
-    }
+  .remote-video {
+    max-height: 60vh;
+  }
 }
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
-    #waiting_mobile {
-        /* margin-bottom: 10px !important;
+  #waiting_mobile {
+    /* margin-bottom: 10px !important;
         margin-top: -83px !important; */
-    }
-    /* .control-list {
+  }
+  /* .control-list {
         display: none;
     } */
-    .remote-video {
-        max-height: 53vh;
-        background-color: black;
-    }
+  .remote-video {
+    max-height: 53vh;
+    background-color: black;
+  }
 }
 @media only screen and (min-device-width: 414px) and (max-device-width: 736px) {
-    #waiting_mobile {
-        /* margin-bottom: 10px !important;
+  #waiting_mobile {
+    /* margin-bottom: 10px !important;
         margin-top: -83px !important; */
-    }
-    /* .control-list {
+  }
+  /* .control-list {
         display: none;
     } */
-    .remote-video {
-        max-height: 53vh;
-        background-color: black;
-    }
+  .remote-video {
+    max-height: 53vh;
+    background-color: black;
+  }
 }
 .vdo_call_show_android_local {
-    position: absolute !important;
-    width: 25% !important;
-    top: 35px !important;
+  position: absolute !important;
+  width: 25% !important;
+  top: 35px !important;
 }
 .vdo_call_show_android_remote {
-    position: absolute !important;
-    width: 100% !important;
-    height: 100% !important;
-    top: 35px !important;
-    display: flex;
-    flex: 1 1;
-    justify-content: center;
-    align-items: center;
+  position: absolute !important;
+  width: 100% !important;
+  height: 100% !important;
+  top: 35px !important;
+  display: flex;
+  flex: 1 1;
+  justify-content: center;
+  align-items: center;
 }
 .vdo_call_show_ios_local_keyboard {
-    position: fixed !important;
-    width: 25% !important;
-    top: 24px !important;
-    margin-top: 37vh;
-    display: flex;
-    flex: 1 1;
-    justify-content: center;
-    align-items: center;
+  position: fixed !important;
+  width: 25% !important;
+  top: 24px !important;
+  margin-top: 37vh;
+  display: flex;
+  flex: 1 1;
+  justify-content: center;
+  align-items: center;
 }
 .vdo_call_show_ios_local {
-    position: fixed !important;
-    width: 40% !important;
-    top: 24px !important;
+  position: fixed !important;
+  width: 40% !important;
+  top: 24px !important;
 }
 .vdo_call_show_ios_remote_keyboard {
-    /* position: absolute !important; */
-    width: 100% !important;
-    margin-top: 57vh !important;
-    z-index: -1;
-    background-color: #1e252d;
+  /* position: absolute !important; */
+  width: 100% !important;
+  margin-top: 57vh !important;
+  z-index: -1;
+  background-color: #1e252d;
 }
 .vdo_call_show_ios_remote {
-    /* position: absolute !important; */
-    /* margin-top: 48px; */
-    width: 100% !important;
-    height: 100% !important;
-    background-color: #1e252d;
-    display: flex;
-    flex: 1 1;
-    justify-content: center;
-    align-items: center;
+  /* position: absolute !important; */
+  /* margin-top: 48px; */
+  width: 100% !important;
+  height: 100% !important;
+  background-color: #1e252d;
+  display: flex;
+  flex: 1 1;
+  justify-content: center;
+  align-items: center;
 }
 .local_ios {
-    margin-top: 40vh;
+  margin-top: 40vh;
 }
 .remote_ios {
-    margin-top: 30vh !important;
+  margin-top: 30vh !important;
 }
 .iphone-control {
-    margin-top: 50vh;
+  margin-top: 50vh;
 }
 .switch-camera {
-    top: 40px;
-    right: 15px;
-    width: 60px;
-    height: 60px;
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 999;
+  top: 40px;
+  right: 15px;
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 999;
 }
 .switch-camera-text {
-    margin-top: 3px;
-    font-size: 13px;
-    color: white;
+  margin-top: 3px;
+  font-size: 13px;
+  color: white;
 }
 .local-video {
-    height: 150px;
-    max-height: 150px;
-    max-width: 150px;
-    border-bottom-right-radius: 5px;
+  height: 150px;
+  max-height: 150px;
+  max-width: 150px;
+  border-bottom-right-radius: 5px;
 }
 .local-vide-camera-off {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 20px;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
 }
 .remote-video {
-    height: 100%;
-    /* width: 100%; */
-    /* background-color: black; */
+  height: 100%;
+  /* width: 100%; */
+  /* background-color: black; */
 }
 
 .control-list li {
-    cursor: pointer;
+  cursor: pointer;
 }
 .control-button {
-    margin-left: 5px;
-    margin-right: 5px;
-    padding: 5px;
-    color: white !important;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    width: 100px;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 5px;
+  color: white !important;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
 }
 .control-list {
-    position: fixed;
-    bottom: 55px;
-    z-index: 999;
-    width: 100%;
-    text-align: center;
-    height: 60px;
-    display: flex;
-    flex: 1;
-    justify-content: center;
+  position: fixed;
+  bottom: 55px;
+  z-index: 999;
+  width: 100%;
+  text-align: center;
+  height: 60px;
+  display: flex;
+  flex: 1;
+  justify-content: center;
 }
 .control-list li {
-    align-items: center;
-    display: inline-block;
-    /* margin: 6px; */
+  align-items: center;
+  display: inline-block;
+  /* margin: 6px; */
 
-    /* pos */
+  /* pos */
 }
 .control-list li > img {
-    content: "";
-    width: 23px;
-    height: 23px;
-    /* background: url(../img/icon-message-white.png) center no-repeat; */
-    display: block;
-    background-repeat: no-repeat;
-    background-size: 20px;
-    margin: 10px auto;
-    margin-bottom: 2px;
+  content: "";
+  width: 23px;
+  height: 23px;
+  /* background: url(../img/icon-message-white.png) center no-repeat; */
+  display: block;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  margin: 10px auto;
+  margin-bottom: 2px;
 }
 .control-icon-active {
-    background-color: #9e5555ad !important;
-    border-radius: 10px !important;
+  background-color: #9e5555ad !important;
+  border-radius: 10px !important;
 }
 
 .control-bandge {
-    top: -5px;
-    position: absolute;
-    margin-left: 40px;
+  top: -5px;
+  position: absolute;
+  margin-left: 40px;
 }
 .btn.focus,
 .btn:focus {
-    outline: 0 !important;
-    box-shadow: none !important;
-    border-radius: 10px !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
 }
 
 .control-icon {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin: auto;
-    height: 22px;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+  height: 22px;
 }
 .control-text {
-    font-size: 13px;
+  font-size: 13px;
 }

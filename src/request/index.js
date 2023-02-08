@@ -1,9 +1,9 @@
 export {
-    updateUserActiveStatus,
-    getExtensionDetail,
-    updateTerminateCall,
-    sendLocation,
-    getLocationName,
-    uploadFile,
-    reverseGeocode,
+  updateUserActiveStatus,
+  getExtensionDetail,
+  updateTerminateCall,
+  sendLocation,
+  getLocationName,
+  uploadFile,
+  reverseGeocode,
 } from "./request";

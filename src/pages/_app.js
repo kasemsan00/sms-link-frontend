@@ -10,12 +10,12 @@ import store from "../redux/store";
 const queryClient = new QueryClient();
 
 export default function MyApp({ Component, pageProps }) {
-    return (
-        <Provider store={store}>
-            <QueryClientProvider client={queryClient}>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-                <Component {...pageProps} />
-            </QueryClientProvider>
-        </Provider>
-    );
+  return (
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <Component {...pageProps} />
+      </QueryClientProvider>
+    </Provider>
+  );
 }
