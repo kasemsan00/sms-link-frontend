@@ -3,7 +3,7 @@
 @tailwind utilities;
 :root {
   --primary: #2D683E;
-  --seccondary: #6bff95;
+  --secondary: #6bff95;
 }
 .shortcuts-box {
   height: 60px !important;
@@ -22,7 +22,7 @@ body {
   margin: 0;
   height: 100%;
   overflow: hidden;
-  background-image: radial-gradient(var(--seccondary), var(--primary));
+  background-image: radial-gradient(var(--secondary), var(--primary));
   /*background-image: radial-gradient(rgb(97 197 238 / 57%), #037fe1);*/
 }
 .body {
