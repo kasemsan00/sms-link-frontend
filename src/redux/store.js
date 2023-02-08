@@ -11,16 +11,16 @@ import messageDataSlice from "./slices/messageDataSlice";
 const middleware = [reduxThunk];
 
 const store = configureStore({
-    reducer: {
-        webStatus: webStatusSlice,
-        userActiveStatus: userActiveStatusSlice,
-        sip: sipSlice,
-        linkDetail: linkDetailSlice,
-        messageData: messageDataSlice,
-        location: locationSlice,
-        controlVideo: controlVideoSlice,
-    },
-    middleware,
+  reducer: {
+    webStatus: webStatusSlice,
+    userActiveStatus: userActiveStatusSlice,
+    sip: sipSlice,
+    linkDetail: linkDetailSlice,
+    messageData: messageDataSlice,
+    location: locationSlice,
+    controlVideo: controlVideoSlice,
+  },
+  middleware,
 });
 
 export default store;
