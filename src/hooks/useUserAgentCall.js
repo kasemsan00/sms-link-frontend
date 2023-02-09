@@ -116,14 +116,19 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
       setStartCall(true);
     }
     if (startCall === true) {
-      navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then((stream) => {
+      (async () => {
+        try {
+          console.log(constraints);
+          const stream = await navigator.mediaDevices.getUserMedia(constraints);
           userAgentCall({ stream });
-        })
-        .then((error) => {
-          if (error) console.log(error);
-        });
+        } catch (error) {
+          console.log("error", error);
+          if (error.name === "OverconstrainedError" && error.constraint === "facingMode") {
+            constraints.video.facingMode = "user";
+            setStartCall(false);
+          }
+        }
+      })();
     }
     return () => {
       setStartCall(false);

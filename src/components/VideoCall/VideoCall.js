@@ -31,7 +31,6 @@ export default function VideoCall() {
       localVideoRef.current.srcObject.getTracks().forEach(function (track) {
         track.stop();
       });
-
       constraints.video.facingMode.exact = controlVideo.facingMode;
       navigator.mediaDevices
         .getUserMedia(constraints)
