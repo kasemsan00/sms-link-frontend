@@ -61,7 +61,7 @@ export const initConstraints = () => {
         googNoiseSuppression: { exact: true },
       },
       video: {
-        faceingMode: {
+        facingMode: {
           exact: "user",
         },
         frameRate: {
