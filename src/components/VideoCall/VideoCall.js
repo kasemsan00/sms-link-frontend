@@ -13,7 +13,6 @@ export default function VideoCall() {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
 
-  const { userAgent } = useSelector((state) => state.sip);
   const controlVideo = useSelector((state) => state.controlVideo);
   const [realtimeText, connection, peerConnection, setStartCall] = useUserAgentCall({ localVideoRef, remoteVideoRef });
 
@@ -27,7 +26,6 @@ export default function VideoCall() {
     }
   }, [controlVideo.openAudio, remoteVideoRef]);
 
-  const backCameraTestRef = useRef(null);
   useEffect(() => {
     if (controlVideo.facingMode !== "") {
       localVideoRef.current.srcObject.getTracks().forEach(function (track) {
@@ -39,8 +37,7 @@ export default function VideoCall() {
         .getUserMedia(constraints)
         .then((stream) => {
           console.log(stream, constraints);
-          // localVideoRef.current.srcObject = stream;
-          backCameraTestRef.current.srcObject = stream;
+          localVideoRef.current.srcObject = stream;
           peerConnection.peerconnection.getSenders().map(function (sender) {
             sender
               .replaceTrack(
@@ -60,7 +57,6 @@ export default function VideoCall() {
     <>
       <StatusBarVideo show={true} start={connection} />
       <VideoContent localVideoRef={localVideoRef} remoteVideoRef={remoteVideoRef} />
-      <video className={"fixed top-0 left-0 w-[300px] h-[300px]"} ref={backCameraTestRef} muted autoPlay playsInline />
       <ChatVideo realtimeText={realtimeText} />
       <ControlVideo />
     </>
