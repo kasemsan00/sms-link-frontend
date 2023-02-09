@@ -8,18 +8,18 @@ import { useMutation } from "react-query";
 import { updateTerminateCall, updateUserActiveStatus } from "../../request";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function Menu({ textSize, setTextSize }) {
+export default function Menu({ fontSize, setFontSize }) {
   const dispatch = useDispatch();
   const uuid = useSelector((state) => state.linkDetail.uuid);
   const mutationTerminate = useMutation(updateTerminateCall);
 
   const textDecrease = (e) => {
     e.preventDefault();
-    setTextSize(textSize - 1);
+    setFontSize(fontSize - 1);
   };
   const textIncrease = (e) => {
     e.preventDefault();
-    setTextSize(textSize + 1);
+    setFontSize(fontSize + 1);
   };
   const exitChat = () => {
     mutationTerminate.mutate(

@@ -5,7 +5,7 @@ import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
 import MessageRight from "./MessageRight";
 import MessageLeft from "./MessageLeft";
 
-export default function Content({ realtimeText }) {
+export default function Content({ realtimeText, fontSize }) {
   const messageEndRef = useRef(null);
   const messageData = useSelector((state) => state.messageData);
   const realtimePreviewRef = useRef(null);
@@ -14,6 +14,7 @@ export default function Content({ realtimeText }) {
     messageEndRef.current.scrollIntoView({ behavior: "instant" });
   };
   useEffect(scrollToBottom, [messageData]);
+  useEffect(scrollToBottom, [fontSize]);
 
   useIsomorphicLayoutEffect(() => {
     scrollToBottom();
