@@ -266,7 +266,7 @@ export default function Record({ uuid }) {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <div className="w-[140px]">{t("start-record")}</div>
+              <div className="w-[140px] font-bold">{t("start-record")}</div>
             </motion.div>
           </motion.div>
         </div>

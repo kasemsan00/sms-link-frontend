@@ -37,7 +37,7 @@ export default function StartChat({ isStartChat, handleStartChat }) {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          <div className="w-[140px]">{t("start-chat")}</div>
+          <div className="w-[140px] font-bold">{t("start-chat")}</div>
         </motion.div>
       </motion.div>
     </div>
