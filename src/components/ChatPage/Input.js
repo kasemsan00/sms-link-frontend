@@ -20,6 +20,9 @@ export default function Input({ writeMessage, setWriteMessage, realtimeText, set
   const domain = "sip-27.d1669.in.th";
   const [realtimeWriteMessage, setRealtimeWriteMessage] = useState("");
 
+  useEffect(() => {
+    inputTextRef.current.focus();
+  }, []);
   useEffect(() => inputTextRef.current.focus());
 
   const handleSendMessage = (event) => {
