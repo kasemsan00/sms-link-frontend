@@ -31,7 +31,7 @@ export const LinkCall = ({ uuid, extensionStatus }) => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <div className="w-[140px]">{t("link-call")}</div>
+            <div className="w-[140px] font-bold">{t("link-call")}</div>
           </motion.div>
         </motion.div>
       </div>

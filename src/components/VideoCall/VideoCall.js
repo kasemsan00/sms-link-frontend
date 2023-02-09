@@ -13,7 +13,6 @@ export default function VideoCall() {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
 
-  const { userAgent } = useSelector((state) => state.sip);
   const controlVideo = useSelector((state) => state.controlVideo);
   const [realtimeText, connection, peerConnection, setStartCall] = useUserAgentCall({ localVideoRef, remoteVideoRef });
 
@@ -34,10 +33,10 @@ export default function VideoCall() {
       });
 
       constraints.video.facingMode.exact = controlVideo.facingMode;
-
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then((stream) => {
+          console.log(stream, constraints);
           localVideoRef.current.srcObject = stream;
           peerConnection.peerconnection.getSenders().map(function (sender) {
             sender
@@ -52,7 +51,7 @@ export default function VideoCall() {
         })
         .catch((e) => console.error(e));
     }
-  }, [controlVideo.facingMode, connection, peerConnection, userAgent]);
+  }, [controlVideo.facingMode, peerConnection]);
 
   return (
     <>
