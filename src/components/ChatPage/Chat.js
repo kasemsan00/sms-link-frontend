@@ -28,6 +28,15 @@ export default function Chat() {
   const [fontSize, setFontSize] = useState(14);
   const [realtimeText, setRealtimeText] = useState("");
   useEffect(() => {
+    const localFontSize = localStorage.getItem("fontSize");
+    if (localFontSize) {
+      setFontSize(parseInt(localFontSize));
+    }
+    if (localFontSize === null) {
+      localStorage.setItem("fontSize", "14");
+    }
+  }, []);
+  useEffect(() => {
     const controller = new AbortController();
     updateUserActiveStatus({
       uuid: uuid,

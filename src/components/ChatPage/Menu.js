@@ -16,10 +16,12 @@ export default function Menu({ fontSize, setFontSize }) {
   const textDecrease = (e) => {
     e.preventDefault();
     setFontSize(fontSize - 1);
+    localStorage.setItem("fontSize", (fontSize - 1).toString());
   };
   const textIncrease = (e) => {
     e.preventDefault();
     setFontSize(fontSize + 1);
+    localStorage.setItem("fontSize", (fontSize + 1).toString());
   };
   const exitChat = () => {
     mutationTerminate.mutate(
