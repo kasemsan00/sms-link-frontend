@@ -25,8 +25,17 @@ export default function Chat() {
   const [writeMessage, setWriteMessage] = useState("");
   const [location, setLocation] = useState();
   const [isStartChat, setIsStartChat] = useState(false);
-  const [textSize, setTextSize] = useState(14);
+  const [fontSize, setFontSize] = useState(14);
   const [realtimeText, setRealtimeText] = useState("");
+  useEffect(() => {
+    const localFontSize = localStorage.getItem("fontSize");
+    if (localFontSize) {
+      setFontSize(parseInt(localFontSize));
+    }
+    if (localFontSize === null) {
+      localStorage.setItem("fontSize", "14");
+    }
+  }, []);
   useEffect(() => {
     const controller = new AbortController();
     updateUserActiveStatus({
@@ -121,7 +130,7 @@ export default function Chat() {
   return (
     <>
       <StatusBarGeo show={!isStartChat} uuid={uuid} />
-      {!isStartChat ? null : <Menu textSize={textSize} setTextSize={setTextSize} />}
+      {!isStartChat ? null : <Menu fontSize={fontSize} setFontSize={setFontSize} />}
       {!isStartChat ? <Header /> : null}
       <StartChat isStartChat={isStartChat} handleStartChat={handleStartChat} />
       {!isStartChat ? <Footer /> : null}
@@ -138,12 +147,12 @@ export default function Chat() {
             </div>
           </div>
           <div
-            style={{ fontSize: textSize }}
+            style={{ fontSize }}
             className="flex flex-1 justify-center items-center h-[calc(100vh-46px)] w-full bg-white"
             ref={chatRef}
           >
             <Input writeMessage={writeMessage} setWriteMessage={setWriteMessage} setIsDisplayMap={setIsDisplayMap} />
-            <Content realtimeText={realtimeText} />
+            <Content realtimeText={realtimeText} fontSize={fontSize} />
           </div>
         </>
       )}

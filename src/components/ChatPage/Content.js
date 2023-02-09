@@ -5,7 +5,7 @@ import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
 import MessageRight from "./MessageRight";
 import MessageLeft from "./MessageLeft";
 
-export default function Content({ realtimeText }) {
+export default function Content({ realtimeText, fontSize }) {
   const messageEndRef = useRef(null);
   const messageData = useSelector((state) => state.messageData);
   const realtimePreviewRef = useRef(null);
@@ -14,6 +14,7 @@ export default function Content({ realtimeText }) {
     messageEndRef.current.scrollIntoView({ behavior: "instant" });
   };
   useEffect(scrollToBottom, [messageData]);
+  useEffect(scrollToBottom, [fontSize]);
 
   useIsomorphicLayoutEffect(() => {
     scrollToBottom();
@@ -29,7 +30,7 @@ export default function Content({ realtimeText }) {
 
   return (
     <motion.div
-      className="fixed w-full pl-1 max-h-[calc(100vh-85px)] bottom-12 overflow-x-hidden overflow-y-scroll chat-scroll break-all"
+      className="fixed w-full pl-1 pr-1 max-h-[calc(100vh-85px)] bottom-12 overflow-x-hidden overflow-y-scroll chat-scroll break-all"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}

@@ -12,11 +12,12 @@ export default function VideoContent({ localVideoRef, remoteVideoRef }) {
   return (
     <div className="bg-video-call h-[calc(100vh)] ">
       <div ref={localVideoSectionRef}>
-        <video ref={localVideoRef} className="max-h-32 max-w-32" alt="localvideo" muted autoPlay playsInline />
+        <video ref={localVideoRef} className="max-h-32 max-w-32" alt="local video" muted autoPlay playsInline />
         {isMobile ? <SwitchCamera /> : null}
       </div>
       <motion.div
-        className="flex flex-1 justify-center items-center w-full h-[55vh] mobileSE:h-[55vh] mobile:h-[55vh] sm:h-[65vh] md:h-[65vh] xl:h-[70vh] 2xl:h-[70vh] bg-black"
+        className="flex flex-1 justify-center items-center w-full h-[55vh] mobileSE:h-[55vh]
+        mobile:h-[55vh] sm:h-[65vh] md:h-[65vh] xl:h-[70vh] 2xl:h-[70vh] bg-white"
         ref={remoteVideoSectionRef}
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
