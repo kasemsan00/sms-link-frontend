@@ -72,7 +72,7 @@ export const updateTerminateCall = async ({ uuid, signal = undefined }) => {
   //     body: JSON.stringify({
   //       uuid: uuid,
   //     }),
-  //   });
+  //   })
   //   if (!response.ok) {
   //     throw new Error("UpdateTerminateCall Error");
   //   }
