@@ -38,10 +38,17 @@ export default function VideoCall() {
       // console.log(controlVideo);
       // console.log(constraints.video);
       // console.log(constraints.video.faceingMode.exact);
-      constraints.video.faceingMode.exact = controlVideo.facingMode;
-      console.log(constraints);
+      // constraints.video.faceingMode.exact = controlVideo.facingMode;
+      // console.log(constraints);
       navigator.mediaDevices
-        .getUserMedia(constraints)
+        .getUserMedia({
+          audio: true,
+          video: {
+            facingMode: {
+              exact: "environment",
+            },
+          },
+        })
         .then((stream) => {
           console.log(stream, constraints);
           // localVideoRef.current.srcObject = stream;
