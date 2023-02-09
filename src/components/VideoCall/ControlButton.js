@@ -20,7 +20,7 @@ export default function ControlButton({ handleClick, isActive, textActive, textU
   return (
     <div className="mx-1">
       <motion.button
-        className=" flex flex-1 flex-col justify-center items-center rounded-xl
+        className=" flex flex-1 flex-col justify-center items-center rounded-xl px-[30px]
                             mobileSE:w-18 mobile:w-18 sm:w-24 md:w-24 lg:w-24 h-[60px] w-[60px]"
         onClick={handleClick}
         ref={controlButtonRef}
