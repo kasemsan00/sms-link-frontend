@@ -30,7 +30,7 @@ export default function Content({ realtimeText, fontSize }) {
 
   return (
     <motion.div
-      className="fixed w-full pl-1 max-h-[calc(100vh-85px)] bottom-12 overflow-x-hidden overflow-y-scroll chat-scroll break-all"
+      className="fixed w-full pl-1 pr-1 max-h-[calc(100vh-85px)] bottom-12 overflow-x-hidden overflow-y-scroll chat-scroll break-all"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
