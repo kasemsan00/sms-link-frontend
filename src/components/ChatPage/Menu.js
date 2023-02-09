@@ -13,8 +13,14 @@ export default function Menu({ textSize, setTextSize }) {
   const uuid = useSelector((state) => state.linkDetail.uuid);
   const mutationTerminate = useMutation(updateTerminateCall);
 
-  const textDecrease = () => setTextSize(textSize - 1);
-  const textIncrease = () => setTextSize(textSize + 1);
+  const textDecrease = (e) => {
+    e.preventDefault();
+    setTextSize(textSize - 1);
+  };
+  const textIncrease = (e) => {
+    e.preventDefault();
+    setTextSize(textSize + 1);
+  };
   const exitChat = () => {
     mutationTerminate.mutate(
       { uuid },
