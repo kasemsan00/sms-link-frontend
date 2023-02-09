@@ -51,14 +51,14 @@ export default function UUID() {
           <Suspense fallback={`Loading...`}>
             <DynamicStartRecord uuid={uuid} />
           </Suspense>
-        ) : (
+        ) : null}
+        {isSuccess && data.status === "close" ? (
           <>
-            <StatusbarGeo show={true} />
             <Suspense fallback={`Loading...`}>
               <DynamicEndCall />
             </Suspense>
           </>
-        )}
+        ) : null}
       </main>
     </>
   );
