@@ -17,5 +17,9 @@
     "on": "Message",
     "off": "Message off"
   },
+  "font-size" : {
+    "increase": "A+",
+    "decrease": "A-"
+  },
   "terminate": "END CALL"
 }

@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-  --primary: #2D683E;
-  --secondary: #6bff95;
+  --primary: rgb(219 56 102);
+  --secondary: rgb(251 235 241);
 }
 .shortcuts-box {
   height: 60px !important;

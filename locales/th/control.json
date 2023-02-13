@@ -17,5 +17,9 @@
     "on": "ข้อความ",
     "off": "ปิดข้อความ"
   },
+  "font-size" : {
+    "increase": "ก+",
+    "decrease": "ก-"
+  },
   "terminate": "วางสาย"
 }
