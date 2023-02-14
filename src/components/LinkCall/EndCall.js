@@ -23,11 +23,11 @@ export default function EndCall() {
     }).then((r) => r);
     return () => controller.abort();
   }, [uuid]);
-  useEffect(() => {
-    if (sip !== null) {
-      sip.session.terminate();
-    }
-  }, [sip]);
+  // useEffect(() => {
+  //   if (sip !== null) {
+  //     sip.session.terminate();
+  //   }
+  // }, [sip]);
   //
   return (
     <>

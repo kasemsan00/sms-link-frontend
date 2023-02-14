@@ -60,7 +60,8 @@ export default function ChatVideo({ realtimeText }) {
     }
   };
   const sendMessage = ({ text }) => {
-    userAgent.sendMessage(`sip:${agent}@${domain}`, text);
+    // userAgent.sendMessage(`sip:${agent}@${domain}`, text);
+    userAgent.sendMessage(`sip:14001@d1422-sip.ddc.moph.go.th`, text);
     setWriteMessage("");
     sequenceNumber = initSequenceNumber();
     eventRtt = "new";

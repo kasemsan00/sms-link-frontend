@@ -51,6 +51,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
         sessionTimersExpires: 9999,
       };
       console.log("userAgentCall", userAgent);
+      console.log("options", options);
       if (session === null) {
         userAgent.on("newMessage", async (event) => {
           const messageBody = event.message._request.body;
@@ -89,6 +90,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
             ev1.session.connection.addEventListener("addstream", (event) => {
               dispatch(setUserActiveStatus("close"));
               setConnection(true);
+              console.log(event.stream);
               remoteVideoRef.current.srcObject = event.stream;
             });
           }
@@ -107,7 +109,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
         });
       }
       localVideoRef.current.srcObject = stream;
-      userAgent.call("sip:" + agent + "@" + domain, options);
+      userAgent.call("sip:142213@d1422-sip.ddc.moph.go.th", options);
     },
     [dispatch, localVideoRef, remoteVideoRef, userAgent, agent, domain],
   );
@@ -119,7 +121,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
       (async () => {
         try {
           console.log(constraints);
-          const stream = await navigator.mediaDevices.getUserMedia(constraints);
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
           userAgentCall({ stream });
         } catch (error) {
           console.log("error", error);

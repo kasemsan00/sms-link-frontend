@@ -7,9 +7,9 @@ export default function LinkID() {
     <>
       <Head>
         <title>{t("title")}</title>
-        <meta name="theme-color" content="rgb(219 56 102)" />
+        {/*<meta name="theme-color" content="rgb(219 56 102)" />*/}
         <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
-        <link rel="manifest" href="/manifest.json" />
+        {/*<link rel="manifest" href="/manifest.json" />*/}
       </Head>
       <main className="h-screen w-screen"></main>
     </>
