@@ -33,7 +33,7 @@ export default function EndCall() {
     <>
       <StatusBarGeo show={true} />
       <Header />
-      <div className="flex flex-1 h-[calc(100vh-100px)] justify-center items-center">
+      <div className="flex flex-1 h-[calc(100vh-85px)] justify-center items-center">
         <div className="text-3xl text-primary font-bold">{t("end-call")}</div>
       </div>
       <Footer />
