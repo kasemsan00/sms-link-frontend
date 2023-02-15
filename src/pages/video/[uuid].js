@@ -47,11 +47,11 @@ export default function UUID() {
       dispatch(setLinkDetail(data));
       if (data.status !== "close" && data.status !== "ERROR" && userAgent === null) {
         console.log("register", data);
-        const socket = new JsSIP.WebSocketInterface("wss://d1422-sip.ddc.moph.go.th:8002/ws");
+        const socket = new JsSIP.WebSocketInterface(data.wss);
         const configuration = {
           sockets: [socket],
-          uri: "sip:" + "164179150989057" + "@" + "d1422-sip.ddc.moph.go.th",
-          password: "K5kk9SMRNIEqwMWEb36Z",
+          uri: "sip:" + data.extension + "@" + data.domain,
+          password: data.password,
         };
         userAgent = new JsSIP.UA(configuration);
         userAgent.on("unregistered", () => {
@@ -76,9 +76,9 @@ export default function UUID() {
     <>
       <Head>
         <title>{t("title")}</title>
-        {/*<meta name="theme-color" content="rgb(219 56 102)" />*/}
+        <meta name="theme-color" content="rgb(219 56 102)" />
         <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
-        {/*<link rel="manifest" href="/manifest.json" />*/}
+        <link rel="manifest" href="/manifest.json" />
       </Head>
       <main>
         {queryExtension.isSuccess === true ? (

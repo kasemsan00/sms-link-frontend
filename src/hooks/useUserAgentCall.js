@@ -109,7 +109,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
         });
       }
       localVideoRef.current.srcObject = stream;
-      userAgent.call("sip:142213@d1422-sip.ddc.moph.go.th", options);
+      userAgent.call(`sip:${agent}@${domain}`, options);
     },
     [dispatch, localVideoRef, remoteVideoRef, userAgent, agent, domain],
   );

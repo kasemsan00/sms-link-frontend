@@ -19,7 +19,7 @@ export default function Chat() {
   const dispatch = useDispatch();
   const chatRef = useRef(null);
   const modalRef = useRef(null);
-  const { uuid } = useSelector((state) => state.linkDetail);
+  const { uuid, agent, domain } = useSelector((state) => state.linkDetail);
   const { userAgent } = useSelector((state) => state.sip);
   const [isDisplayMap, setIsDisplayMap] = useState(false);
   const [writeMessage, setWriteMessage] = useState("");
@@ -103,7 +103,7 @@ export default function Chat() {
       sessionTimersExpires: 9999,
     };
     console.log("userAgent Call", 1006);
-    userAgent.call("sip:1006@sip-27.d1669.in.th", options);
+    userAgent.call("sip:" + agent + "@" + domain, options);
     console.log("initial UA Message");
     const display = new DisplayBuffer((resp) => {
       if (resp.drained === true) {

@@ -10,17 +10,13 @@ const initSequenceNumber = () => Math.floor(Math.random() * 100000 + 1);
 let sequenceNumber = initSequenceNumber();
 let eventRtt = "new";
 
-export default function Input({ writeMessage, setWriteMessage, realtimeText, setRealtimeText, setIsDisplayMap }) {
+export default function Input({ writeMessage, setWriteMessage, setIsDisplayMap }) {
   const { t } = useTranslation("common");
   const inputTextRef = useRef(null);
   const dispatch = useDispatch();
   const { userAgent } = useSelector((state) => state.sip);
-  // const { agent, domain } = useSelector((state) => state.linkDetail);
-  const agent = "1006";
-  const domain = "sip-27.d1669.in.th";
+  const { agent, domain } = useSelector((state) => state.linkDetail);
   const [realtimeWriteMessage, setRealtimeWriteMessage] = useState("");
-
-  // useEffect(() => inputTextRef.current.focus());
 
   const handleSendMessage = (event) => {
     if (event.key === "Enter") {
@@ -62,7 +58,7 @@ export default function Input({ writeMessage, setWriteMessage, realtimeText, set
     if (userAgent !== null) {
       userAgent.sendMessage(`sip:${agent}@${domain}`, realtimeWriteMessage);
     }
-  }, [realtimeWriteMessage, userAgent]);
+  }, [realtimeWriteMessage, userAgent, agent, domain]);
 
   return (
     <motion.div

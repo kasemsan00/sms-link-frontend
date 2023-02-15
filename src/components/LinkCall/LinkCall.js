@@ -21,7 +21,7 @@ export const LinkCall = ({ uuid, extensionStatus }) => {
     <>
       <StatusbarGeo show={true} uuid={uuid} />
       <Header />
-      <div className="flex flex-1 h-[calc(100vh-100px)] justify-center items-center">
+      <div className="flex flex-1 h-[calc(100vh-85px)] justify-center items-center">
         <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }}>
           <motion.div
             className="bg-[#D13A2E] w-[30vh] h-[30vh] rounded-full shadow-md drop-shadow-md

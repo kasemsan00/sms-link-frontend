@@ -27,7 +27,7 @@ export default function VideoContent({ localVideoRef, remoteVideoRef }) {
           className="h-full bg-black"
           ref={remoteVideoRef}
           poster={require("../../assets/videocall/waiting.png")}
-          controls={true}
+          controls={false}
           autoPlay
           playsInline
         />
