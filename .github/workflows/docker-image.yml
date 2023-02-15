@@ -21,4 +21,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: thspinsoft/webrtc-location:develop
+          tags: thspinsoft/sms-link-frontend:develop
