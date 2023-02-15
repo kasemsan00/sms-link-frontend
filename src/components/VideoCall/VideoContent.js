@@ -12,7 +12,7 @@ export default function VideoContent({ localVideoRef, remoteVideoRef }) {
   return (
     <div className="bg-video-call h-[calc(100vh)] ">
       <div ref={localVideoSectionRef}>
-        <video ref={localVideoRef} className="max-h-32 max-w-32" alt="local video" muted autoPlay playsInline />
+        <video ref={localVideoRef} className="max-h-32 max-w-32 pt-[25px]" alt="local video" muted autoPlay playsInline />
         {isMobile ? <SwitchCamera /> : null}
       </div>
       <motion.div
@@ -24,9 +24,10 @@ export default function VideoContent({ localVideoRef, remoteVideoRef }) {
         transition={{ duration: 0.3 }}
       >
         <video
-          className="h-full"
+          className="h-full bg-black"
           ref={remoteVideoRef}
           poster={require("../../assets/videocall/waiting.png")}
+          controls={false}
           autoPlay
           playsInline
         />

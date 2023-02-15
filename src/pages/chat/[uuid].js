@@ -36,7 +36,7 @@ export default function Chat() {
         const socket = new JsSIP.WebSocketInterface(data.wss);
         const configuration = {
           sockets: [socket],
-          uri: "sip:" + data.extension + "@" + "sip-93.d1669.in.th",
+          uri: "sip:" + data.extension + "@" + data.domain,
           password: data.password,
         };
         userAgent = new JsSIP.UA(configuration);
@@ -57,34 +57,6 @@ export default function Chat() {
         });
         userAgent.start();
       }
-
-      // For Demo
-      // if (userAgent === null) {
-      //     console.log("register");
-      //     const socket = new JsSIP.WebSocketInterface("wss://sip-27.d1669.in.th:8002/ws");
-      //     const configuration = {
-      //         sockets: [socket],
-      //         uri: "sip:" + "1582172490" + "@" + "sip-27.d1669.in.th",
-      //         password: "test1234",
-      //     };
-      //     userAgent = new JsSIP.UA(configuration);
-      //     userAgent.on("unregistered", () => {
-      //         console.log("unregistered");
-      //         dispatch(setWebStatus("unregistered"));
-      //         dispatch(setUserActiveStatus("failed"));
-      //     });
-      //     userAgent.on("registered", () => {
-      //         console.log("registered");
-      //         dispatch(setUserAgent(userAgent));
-      //         dispatch(setWebStatus("registered"));
-      //         dispatch(setUserActiveStatus("open"));
-      //     });
-      //     userAgent.on("registrationFailed", () => {
-      //         console.log("registrationFailed");
-      //         dispatch(setWebStatus("registrationFailed"));
-      //     });
-      //     userAgent.start();
-      // }
     }
   }, [dispatch, queryExtension.isSuccess, queryExtension]);
 
@@ -92,7 +64,6 @@ export default function Chat() {
     <>
       <Head>
         <title>{t("title")}</title>
-        <meta name="theme-color" content="#2D683E" />
         <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
       </Head>

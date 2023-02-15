@@ -3,10 +3,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#2D683E",
-        secondary: "#deffd2",
+        primary: "rgb(219 56 102)",
+        "primary-text": "#1f4d2e",
+        secondary: "rgb(251 235 241)",
+        "nstda-color": "rgb(48, 106, 179)",
         focus: "#1f4d2e",
-        "video-call": "#041309",
+        "video-call": "#190b1a",
         "chat-page": "#BBCDF8",
         "chat-user-local": "#4C7ED4",
         "chat-realtime-preview": "#a84e32",

@@ -59,24 +59,24 @@ export const getExtensionDetail = async (uuid) => {
   return response.json();
 };
 export const updateTerminateCall = async ({ uuid, signal = undefined }) => {
-  //   if (signal !== undefined && signal.aborted) {
-  //     return false;
-  //   }
-  //   const response = await fetch(`${URL_API}/close`, {
-  //     method: "POST",
-  //     signal: signal !== undefined ? signal : null,
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       uuid: uuid,
-  //     }),
-  //   })
-  //   if (!response.ok) {
-  //     throw new Error("UpdateTerminateCall Error");
-  //   }
-  //   return response.json();
+  // if (signal !== undefined && signal.aborted) {
+  //   return false;
+  // }
+  // const response = await fetch(`${URL_API}/close`, {
+  //   method: "POST",
+  //   signal: signal !== undefined ? signal : null,
+  //   headers: {
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     uuid: uuid,
+  //   }),
+  // });
+  // if (!response.ok) {
+  //   throw new Error("UpdateTerminateCall Error");
+  // }
+  // return response.json();
   return true;
 };
 export const sendLocation = async ({ os, latitude, longitude, accuracy, uuid }) => {

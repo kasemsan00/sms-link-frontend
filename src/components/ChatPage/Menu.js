@@ -1,15 +1,15 @@
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import TextDecreaseIcon from "@mui/icons-material/TextDecrease";
-import TextIncreaseIcon from "@mui/icons-material/TextIncrease";
 import { motion } from "framer-motion";
 import { setWebStatus } from "../../redux/slices/webStatusSlice";
 import { useMutation } from "react-query";
 import { updateTerminateCall, updateUserActiveStatus } from "../../request";
 import { useDispatch, useSelector } from "react-redux";
+import useTranslation from "next-translate/useTranslation";
 
 export default function Menu({ fontSize, setFontSize }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation("control");
   const uuid = useSelector((state) => state.linkDetail.uuid);
   const mutationTerminate = useMutation(updateTerminateCall);
 
@@ -46,10 +46,10 @@ export default function Menu({ fontSize, setFontSize }) {
     >
       <div className="fixed flex flex-1 justify-center left-0 pl-1">
         <div className="mx-1 flex flex-1 items-center cursor-pointer" onClick={textIncrease}>
-          <TextIncreaseIcon style={{ color: "var(--primary)" }} fontSize="large" />
+          <label className="text-[30px] cursor-pointer text-primary">{t("font-size.increase")}</label>
         </div>
         <div className="mx-1 flex flex-1 items-center cursor-pointer" onClick={textDecrease}>
-          <TextDecreaseIcon style={{ color: "var(--primary)" }} fontSize="large" />
+          <label className="text-[30px] cursor-pointer text-primary">{t("font-size.decrease")}</label>
         </div>
       </div>
       <div className="fixed flex flex-1 justify-center">

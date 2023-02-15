@@ -46,11 +46,11 @@ export default function UUID() {
       let { data } = queryExtension;
       dispatch(setLinkDetail(data));
       if (data.status !== "close" && data.status !== "ERROR" && userAgent === null) {
-        console.log("register");
+        console.log("register", data);
         const socket = new JsSIP.WebSocketInterface(data.wss);
         const configuration = {
           sockets: [socket],
-          uri: "sip:" + data.extension + "@" + "sip-93.d1669.in.th",
+          uri: "sip:" + data.extension + "@" + data.domain,
           password: data.password,
         };
         userAgent = new JsSIP.UA(configuration);
@@ -76,7 +76,7 @@ export default function UUID() {
     <>
       <Head>
         <title>{t("title")}</title>
-        <meta name="theme-color" content="#2D683E" />
+        <meta name="theme-color" content="rgb(219 56 102)" />
         <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
       </Head>

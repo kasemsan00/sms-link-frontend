@@ -8,9 +8,8 @@ export default function Home() {
     <>
       <Head>
         <title>{t("title")}</title>
-        <meta name="theme-color" content="#2D683E" />
         <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
-        <link rel="manifest" href="/manifest.json" />
+        {/*<link rel="manifest" href="/manifest.json" />*/}
       </Head>
       <main className="h-screen w-screen"></main>
     </>
