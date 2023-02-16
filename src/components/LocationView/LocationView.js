@@ -14,7 +14,7 @@ const LocationView = ({ uuid, status }) => {
     <>
       <StatusbarGeo show={true} uuid={uuid} />
       <Header />
-      <div className="flex flex-1 h-[calc(100vh-100px)] justify-center items-center">
+      <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
         {status === "ERROR" ? <URLExpired /> : null}
         {status === "close" ? <URLExpired /> : null}
         {status !== "close" && status !== "ERROR" ? (

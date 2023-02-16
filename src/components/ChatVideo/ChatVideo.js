@@ -125,9 +125,9 @@ export default function ChatVideo({ realtimeText }) {
       <div className="fixed top-[21px] right-0 bg-video-call rounded-xl">
         <div className="table-cell align-bottom">
           <div className="w-[200px] h-[108px] float-right overflow-y-scroll z-50 rounded-xl break-all">
-            {messageData.map((chatdata, index) => {
+            {messageData.map((chatData, index) => {
               return (
-                <ResponsiveChatPush key={index} sender="" origin={chatdata.type} date={chatdata.date} message={chatdata.body} />
+                <ResponsiveChatPush key={index} sender="" origin={chatData.type} date={chatData.date} message={chatData.body} />
               );
             })}
             <MessageRealTimeView messageRealtime={realtimeText} />
