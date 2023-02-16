@@ -119,8 +119,6 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
     if (startCall === true) {
       (async () => {
         try {
-          ///////////////////////////////// แก้ cons
-          // console.log(constraints);
           const stream = await navigator.mediaDevices.getUserMedia(constraints);
           userAgentCall({ stream });
         } catch (error) {
