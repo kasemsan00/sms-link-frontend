@@ -41,17 +41,17 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
       const options = {
         eventHandlers: eventHandlers,
         mediaStream: stream,
-        pcConfig: [
-          {
-            urls: process.env.NEXT_PUBLIC_TURN_DOMAIN,
-            username: process.env.NEXT_PUBLIC_TURN_USERNAME,
-            credential: process.env.NEXT_PUBLIC_TURN_CREDENTIAL,
-          },
-        ],
+        pcConfig: {
+          iceServers: [
+            {
+              urls: process.env.NEXT_PUBLIC_TURN_DOMAIN,
+              username: process.env.NEXT_PUBLIC_TURN_USERNAME,
+              credential: process.env.NEXT_PUBLIC_TURN_CREDENTIAL,
+            },
+          ],
+        },
         sessionTimersExpires: 9999,
       };
-      console.log("userAgentCall", userAgent);
-      console.log("options", options);
       if (session === null) {
         userAgent.on("newMessage", async (event) => {
           const messageBody = event.message._request.body;
@@ -90,7 +90,6 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
             ev1.session.connection.addEventListener("addstream", (event) => {
               dispatch(setUserActiveStatus("close"));
               setConnection(true);
-              console.log(event.stream);
               remoteVideoRef.current.srcObject = event.stream;
             });
           }
@@ -120,8 +119,9 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
     if (startCall === true) {
       (async () => {
         try {
-          console.log(constraints);
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+          ///////////////////////////////// แก้ cons
+          // console.log(constraints);
+          const stream = await navigator.mediaDevices.getUserMedia(constraints);
           userAgentCall({ stream });
         } catch (error) {
           console.log("error", error);

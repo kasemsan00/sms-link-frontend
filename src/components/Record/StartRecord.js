@@ -258,10 +258,8 @@ export default function Record({ uuid }) {
             ref={startCameraRef}
           >
             <motion.div
-              className="
-                            bg-[#D13A2E] w-[30vh] h-[30vh] rounded-full shadow-md drop-shadow-md shadow-gray-700
-                            text-2xl text-white flex flex-1 justify-center items-center text-center self-center cursor-pointer
-                        "
+              className="bg-[#D13A2E] w-[30vh] h-[30vh] rounded-full shadow-md drop-shadow-md shadow-gray-700
+              text-2xl text-white flex flex-1 justify-center items-center text-center self-center cursor-pointer"
               onClick={handleStartCamera}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
