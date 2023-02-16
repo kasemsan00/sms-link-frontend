@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setControlVideo, setControlMicrophone, setControlAudio, setControlMessage } from "../../redux/slices/controlVideoSlice";
 import { setWebStatus } from "../../redux/slices/webStatusSlice";
@@ -8,9 +8,11 @@ import { motion } from "framer-motion";
 import useTranslation from "next-translate/useTranslation";
 
 export default function ControlVideo() {
+  const controlVideoPanelRef = useRef(null);
   const dispatch = useDispatch();
   const controlVideo = useSelector((state) => state.controlVideo);
   const messageData = useSelector((state) => state.messageData);
+  const [bottomControl, setBottomControl] = useState(10);
   const { t } = useTranslation("control");
   const sip = useSelector((state) => state.sip);
   const [newMessage, setNewMessage] = useState(false);
@@ -45,12 +47,25 @@ export default function ControlVideo() {
   useEffect(() => {
     if (messageData.length === 0) {
       setNewMessage(false);
-    } else if (controlVideo.openMessage === true) {
-      setNewMessage(false);
-    } else {
-      setNewMessage(true);
+      return;
     }
+    if (controlVideo.openMessage === true) {
+      setNewMessage(false);
+      return;
+    }
+    setNewMessage(true);
   }, [messageData, controlVideo.openMessage]);
+
+  useEffect(() => {
+    if (controlVideo.openMessage === false) {
+      setBottomControl(10);
+      return;
+    }
+    if (controlVideo.openMessage === true) {
+      controlVideoPanelRef.current.scrollIntoView({ behavior: "smooth" });
+      setBottomControl(60);
+    }
+  }, [controlVideo.openMessage]);
 
   const handleTerminate = () => {
     sip.userAgent.unregister();
@@ -62,7 +77,9 @@ export default function ControlVideo() {
 
   return (
     <motion.div
-      className="fixed flex flex-1 w-full bottom-[100px] justify-center items-center"
+      ref={controlVideoPanelRef}
+      className="fixed flex flex-1 w-full justify-center items-center animation"
+      style={{ bottom: bottomControl, left: 0, zIndex: 1000 }}
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}

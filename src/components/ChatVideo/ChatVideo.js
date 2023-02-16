@@ -49,14 +49,14 @@ export default function ChatVideo({ realtimeText }) {
 
   const [writeMessage, setWriteMessage] = useState("");
 
-  const handleSendMessage = (event) => {
+  const handleInputSendMessage = (event) => {
     if (event.key === "Enter" && writeMessage.trim() !== "") {
       sendMessage({ text: writeMessage });
     }
   };
-  const handleSendMessageButton = (event) => {
-    if (event.target.value !== "") {
-      sendMessage({ text: event.target.value });
+  const handleButtonSendMessage = () => {
+    if (writeMessage.trim() !== "") {
+      sendMessage({ text: writeMessage });
     }
   };
   const sendMessage = ({ text }) => {
@@ -100,7 +100,7 @@ export default function ChatVideo({ realtimeText }) {
       <div className="flex flex-1 justify-center items-center w-full">
         <div className="form-control w-full">
           <label className="input-group">
-            <span className="bg-sky-800" style={{ borderRadius: "0" }} onClick={handleSendLocation}>
+            <span className="bg-sky-800 cursor-pointer" style={{ borderRadius: "0" }} onClick={handleSendLocation}>
               <Image width={30} height={30} alt="place location" src={require("../../assets/img/placeholder.png")} />
             </span>
             <input
@@ -108,22 +108,26 @@ export default function ChatVideo({ realtimeText }) {
               style={{ outline: "none" }}
               type="text"
               placeholder={t("chat-input-placeholder")}
-              onKeyDown={handleSendMessage}
+              onKeyDown={handleInputSendMessage}
               onChange={handleOnChange}
               value={writeMessage}
             />
-            <span className="bg-sky-800 text-white" style={{ borderRadius: "0" }} onClick={handleSendMessageButton}>
+            <span
+              className="bg-sky-800 text-white cursor-pointer"
+              style={{ borderRadius: "0" }}
+              onClick={handleButtonSendMessage}
+            >
               {t("chat-send-button")}
             </span>
           </label>
         </div>
       </div>
-      <div className="fixed top-[21px] right-0">
+      <div className="fixed top-[21px] right-0 bg-video-call rounded-xl">
         <div className="table-cell align-bottom">
           <div className="w-[200px] h-[108px] float-right overflow-y-scroll z-50 rounded-xl break-all">
-            {messageData.map((chatdata, index) => {
+            {messageData.map((chatData, index) => {
               return (
-                <ResponsiveChatPush key={index} sender="" origin={chatdata.type} date={chatdata.date} message={chatdata.body} />
+                <ResponsiveChatPush key={index} sender="" origin={chatData.type} date={chatData.date} message={chatData.body} />
               );
             })}
             <MessageRealTimeView messageRealtime={realtimeText} />

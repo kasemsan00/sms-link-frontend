@@ -9,10 +9,10 @@ export default function ControlButton({ handleClick, isActive, textActive, textU
 
   useIsomorphicLayoutEffect(() => {
     if (isActive) {
-      controlButtonRef.current.classList.add("bg-gray-700");
+      controlButtonRef.current.classList.replace("bg-video-call", "bg-gray-700");
       controlTextRef.current.innerHTML = textActive;
     } else {
-      controlButtonRef.current.classList.remove("bg-gray-700");
+      controlButtonRef.current.classList.replace("bg-gray-700", "bg-video-call");
       controlTextRef.current.innerHTML = textUnActive;
     }
   }, [isActive, textActive, textUnActive]);
@@ -21,7 +21,9 @@ export default function ControlButton({ handleClick, isActive, textActive, textU
     <div className="mx-1">
       <motion.button
         className="flex flex-1 flex-col justify-center items-center rounded-xl
-        mobileSE:w-18 mobile:w-18 sm:w-24 md:w-24 lg:w-24 h-[60px] w-[60px] px-[35px]"
+        mobileSE:w-18 mobile:w-18 sm:w-24 md:w-24 lg:w-24 h-[60px] w-[60px] px-[35px]
+        bg-video-call
+        "
         onClick={handleClick}
         ref={controlButtonRef}
         whileTap={{ scale: 0.9 }}

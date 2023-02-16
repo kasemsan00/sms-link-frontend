@@ -9,7 +9,7 @@ export default function ControlPanel({ controlPanelRef, handleStopRecord, handle
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
-      className="fixed flex justify-center items-center z-50 w-full h-20 mt-10 bottom-5"
+      className="fixed flex justify-center items-center z-50 w-full h-20 mt-10 bottom-5 bg-video-call"
       ref={controlPanelRef}
     >
       <motion.button
