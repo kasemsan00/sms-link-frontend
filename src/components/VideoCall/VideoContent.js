@@ -17,7 +17,7 @@ export default function VideoContent({ localVideoRef, remoteVideoRef }) {
       </div>
       <motion.div
         className="mt-[15vh] fixed flex flex-1 justify-center items-center w-full h-[55vh] mobileSE:h-[55vh]
-        mobile:h-[55vh] sm:h-[65vh] md:h-[65vh] xl:h-[70vh] 2xl:h-[70vh] bg-white"
+        mobile:h-[55vh] sm:h-[65vh] md:h-[65vh] xl:h-[70vh] 2xl:h-[70vh] bg-black"
         ref={remoteVideoSectionRef}
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}

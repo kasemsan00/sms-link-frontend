@@ -118,7 +118,7 @@ export default function ChatVideo({ realtimeText }) {
           </label>
         </div>
       </div>
-      <div className="fixed top-[21px] right-0">
+      <div className="fixed top-[21px] right-0 bg-video-call rounded-xl">
         <div className="table-cell align-bottom">
           <div className="w-[200px] h-[108px] float-right overflow-y-scroll z-50 rounded-xl break-all">
             {messageData.map((chatdata, index) => {
