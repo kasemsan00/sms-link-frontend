@@ -62,7 +62,7 @@ export default function ControlVideo() {
 
   return (
     <motion.div
-      className="fixed flex flex-1 w-full bottom-[100px] justify-center items-center"
+      className="fixed flex flex-1 w-full bottom-[60px] justify-center items-center"
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
