@@ -15,6 +15,7 @@ import SelectCamera from "./SelectCamera";
 import useTranslation from "next-translate/useTranslation";
 import { initRTC } from "./ReplaceableMediaStream";
 import { updateUserActiveStatus, updateTerminateCall } from "../../request";
+import StartCall from "../Utilities/StartCall";
 
 let temporaryStream = null;
 let mediaRecorder = null,
@@ -249,24 +250,12 @@ export default function Record({ uuid }) {
       <StatusBarVideo start={isStartRecord} type="videorecord" show={isStartRecord} />
       {!isStartRecord ? <Header /> : null}
       <div className="h-screen w-screen " ref={backgroundRef}>
-        <div className="flex flex-1 h-[calc(100vh)] justify-center items-center" ref={startRecordRef}>
-          <motion.div
-            className="flex mt-[-50px]"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-            ref={startCameraRef}
-          >
-            <motion.div
-              className="bg-[#D13A2E] w-[30vh] h-[30vh] rounded-full shadow-md drop-shadow-md shadow-gray-700
-              text-2xl text-white flex flex-1 justify-center items-center text-center self-center cursor-pointer"
-              onClick={handleStartCamera}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <div className="w-[140px] font-bold">{t("start-record")}</div>
-            </motion.div>
-          </motion.div>
+        <div
+          className="flex flex-1 h-[calc(100vh-85px)] justify-center items-center
+        sm:h-[calc(100vh)]"
+          ref={startRecordRef}
+        >
+          <StartCall startRef={startCameraRef} title={t("start-record")} handleClick={handleStartCamera} />
         </div>
         <SelectCamera selectCameraRef={selectCameraRef} handleSelectCamera={handleSelectCamera} />
         <Recording recordingRef={recordingRef} localVideoRef={localVideoRef} isStartRecord={isStartRecord} />

@@ -7,7 +7,6 @@ import { useQuery } from "react-query";
 import { updateUserActiveStatus, getExtensionDetail } from "../../request";
 import { useDispatch } from "react-redux";
 import { setLinkDetail } from "../../redux/slices/linkDetailSlice";
-import StatusbarGeo from "../../components/Status/StatusBarGeo";
 
 const DynamicStartRecord = dynamic(() => import("../../components/Record/StartRecord"));
 const DynamicEndCall = dynamic(() => import("../../components/LinkCall/EndCall"));
@@ -34,7 +33,7 @@ export default function UUID() {
       uuid: uuid,
       status: "open",
       signal: controller.signal,
-    }).then((r) => console.log(r));
+    }).then((r) => r);
     return () => controller.abort();
   }, [uuid]);
 

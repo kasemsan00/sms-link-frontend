@@ -1,0 +1,2 @@
+POST https://dev-d1442-sms-link-backend-api.103.74.254.185.nip.io/test/createlink?phonenumber=0828955697&extension=164179150989057&password=K5kk9SMRNIEqwMWEb36Z&domain=d1422-sip.ddc.moph.go.th&websocket=wss://d1422-sip.ddc.moph.go.th:8002/ws&sms=false&agent=142213&type=webrtc
+Content-Type: application/json

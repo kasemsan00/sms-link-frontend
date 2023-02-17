@@ -4,9 +4,18 @@ import ChangeLanguage from "./ChangeLanguage";
 
 export default function Header() {
   const { t } = useTranslation("header");
-
   return (
-    <div className="fixed flex flex-1 bg-secondary p-3 w-full justify-center items-center">
+    <div
+      className="fixed flex flex-1 bg-secondary w-full justify-center items-center p-3
+      mobile:p-0
+      mobileSE:p-0
+      sm:p-0
+      md:p-3,
+      lg:p-3,
+      xl:p-3,
+      2xl:p-3
+      "
+    >
       <div className="m-2">
         <Image alt="HeadLogo" width={80} height={80} src={require("../../assets/img/header/logo.png")} />
       </div>

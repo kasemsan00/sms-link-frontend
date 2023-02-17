@@ -6,8 +6,9 @@ import Footer from "../Utilities/Footer";
 import Header from "../Utilities/Header";
 import { motion } from "framer-motion";
 import useTranslation from "next-translate/useTranslation";
+import StartCall from "../Utilities/StartCall";
 
-export const LinkCall = ({ uuid, extensionStatus }) => {
+export default function LinkCall({ uuid, extensionStatus }) {
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
   const handleCall = () => {
@@ -23,26 +24,11 @@ export const LinkCall = ({ uuid, extensionStatus }) => {
       <Header />
       <div
         className="flex flex-1 h-[calc(100vh-85px)] justify-center items-center
-        landscape:h-[calc(100vh)]"
+        sm:h-[calc(100vh)]"
       >
-        <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }}>
-          <motion.div
-            className="bg-[#D13A2E] w-[30vh] h-[30vh] rounded-full shadow-md drop-shadow-md
-            shadow-gray-700 text-2xl text-white flex flex-1 justify-center items-center
-            text-center self-center cursor-pointer
-            landscape:w-[40vh]
-            landscape:h-[40vh]"
-            onClick={handleCall}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <div className="w-[140px] font-bold">{t("link-call")}</div>
-          </motion.div>
-        </motion.div>
+        <StartCall startRef={null} title={t("link-call")} handleClick={handleCall} />
       </div>
       <Footer />
     </>
   );
-};
-
-export default LinkCall;
+}
