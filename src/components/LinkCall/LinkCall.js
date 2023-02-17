@@ -4,7 +4,6 @@ import { setWebStatus } from "../../redux/slices/webStatusSlice";
 import StatusbarGeo from "../Status/StatusBarGeo";
 import Footer from "../Utilities/Footer";
 import Header from "../Utilities/Header";
-import { motion } from "framer-motion";
 import useTranslation from "next-translate/useTranslation";
 import StartCall from "../Utilities/StartCall";
 

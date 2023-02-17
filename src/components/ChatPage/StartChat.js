@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { motion } from "framer-motion";
 import useTranslation from "next-translate/useTranslation";
 import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
 import StartCall from "../Utilities/StartCall";
