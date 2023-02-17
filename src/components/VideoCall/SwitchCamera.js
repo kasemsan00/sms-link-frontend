@@ -31,7 +31,7 @@ export default function SwitchCamera() {
   return (
     <div
       onClick={handleSwitchCamera}
-      className="top-[45px] right-0 w-[60px] h-[60px] fixed flex flex-col justify-center items-center cursor-pointer z-50] bg-video-call rounded-md"
+      className="top-[45px] right-0 w-[60px] h-[60px] fixed flex flex-col justify-center items-center cursor-pointer z-50] rounded-md"
       ref={switchCameraRef}
     >
       {facingMode === "user" ? (
