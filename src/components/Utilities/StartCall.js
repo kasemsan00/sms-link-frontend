@@ -13,7 +13,8 @@ export default function StartCall({ startRef, title, handleClick }) {
               shadow-gray-700 text-2xl text-white flex flex-1 justify-center items-center
               text-center self-center cursor-pointer
               landscape:w-[40vh]
-              landscape:h-[40vh]"
+              landscape:h-[40vh]
+              "
         onClick={handleClick}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
