@@ -10,14 +10,14 @@ export default function Header() {
       mobile:p-0
       mobileSE:p-0
       sm:p-0
-      md:p-3,
-      lg:p-3,
-      xl:p-3,
+      md:p-3
+      lg:p-3
+      xl:p-3
       2xl:p-3
       "
     >
-      <div className="m-2">
-        <Image alt="HeadLogo" width={80} height={80} src={require("../../assets/img/header/logo.png")} />
+      <div className="m-2 w-[80px] h-[80px]">
+        <Image alt="HeadLogo" width="auto" height="auto" src={require("../../assets/img/header/logo.png")} />
       </div>
       <div className="flex justify-center flex-col">
         <div className="text-[16px] font-bold mx-2 text-primary-text">{t("header1")}</div>

@@ -23,7 +23,8 @@ export default function LinkCall({ uuid, extensionStatus }) {
       <Header />
       <div
         className="flex flex-1 h-[calc(100vh-85px)] justify-center items-center
-        sm:h-[calc(100vh)]"
+        sm:h-[calc(100vh)]
+        "
       >
         <StartCall startRef={null} title={t("link-call")} handleClick={handleCall} />
       </div>
