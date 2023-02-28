@@ -12,10 +12,13 @@ export default function EndCall() {
   const { t } = useTranslation("common");
   const sip = useSelector((state) => state.sip.session);
   const dispatch = useDispatch();
+  const webStatus = useSelector((state) => state.webStatus);
 
   useEffect(() => {
-    dispatch(setUserActiveStatus("close"));
-  }, [dispatch]);
+    if (webStatus !== "registrationFailed") {
+      dispatch(setUserActiveStatus("close"));
+    }
+  }, [webStatus, dispatch]);
   useEffect(() => {
     const controller = new AbortController();
     updateTerminateCall({
@@ -34,7 +37,11 @@ export default function EndCall() {
       <StatusBarGeo show={true} />
       <Header />
       <div className="flex flex-1 h-[calc(100vh-64px)] justify-center items-center landscape:mt-10">
-        <div className="text-3xl text-primary font-bold">{t("end-call")}</div>
+        {webStatus === "registrationFailed" ? (
+          <div className="text-3xl text-primary font-bold">{t("registration-failed")}</div>
+        ) : (
+          <div className="text-3xl text-primary font-bold">{t("end-call")}</div>
+        )}
       </div>
       <Footer />
     </>

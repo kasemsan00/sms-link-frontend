@@ -25,11 +25,10 @@ export const updateUserActiveStatus = async ({ uuid, status, signal = undefined 
   // if (status === false) return false;
   // const response = await fetch(`${URL_API}/updatestatus`, {
   //   method: "POST",
-  //   signal: signal !== undefined ? signal : null,
   //   headers: {
-  //     Accept: "application/json",
   //     "Content-Type": "application/json",
   //   },
+  //   signal: signal !== undefined ? signal : null,
   //   body: JSON.stringify({
   //     uuid: uuid,
   //     status: status,
@@ -43,32 +42,23 @@ export const updateUserActiveStatus = async ({ uuid, status, signal = undefined 
 };
 
 export const getExtensionDetail = async (uuid) => {
-  const response = await fetch(`${URL_API}/detail`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      uuid: uuid,
-    }),
-  });
+  const response = await fetch(`${URL_API}/linkdetail/${uuid}`);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
   return response.json();
 };
 export const updateTerminateCall = async ({ uuid, signal = undefined }) => {
+  // console.log("Update Terminate Call");
   // if (signal !== undefined && signal.aborted) {
   //   return false;
   // }
   // const response = await fetch(`${URL_API}/close`, {
   //   method: "POST",
-  //   signal: signal !== undefined ? signal : null,
   //   headers: {
-  //     Accept: "application/json",
   //     "Content-Type": "application/json",
   //   },
+  //   signal: signal !== undefined ? signal : null,
   //   body: JSON.stringify({
   //     uuid: uuid,
   //   }),
@@ -77,13 +67,12 @@ export const updateTerminateCall = async ({ uuid, signal = undefined }) => {
   //   throw new Error("UpdateTerminateCall Error");
   // }
   // return response.json();
-  return true;
+  return false;
 };
 export const sendLocation = async ({ os, latitude, longitude, accuracy, uuid }) => {
   const response = await fetch(`${URL_API}/savelocation`, {
     method: "POST",
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({

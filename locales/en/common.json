@@ -2,6 +2,7 @@
   "title": "Department of Disease Control",
   "link-call": "Video Call",
   "end-call": "End Call",
+  "registration-failed": "Registration Failed",
   "send-location-success": "Send location success",
   "url-expired": "URL expired",
   "please-allow-location": "Please allow browser location services ",
