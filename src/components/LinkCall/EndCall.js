@@ -8,12 +8,11 @@ import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 import useTranslation from "next-translate/useTranslation";
 
 export default function EndCall() {
-  const { uuid } = useSelector((state) => state.linkDetail);
-  const { t } = useTranslation("common");
-  const sip = useSelector((state) => state.sip.session);
   const dispatch = useDispatch();
   const webStatus = useSelector((state) => state.webStatus);
-
+  const { uuid } = useSelector((state) => state.linkDetail);
+  const { t } = useTranslation("common");
+  // const sip = useSelector((state) => state.sip.session);
   useEffect(() => {
     if (webStatus !== "registrationFailed") {
       dispatch(setUserActiveStatus("close"));
@@ -37,11 +36,7 @@ export default function EndCall() {
       <StatusBarGeo show={true} />
       <Header />
       <div className="flex flex-1 h-[calc(100vh-64px)] justify-center items-center landscape:mt-10">
-        {webStatus === "registrationFailed" ? (
-          <div className="text-3xl text-primary font-bold">{t("registration-failed")}</div>
-        ) : (
-          <div className="text-3xl text-primary font-bold">{t("end-call")}</div>
-        )}
+        <div className="text-3xl text-primary font-bold">{t("end-call")}</div>
       </div>
       <Footer />
     </>
