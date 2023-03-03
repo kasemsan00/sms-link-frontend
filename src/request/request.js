@@ -19,6 +19,7 @@ export const uploadFile = async ({ file }) => {
 };
 
 export const updateUserActiveStatus = async ({ uuid, status, signal = undefined }) => {
+  console.log("Update User Active Status", status);
   if (signal !== undefined && signal.aborted) {
     return false;
   }
