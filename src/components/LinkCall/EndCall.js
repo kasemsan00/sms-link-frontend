@@ -1,27 +1,20 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import StatusBarGeo from "../Status/StatusBarGeo";
 import { updateTerminateCall } from "../../request";
 import Header from "../Utilities/Header";
 import Footer from "../Utilities/Footer";
-import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 import useTranslation from "next-translate/useTranslation";
 
 export default function EndCall() {
-  const dispatch = useDispatch();
-  const webStatus = useSelector((state) => state.webStatus);
   const { uuid } = useSelector((state) => state.linkDetail);
   const { t } = useTranslation("common");
   // const sip = useSelector((state) => state.sip.session);
   useEffect(() => {
-    if (webStatus !== "registrationFailed") {
-      dispatch(setUserActiveStatus("close"));
-    }
-  }, [webStatus, dispatch]);
-  useEffect(() => {
     const controller = new AbortController();
     updateTerminateCall({
       uuid: uuid,
+      signal: controller.signal,
     }).then((r) => r);
     return () => controller.abort();
   }, [uuid]);

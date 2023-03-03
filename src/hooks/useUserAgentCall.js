@@ -88,7 +88,6 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
           dispatch(setSession(session));
           if (ev1.originator === "local") {
             ev1.session.connection.addEventListener("addstream", (event) => {
-              dispatch(setUserActiveStatus("close"));
               setConnection(true);
               remoteVideoRef.current.srcObject = event.stream;
             });
