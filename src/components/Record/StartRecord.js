@@ -69,6 +69,16 @@ export default function Record({ uuid }) {
   });
 
   useEffect(() => {
+    const controller = new AbortController();
+    updateUserActiveStatus({
+      uuid: uuid,
+      status: "open",
+      signal: controller.signal,
+    }).then((r) => r);
+    return () => controller.abort();
+  }, [uuid]);
+
+  useEffect(() => {
     if (!isSafari && !isIOS && temporaryStream === null) {
       temporaryStream = new MediaStream();
       MediaStream.prototype.constructor = initRTC();
