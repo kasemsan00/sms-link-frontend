@@ -48,6 +48,7 @@ export const getExtensionDetail = async (uuid) => {
   }
   return response.json();
 };
+
 export const updateTerminateCall = async ({ uuid, signal = undefined }) => {
   console.log("Update Terminate Call");
   if (signal !== undefined && signal.aborted) {
@@ -68,6 +69,7 @@ export const updateTerminateCall = async ({ uuid, signal = undefined }) => {
   }
   return response.json();
 };
+
 export const sendLocation = async ({ os, latitude, longitude, accuracy, uuid }) => {
   const response = await fetch(`${URL_API}/savelocation`, {
     method: "POST",
@@ -87,6 +89,7 @@ export const sendLocation = async ({ os, latitude, longitude, accuracy, uuid }) 
   }
   return response.json();
 };
+
 export const getLocationName = async ({ latitude, longitude, signal, language }) => {
   if (signal.aborted) {
     return false;
