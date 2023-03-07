@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import StatusBarGeo from "../Status/StatusBarGeo";
-import { updateTerminateCall } from "../../request";
+import { updateTerminateCall, updateUserActiveStatus } from "../../request";
 import Header from "../Utilities/Header";
 import Footer from "../Utilities/Footer";
 import useTranslation from "next-translate/useTranslation";
@@ -14,6 +14,15 @@ export default function EndCall() {
     const controller = new AbortController();
     updateTerminateCall({
       uuid: uuid,
+      signal: controller.signal,
+    }).then((r) => r);
+    return () => controller.abort();
+  }, [uuid]);
+  useEffect(() => {
+    const controller = new AbortController();
+    updateUserActiveStatus({
+      uuid: uuid,
+      status: "close",
       signal: controller.signal,
     }).then((r) => r);
     return () => controller.abort();
