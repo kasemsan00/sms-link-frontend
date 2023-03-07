@@ -56,7 +56,6 @@ export default function UUID() {
         userAgent = new JsSIP.UA(configuration);
         userAgent.on("unregistered", () => {
           dispatch(setWebStatus("unregistered"));
-          dispatch(setUserActiveStatus("failed"));
         });
         userAgent.on("registered", () => {
           dispatch(setUserAgent(userAgent));
