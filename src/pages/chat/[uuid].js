@@ -59,7 +59,7 @@ export default function Chat() {
         userAgent.start();
       }
     }
-  }, [dispatch, queryExtension.isSuccess, queryExtension]);
+  }, [uuid, dispatch, queryExtension.isSuccess, queryExtension]);
 
   return (
     <>
