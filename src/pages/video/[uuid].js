@@ -31,7 +31,7 @@ export default function UUID() {
   });
 
   useQuery([uuid, userActiveStatus], () => updateUserActiveStatus({ uuid, status: userActiveStatus }), {
-    enabled: uuid !== "" && userActiveStatus !== "" && userActiveStatus !== "close",
+    enabled: uuid !== "" && userActiveStatus !== "",
     staleTime: Infinity,
   });
 

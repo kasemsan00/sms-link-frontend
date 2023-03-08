@@ -7,6 +7,7 @@ import ControlButton from "./ControlButton";
 import { motion } from "framer-motion";
 import useTranslation from "next-translate/useTranslation";
 import { updateUserActiveStatus } from "../../request";
+import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 
 export default function ControlVideo() {
   const controlVideoPanelRef = useRef(null);
@@ -70,11 +71,7 @@ export default function ControlVideo() {
   }, [controlVideo.openMessage]);
 
   const handleTerminate = () => {
-    // request update user active status api
-    updateUserActiveStatus({
-      uuid: uuid,
-      status: "close",
-    }).then((r) => r);
+    dispatch(setUserActiveStatus("close"));
     sip.userAgent.unregister();
     sip.userAgent.stop();
     dispatch(setWebStatus("ended"));

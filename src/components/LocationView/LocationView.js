@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StatusbarGeo from "../Status/StatusBarGeo";
 import Header from "../Utilities/Header";
 import Footer from "../Utilities/Footer";
@@ -6,10 +6,15 @@ import DeniedLocation from "./DeniedLocation";
 import SendLocationSuccess from "./SendLocationSuccess";
 import URLExpired from "./URLExpired";
 import Loading from "./Loading";
+import { useEffect } from "react";
+import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 
 const LocationView = ({ uuid, status }) => {
+  const dispatch = useDispatch();
   const location = useSelector((state) => state.location);
-
+  useEffect(() => {
+    dispatch(setUserActiveStatus("sendLocation"));
+  }, [dispatch, uuid]);
   return (
     <>
       <StatusbarGeo show={true} uuid={uuid} />

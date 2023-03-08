@@ -36,15 +36,16 @@ export default function Chat() {
       localStorage.setItem("fontSize", "14");
     }
   }, []);
-  useEffect(() => {
-    const controller = new AbortController();
-    updateUserActiveStatus({
-      uuid: uuid,
-      status: "open",
-      signal: controller.signal,
-    }).then((r) => r);
-    return () => controller.abort();
-  }, [uuid]);
+
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  // updateUserActiveStatus({
+  //   uuid: uuid,
+  //   status: "open",
+  //   signal: controller.signal,
+  // }).then((r) => r);
+  //   return () => controller.abort();
+  // }, [uuid]);
 
   const handleCloseModal = async () => {
     setIsDisplayMap(false);
