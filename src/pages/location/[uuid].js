@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { getExtensionDetail, updateUserActiveStatus } from "../../request";
 import { setLinkDetail } from "../../redux/slices/linkDetailSlice";
 import useTranslation from "next-translate/useTranslation";
+import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 
 const DynamicLocation = dynamic(() => import("../../components/LocationView"));
 
@@ -22,7 +23,7 @@ export default function Location() {
   });
 
   useQuery([uuid, userActiveStatus], () => updateUserActiveStatus({ uuid, status: userActiveStatus }), {
-    enabled: uuid !== "" && userActiveStatus !== "" && userActiveStatus !== "close",
+    enabled: uuid !== "" && userActiveStatus !== "",
     staleTime: Infinity,
   });
 
@@ -30,6 +31,7 @@ export default function Location() {
     if (queryExtension.isSuccess) {
       let { data } = queryExtension;
       dispatch(setLinkDetail(data));
+      dispatch(setUserActiveStatus("open"));
     }
   }, [dispatch, queryExtension.isSuccess, queryExtension]);
 

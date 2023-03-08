@@ -5,8 +5,9 @@ import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { useQuery } from "react-query";
 import { updateUserActiveStatus, getExtensionDetail } from "../../request";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLinkDetail } from "../../redux/slices/linkDetailSlice";
+import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 
 const DynamicStartRecord = dynamic(() => import("../../components/Record/StartRecord"));
 const DynamicEndCall = dynamic(() => import("../../components/LinkCall/EndCall"));
@@ -16,26 +17,22 @@ export default function UUID() {
   const uuid = router.query.uuid || "";
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
+  const userActiveStatus = useSelector((state) => state.userActiveStatus);
   const { isSuccess, data } = useQuery([uuid], () => getExtensionDetail(uuid), {
     enabled: uuid !== "",
+    staleTime: Infinity,
+  });
+  useQuery([uuid, userActiveStatus], () => updateUserActiveStatus({ uuid, status: userActiveStatus }), {
+    enabled: uuid !== "" && userActiveStatus !== "",
     staleTime: Infinity,
   });
 
   useEffect(() => {
     if (isSuccess) {
       dispatch(setLinkDetail(data));
+      dispatch(setUserActiveStatus("open"));
     }
   }, [dispatch, isSuccess, data]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    updateUserActiveStatus({
-      uuid: uuid,
-      status: "open",
-      signal: controller.signal,
-    }).then((r) => r);
-    return () => controller.abort();
-  }, [uuid]);
 
   return (
     <>

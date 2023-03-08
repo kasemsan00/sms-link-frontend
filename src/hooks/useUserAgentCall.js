@@ -6,7 +6,6 @@ import { DisplayBuffer } from "../components/ChatPage/realtime-text";
 import { ConvertToRTTEvent } from "../components/Utilities/ConvertToRTTEvent";
 import { setSession } from "../redux/slices/sipSlice";
 import { setWebStatus } from "../redux/slices/webStatusSlice";
-import { setUserActiveStatus } from "../redux/slices/userActiveStatusSlice";
 import { addMessageData } from "../redux/slices/messageDataSlice";
 import { initConstraints } from "../components/VideoCall/function";
 // eslint-disable-next-line

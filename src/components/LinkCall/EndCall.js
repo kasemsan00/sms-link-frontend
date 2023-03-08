@@ -18,15 +18,16 @@ export default function EndCall() {
     }).then((r) => r);
     return () => controller.abort();
   }, [uuid]);
-  useEffect(() => {
-    const controller = new AbortController();
-    updateUserActiveStatus({
-      uuid: uuid,
-      status: "close",
-      signal: controller.signal,
-    }).then((r) => r);
-    return () => controller.abort();
-  }, [uuid]);
+
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  //   updateUserActiveStatus({
+  //     uuid: uuid,
+  //     status: "close",
+  //     signal: controller.signal,
+  //   }).then((r) => r);
+  //   return () => controller.abort();
+  // }, [uuid]);
   // useEffect(() => {
   //   if (sip !== null) {
   //     sip.session.terminate();

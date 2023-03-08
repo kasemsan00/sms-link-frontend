@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { useEffect, Suspense } from "react";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
-import { getExtensionDetail } from "../../request";
+import { getExtensionDetail, updateUserActiveStatus } from "../../request";
 import { setLinkDetail } from "../../redux/slices/linkDetailSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserAgent } from "../../redux/slices/sipSlice";
@@ -50,6 +50,7 @@ export default function Chat() {
           dispatch(setUserAgent(userAgent));
           dispatch(setWebStatus("registered"));
           dispatch(setUserActiveStatus("open"));
+          updateUserActiveStatus({ uuid, status: "open" }).then((r) => r);
         });
         userAgent.on("registrationFailed", () => {
           console.log("registrationFailed");
