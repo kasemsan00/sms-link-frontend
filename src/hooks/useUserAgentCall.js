@@ -96,7 +96,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
             console.log(e);
             stopStream();
             setStartCall(null);
-            dispatch(setWebStatus("ended"));
+            ispatch(setWebStatus("ended"));
           });
           ev1.session.on("failed", (e) => {
             dispatch(setWebStatus(""));

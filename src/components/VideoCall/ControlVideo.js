@@ -6,10 +6,12 @@ import { resetUserAgent, resetSession } from "../../redux/slices/sipSlice";
 import ControlButton from "./ControlButton";
 import { motion } from "framer-motion";
 import useTranslation from "next-translate/useTranslation";
+import { updateUserActiveStatus } from "../../request";
 
 export default function ControlVideo() {
   const controlVideoPanelRef = useRef(null);
   const dispatch = useDispatch();
+  const { uuid } = useSelector((state) => state.linkDetail);
   const controlVideo = useSelector((state) => state.controlVideo);
   const messageData = useSelector((state) => state.messageData);
   const [bottomControl, setBottomControl] = useState(10);
@@ -68,6 +70,11 @@ export default function ControlVideo() {
   }, [controlVideo.openMessage]);
 
   const handleTerminate = () => {
+    // request update user active status api
+    updateUserActiveStatus({
+      uuid: uuid,
+      status: "close",
+    }).then((r) => r);
     sip.userAgent.unregister();
     sip.userAgent.stop();
     dispatch(setWebStatus("ended"));

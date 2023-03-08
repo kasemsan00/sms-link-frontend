@@ -19,11 +19,11 @@ export const uploadFile = async ({ file }) => {
 };
 
 export const updateUserActiveStatus = async ({ uuid, status, signal = undefined }) => {
-  console.log("Update User Active Status", status);
   if (signal !== undefined && signal.aborted) {
     return false;
   }
   if (status === false) return false;
+  console.log("Update User Active Status", status);
   const response = await fetch(`${URL_API}/updatestatus`, {
     method: "POST",
     headers: {
