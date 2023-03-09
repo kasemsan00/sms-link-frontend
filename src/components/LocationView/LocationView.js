@@ -15,6 +15,20 @@ const LocationView = ({ uuid, status }) => {
   useEffect(() => {
     dispatch(setUserActiveStatus("sendLocation"));
   }, [dispatch, uuid]);
+
+  if (status === "expired") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <URLExpired />
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <StatusbarGeo show={true} uuid={uuid} />

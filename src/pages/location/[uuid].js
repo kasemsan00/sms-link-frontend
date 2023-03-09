@@ -21,13 +21,13 @@ export default function Location() {
     enabled: uuid !== "",
     staleTime: Infinity,
   });
-
   useQuery([uuid, userActiveStatus], () => updateUserActiveStatus({ uuid, status: userActiveStatus }), {
     enabled: uuid !== "" && userActiveStatus !== "",
     staleTime: Infinity,
   });
 
   useEffect(() => {
+    /////////////////// มีบัคติดลูป
     if (queryExtension.isSuccess) {
       let { data } = queryExtension;
       dispatch(setLinkDetail(data));
