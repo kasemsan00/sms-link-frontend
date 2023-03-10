@@ -1,11 +1,24 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
 import UploadComplete from "./UploadComplete";
 import useTranslation from "next-translate/useTranslation";
+import { useSelector } from "react-redux";
+import { updateUserActiveStatus } from "../../request";
 
 export default function Uploading({ uploadProgress }) {
+  const { uuid } = useSelector((state) => state.linkDetail);
   const uploadProgressRef = useRef(null);
   const { t } = useTranslation("common");
+
+  useEffect(() => {
+    const controller = new AbortController();
+    updateUserActiveStatus({
+      uuid: uuid,
+      status: "upload",
+      signal: controller.signal,
+    }).then((r) => r);
+    return () => controller.abort();
+  }, [uuid]);
 
   useIsomorphicLayoutEffect(() => {
     if (uploadProgress > 0) {
