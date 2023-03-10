@@ -190,11 +190,11 @@ export default function Record({ uuid }) {
   };
 
   const getMimeType = () => {
-    // if (!isSafari && !isIOS) {
-    //   return "video/webm";
-    // } else {
-    return "video/webm";
-    // }
+    if (!isSafari && !isIOS) {
+      return "video/webm";
+    } else {
+      return "video/mp4";
+    }
   };
   const mediaRecord = ({ stream: stream }) => {
     const options = {
