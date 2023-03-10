@@ -21,7 +21,6 @@ export default function Location() {
     enabled: uuid !== "",
     staleTime: Infinity,
   });
-
   useQuery([uuid, userActiveStatus], () => updateUserActiveStatus({ uuid, status: userActiveStatus }), {
     enabled: uuid !== "" && userActiveStatus !== "",
     staleTime: Infinity,

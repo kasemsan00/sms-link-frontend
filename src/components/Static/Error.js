@@ -1,4 +1,3 @@
-import Header from "next/head";
 import StatusbarGeo from "../Status/StatusBarGeo";
 import Footer from "../Utilities/Footer";
 

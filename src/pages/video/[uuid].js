@@ -14,7 +14,7 @@ import useTranslation from "next-translate/useTranslation";
 
 const DynamicLinkCall = dynamic(() => import("../../components/LinkCall"));
 const DynamicVideoCall = dynamic(() => import("../../components/VideoCall"));
-const DynamicEndCall = dynamic(() => import("../../components/LinkCall/EndCall"));
+const DynamicEndCall = dynamic(() => import("../../components/Static/EndCall"));
 
 let userAgent = null;
 

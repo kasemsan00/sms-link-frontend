@@ -13,7 +13,7 @@ import useTranslation from "next-translate/useTranslation";
 import JsSIP from "jssip";
 
 const DynamicChat = dynamic(() => import("../../components/ChatPage/Chat"));
-const DynamicEndCall = dynamic(() => import("../../components/LinkCall/EndCall"));
+const DynamicEndCall = dynamic(() => import("../../components/Static/EndCall"));
 
 let userAgent = null;
 
