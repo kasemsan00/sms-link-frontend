@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
 import useTranslation from "next-translate/useTranslation";
 
-export default function UploadComplete({ uploadProgress }) {
+export default function UploadComplete({ uploadProgress, textColor }) {
   const uploadCompleteRef = useRef(null);
   const { t } = useTranslation("common");
 
@@ -26,7 +26,9 @@ export default function UploadComplete({ uploadProgress }) {
           <circle className="checkmark__circle" cx="26" cy="26" r="30" fill="none" />
           <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
         </svg>
-        <div className="text-2xl text-white">{t("upload-complete")}</div>
+        <div className="text-2xl text-white" style={{ color: textColor }}>
+          {t("upload-complete")}
+        </div>
       </div>
     </motion.div>
   );

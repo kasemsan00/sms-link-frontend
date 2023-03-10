@@ -8,9 +8,13 @@ import { updateUserActiveStatus, getExtensionDetail } from "../../request";
 import { useDispatch, useSelector } from "react-redux";
 import { setLinkDetail } from "../../redux/slices/linkDetailSlice";
 import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
+import URLExpired from "../../components/Static/URLExpired";
+import StatusbarGeo from "../../components/Status/StatusBarGeo";
+import Footer from "../../components/Utilities/Footer";
+import UploadComplete from "../../components/Static/UploadComplete";
 
 const DynamicStartRecord = dynamic(() => import("../../components/Record/StartRecord"));
-const DynamicEndCall = dynamic(() => import("../../components/LinkCall/EndCall"));
+const DynamicEndCall = dynamic(() => import("../../components/Static/EndCall"));
 
 export default function UUID() {
   const router = useRouter();
@@ -28,11 +32,35 @@ export default function UUID() {
   });
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && data.status !== "expired" && data.status !== "close") {
       dispatch(setLinkDetail(data));
       dispatch(setUserActiveStatus("open"));
     }
   }, [dispatch, isSuccess, data]);
+
+  if (data !== undefined && data.status === "close") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <UploadComplete uploadProgress={100} textColor={"black"} />
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (data !== undefined && data.status === "expired") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <URLExpired />
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
@@ -43,12 +71,12 @@ export default function UUID() {
         <link rel="manifest" href="/manifest.json" />
       </Head>
       <main>
-        {isSuccess && data.status !== "close" ? (
+        {isSuccess && data !== undefined && data.status !== "close" ? (
           <Suspense fallback={`Loading...`}>
             <DynamicStartRecord uuid={uuid} />
           </Suspense>
         ) : null}
-        {isSuccess && data.status === "close" ? (
+        {isSuccess && data !== undefined && data.status === "close" ? (
           <>
             <Suspense fallback={`Loading...`}>
               <DynamicEndCall />

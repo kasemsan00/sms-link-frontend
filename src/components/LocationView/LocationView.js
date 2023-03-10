@@ -4,7 +4,7 @@ import Header from "../Utilities/Header";
 import Footer from "../Utilities/Footer";
 import DeniedLocation from "./DeniedLocation";
 import SendLocationSuccess from "./SendLocationSuccess";
-import URLExpired from "./URLExpired";
+import URLExpired from "../Static/URLExpired";
 import Loading from "./Loading";
 import { useEffect } from "react";
 import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
