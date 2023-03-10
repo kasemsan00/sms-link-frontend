@@ -27,7 +27,6 @@ export default function Location() {
   });
 
   useEffect(() => {
-    /////////////////// มีบัคติดลูป
     if (queryExtension.isSuccess) {
       let { data } = queryExtension;
       dispatch(setLinkDetail(data));
