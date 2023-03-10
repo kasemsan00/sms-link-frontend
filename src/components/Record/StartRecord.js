@@ -225,7 +225,9 @@ export default function Record({ uuid }) {
     const blob = new Blob(chunks, {
       type: getMimeType(),
     });
-    mutationUploadFile.mutate({ file: blob }),
+    const fileExt = getMimeType() === "video/webm" ? "webm" : "mp4";
+    const file = new File([blob], "file_record." + fileExt);
+    mutationUploadFile.mutate({ file: file }),
       {
         onSuccess: () => {},
       };
