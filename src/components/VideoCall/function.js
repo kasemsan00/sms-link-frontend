@@ -12,12 +12,13 @@ export const stopStreamElement = (videoElem) => {
 export const initConstraints = () => {
   if (isFirefox) {
     return {
-      audio: {
-        echoCancellation: true,
-        googEchoCancellation: { exact: true },
-        noiseSuppression: true,
-        googNoiseSuppression: { exact: true },
-      },
+      audio: true,
+      // audio: {
+      // echoCancellation: true,
+      // googEchoCancellation: { exact: true },
+      // noiseSuppression: true,
+      // googNoiseSuppression: { exact: true },
+      // },
       video: {
         width: { max: 352 },
         height: { max: 240 },
