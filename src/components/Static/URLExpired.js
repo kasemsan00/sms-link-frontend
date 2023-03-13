@@ -11,7 +11,7 @@ export default function URLExpired() {
       transition={{ duration: 0.3 }}
     >
       <div className="flex flex-1 justify-center items-center">
-        <div className="h-[200px] w-[200px] rounded-full shadow-md drop-shadow-md shadow-gray-700 bg-red-600 mb-5 text-center text-[130px] text-white">
+        <div className="landscape:hidden h-[200px] w-[200px] rounded-full shadow-md drop-shadow-md shadow-gray-700 bg-red-600 mb-5 text-center text-[130px] text-white">
           !
         </div>
       </div>
