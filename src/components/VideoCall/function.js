@@ -31,12 +31,13 @@ export const initConstraints = () => {
   }
   if (isDesktop) {
     return {
-      audio: {
-        echoCancellation: true,
-        googEchoCancellation: { exact: true },
-        noiseSuppression: true,
-        googNoiseSuppression: { exact: true },
-      },
+      audio: true,
+      // audio: {
+      //   echoCancellation: true,
+      //   googEchoCancellation: { exact: true },
+      //   noiseSuppression: true,
+      //   googNoiseSuppression: { exact: true },
+      // },
       video: {
         frameRate: {
           min: "15 ",
@@ -55,12 +56,13 @@ export const initConstraints = () => {
   }
   if (isAndroid || isIOS) {
     return {
-      audio: {
-        echoCancellation: true,
-        googEchoCancellation: { exact: true },
-        noiseSuppression: true,
-        googNoiseSuppression: { exact: true },
-      },
+      audio: true,
+      // audio: {
+      //   echoCancellation: true,
+      //   googEchoCancellation: { exact: true },
+      //   noiseSuppression: true,
+      //   googNoiseSuppression: { exact: true },
+      // },
       video: {
         facingMode: {
           exact: "user",
