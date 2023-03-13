@@ -42,7 +42,7 @@ export interface InputBufferState {
 }
 
 /**
- * Calculate the erase and insert actions needed to describe the user's edit operation.
+ * Calculate to erase and insert actions needed to describe the user's edit operation.
  *
  * Based on the code point buffers before and after the edit, we find the single erase
  * and insert actions needed to describe the full change. We are minimizing the number

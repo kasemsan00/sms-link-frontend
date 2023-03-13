@@ -37,7 +37,7 @@ export default function LongdooMap({ setLocation }) {
           }
         });
         map.Event.bind("location", function () {
-          const location = map.location(); // Cross hair location
+          const location = map.location();
           setLocation(location);
         });
         mapRef.current.classList.remove("hidden");

@@ -1,5 +1,5 @@
 const convert = require("xml-js");
-import { isFirefox, isDesktop, isAndroid, isIOS } from "react-device-detect";
+import { isAndroid, isDesktop, isFirefox, isIOS } from "react-device-detect";
 
 export const stopStreamElement = (videoElem) => {
   const stream = videoElem.srcObject;
@@ -157,8 +157,7 @@ export const previewText = (msgRealtime, message) => {
     } else {
       if (rs.rtt.t._attributes) {
         console.log("else1.1.1");
-        var add = addCharater(msgRealtime, rs.rtt.t._text, rs.rtt.t._attributes.p);
-        return add;
+        return addCharacter(msgRealtime, rs.rtt.t._text, rs.rtt.t._attributes.p);
       } else {
         console.log("else1.2.2");
         if (rs.rtt.t._text === undefined) {
@@ -183,9 +182,8 @@ export const previewText = (msgRealtime, message) => {
     return tmp;
   }
 };
-const addCharater = (str, stradd, char_pos) => {
-  var output = [str.slice(0, char_pos), stradd, str.slice(char_pos)].join("");
-  return output;
+const addCharacter = (str, stradd, char_pos) => {
+  return [str.slice(0, char_pos), stradd, str.slice(char_pos)].join("");
 };
 const removeCharacter = (str, char_pos) => {
   var part1 = str.substring(0, char_pos);
