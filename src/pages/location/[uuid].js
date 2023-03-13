@@ -30,7 +30,9 @@ export default function Location() {
     if (queryExtension.isSuccess) {
       let { data } = queryExtension;
       dispatch(setLinkDetail(data));
-      dispatch(setUserActiveStatus("open"));
+      if (data.status !== "expired") {
+        dispatch(setUserActiveStatus("open"));
+      }
     }
   }, [dispatch, queryExtension.isSuccess, queryExtension]);
 
