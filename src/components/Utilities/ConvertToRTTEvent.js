@@ -2,8 +2,7 @@ import convert from "xml-js";
 
 export const ConvertToRTTEvent = async (xml) => {
   let xmldata = await convert.xml2json(xml, { compact: true, spaces: 4 });
-  const rttEvent = await convertXMLtoJSONRTT(JSON.parse(xmldata).rtt);
-  return rttEvent;
+  return await convertXMLtoJSONRTT(JSON.parse(xmldata).rtt);
 };
 
 const convertXMLtoJSONRTT = (data) => {
