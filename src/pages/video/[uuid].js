@@ -11,6 +11,10 @@ import { setWebStatus } from "../../redux/slices/webStatusSlice";
 import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 import JsSIP from "jssip";
 import useTranslation from "next-translate/useTranslation";
+import StatusbarGeo from "../../components/Status/StatusBarGeo";
+import Header from "../../components/Utilities/Header";
+import LinkClose from "../../components/Static/LinkClose";
+import Footer from "../../components/Utilities/Footer";
 
 const DynamicLinkCall = dynamic(() => import("../../components/VideoCall/StartVideoCall"));
 const DynamicVideoCall = dynamic(() => import("../../components/VideoCall/VideoCall"));
@@ -29,6 +33,7 @@ export default function UUID() {
     enabled: uuid !== "",
     staleTime: Infinity,
   });
+  let { data } = queryExtension;
 
   useQuery([uuid, userActiveStatus], () => updateUserActiveStatus({ uuid, status: userActiveStatus }), {
     enabled: uuid !== "" && userActiveStatus !== "",
@@ -43,7 +48,6 @@ export default function UUID() {
 
   useEffect(() => {
     if (queryExtension.isSuccess) {
-      let { data } = queryExtension;
       dispatch(setLinkDetail(data));
       if (data.status !== "close" && data.status !== "ERROR" && userAgent === null) {
         console.log("register", data);
@@ -69,8 +73,20 @@ export default function UUID() {
         userAgent.start();
       }
     }
-  }, [dispatch, queryExtension.isSuccess, queryExtension]);
+  }, [dispatch, queryExtension.isSuccess, queryExtension, data]);
 
+  if (data !== undefined && data.status === "close") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <LinkClose />
+        </div>
+        <Footer />
+      </>
+    );
+  }
   return (
     <>
       <Head>
