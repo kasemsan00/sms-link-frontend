@@ -1,5 +1,5 @@
 import { useEffect, useRef, useLayoutEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { initConstraints } from "./function";
 import ControlVideo from "../VideoCall/ControlVideo";
 import StatusBarVideo from "../Status/StatusBarVideo";
@@ -8,7 +8,6 @@ import ChatVideo from "./ChatVideo";
 import useUserAgentCall from "../../hooks/useUserAgentCall";
 
 let constraints = initConstraints();
-console.log(constraints);
 
 export default function VideoCall() {
   const localVideoRef = useRef(null);

@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCallNumber } from "../redux/slices/linkDetailSlice";
-import { setControlVideo } from "../redux/slices/controlVideoSlice";
+import { setControlSwitchCamera, setControlVideo } from "../redux/slices/controlVideoSlice";
 import { DisplayBuffer } from "../components/ChatPage/realtime-text";
 import { ConvertToRTTEvent } from "../components/Utilities/ConvertToRTTEvent";
 import { setSession } from "../redux/slices/sipSlice";
@@ -125,13 +125,16 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
             constraints.video.facingMode = "user";
             setStartCall(false);
           }
+          if (constraints.video.facingMode === "user") {
+            dispatch(setControlSwitchCamera("facingMode", "user"));
+          }
         }
       })();
     }
     return () => {
       setStartCall(false);
     };
-  }, [startCall, userAgent, userAgentCall]);
+  }, [dispatch, startCall, userAgent, userAgentCall]);
 
   return [realtimeText, connection, peerConnection, setStartCall];
 }
