@@ -125,7 +125,9 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
             constraints.video.facingMode = "user";
             setStartCall(false);
           }
+          console.log("YYYYYYYYYYYYY");
           if (constraints.video.facingMode === "user") {
+            console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSS");
             dispatch(setControlSwitchCamera("facingMode", "user"));
           }
         }
