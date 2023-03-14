@@ -131,7 +131,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
     return () => {
       setStartCall(false);
     };
-  }, [startCall, userAgent, userAgentCall]);
+  }, [dispatch, startCall, userAgent, userAgentCall]);
 
   return [realtimeText, connection, peerConnection, setStartCall];
 }
