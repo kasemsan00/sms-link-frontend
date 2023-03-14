@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCallNumber } from "../redux/slices/linkDetailSlice";
-import { setControlSwitchCamera, setControlVideo } from "../redux/slices/controlVideoSlice";
+import { setControlVideo } from "../redux/slices/controlVideoSlice";
 import { DisplayBuffer } from "../components/ChatPage/realtime-text";
 import { ConvertToRTTEvent } from "../components/Utilities/ConvertToRTTEvent";
 import { setSession } from "../redux/slices/sipSlice";

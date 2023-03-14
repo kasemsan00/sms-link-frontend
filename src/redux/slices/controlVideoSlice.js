@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isAndroid, isIOS } from "react-device-detect";
 
 const initialState = {
   openMessage: false,
@@ -9,7 +8,7 @@ const initialState = {
   switchCamera: true,
   openTerminate: false,
   show: true,
-  facingMode: isAndroid || isIOS ? "user" : "",
+  facingMode: "",
   typeAsteriskCall: "DIRECT",
 };
 
