@@ -11,6 +11,11 @@ import { setWebStatus } from "../../redux/slices/webStatusSlice";
 import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 import useTranslation from "next-translate/useTranslation";
 import JsSIP from "jssip";
+import StatusbarGeo from "../../components/Status/StatusBarGeo";
+import Header from "../../components/Utilities/Header";
+import LinkClose from "../../components/Static/LinkClose";
+import Footer from "../../components/Utilities/Footer";
+import URLExpired from "../../components/Static/URLExpired";
 
 const DynamicChat = dynamic(() => import("../../components/ChatPage/Chat"));
 const DynamicEndCall = dynamic(() => import("../../components/Static/EndCall"));
@@ -27,10 +32,10 @@ export default function Chat() {
     enabled: uuid !== "",
     staleTime: Infinity,
   });
+  let { data } = queryExtension;
 
   useEffect(() => {
     if (queryExtension.isSuccess) {
-      let { data } = queryExtension;
       dispatch(setLinkDetail(data));
       if (data.status !== "close" && data.status !== "ERROR" && userAgent === null) {
         const socket = new JsSIP.WebSocketInterface(data.wss);
@@ -60,6 +65,31 @@ export default function Chat() {
       }
     }
   }, [uuid, dispatch, queryExtension.isSuccess, queryExtension]);
+
+  if (data !== undefined && data.status === "close") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <LinkClose />
+        </div>
+        <Footer />
+      </>
+    );
+  }
+  if (data !== undefined && data.status === "expired") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <URLExpired />
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
