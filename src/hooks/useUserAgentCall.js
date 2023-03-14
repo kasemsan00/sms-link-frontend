@@ -120,7 +120,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
           const stream = await navigator.mediaDevices.getUserMedia(constraints);
           userAgentCall({ stream });
           console.log(constraints);
-          if (constraints.video.facingMode === "user") {
+          if (constraints.video.facingMode.exact === "user") {
             console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
             dispatch(setControlSwitchCamera("facingMode", "user"));
           }
