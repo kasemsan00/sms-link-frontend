@@ -53,8 +53,10 @@ export default function SwitchCamera() {
 
   const handleSwitchCamera = () => {
     if (facingMode === "" || facingMode === "user") {
+      alert("Change to back");
       dispatch(setControlSwitchCamera("environment"));
     } else {
+      alert("Change to front");
       dispatch(setControlSwitchCamera("user"));
     }
   };
