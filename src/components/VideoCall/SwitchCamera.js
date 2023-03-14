@@ -35,23 +35,28 @@ export default function SwitchCamera() {
       ref={switchCameraRef}
     >
       {facingMode === "user" || facingMode === "" ? (
-        <Image
-          src={require("../../assets/videocall/btn_camera_switch_back.png")}
-          width={40}
-          height={40}
-          alt="Camera Back"
-          className="switch-camera-image"
-        />
+        <>
+          <Image
+            src={require("../../assets/videocall/btn_camera_switch_back.png")}
+            width={40}
+            height={40}
+            alt="Camera Back"
+            className="switch-camera-image"
+          />
+          <div className="switch-camera-text">{t("front-camera")}</div>
+        </>
       ) : (
-        <Image
-          src={require("../../assets/videocall/btn_camera_switch_front.png")}
-          width={40}
-          height={40}
-          alt="Camera Front"
-          className="switch-camera-image"
-        />
+        <>
+          <Image
+            src={require("../../assets/videocall/btn_camera_switch_front.png")}
+            width={40}
+            height={40}
+            alt="Camera Front"
+            className="switch-camera-image"
+          />
+          <div className="switch-camera-text">{t("back-camera")}</div>
+        </>
       )}
-      <div className="switch-camera-text">{facingMode === "user" ? t("front-camera") : t("back-camera")}</div>
     </div>
   );
 }
