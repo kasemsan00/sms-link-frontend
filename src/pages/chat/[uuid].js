@@ -64,7 +64,7 @@ export default function Chat() {
         userAgent.start();
       }
     }
-  }, [uuid, dispatch, queryExtension.isSuccess, queryExtension]);
+  }, [data, uuid, dispatch, queryExtension.isSuccess, queryExtension]);
 
   if (data !== undefined && data.status === "close") {
     return (

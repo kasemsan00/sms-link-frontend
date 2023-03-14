@@ -38,7 +38,7 @@ export default function Location() {
         dispatch(setUserActiveStatus("open"));
       }
     }
-  }, [dispatch, queryExtension.isSuccess, queryExtension]);
+  }, [data, dispatch, queryExtension.isSuccess, queryExtension]);
 
   if (data !== undefined && data.status === "close") {
     return (

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setControlSwitchCamera } from "../../redux/slices/controlVideoSlice";
 import useTranslation from "next-translate/useTranslation";
@@ -11,6 +11,10 @@ export default function SwitchCamera() {
   const { facingMode } = useSelector((state) => state.controlVideo);
   const { t } = useTranslation("common");
   const openMessage = useSelector((state) => state.controlVideo.openMessage);
+
+  // useEffect(() => {
+  //   console.log(facingMode);
+  // }, [facingMode]);
 
   useIsomorphicLayoutEffect(() => {
     if (openMessage === true) {
