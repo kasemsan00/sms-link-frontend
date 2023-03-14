@@ -12,9 +12,9 @@ export default function SwitchCamera() {
   const { t } = useTranslation("common");
   const openMessage = useSelector((state) => state.controlVideo.openMessage);
 
-  // useEffect(() => {
-  //   console.log(facingMode);
-  // }, [facingMode]);
+  useEffect(() => {
+    console.log(facingMode);
+  }, [facingMode]);
 
   useIsomorphicLayoutEffect(() => {
     if (openMessage === true) {
