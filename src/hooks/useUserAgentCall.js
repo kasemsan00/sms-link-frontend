@@ -119,16 +119,14 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
         try {
           const stream = await navigator.mediaDevices.getUserMedia(constraints);
           userAgentCall({ stream });
+          if (constraints.video.facingMode === "user") {
+            dispatch(setControlSwitchCamera("facingMode", "user"));
+          }
         } catch (error) {
           console.log("error", error);
           if (error.name === "OverconstrainedError" && error.constraint === "facingMode") {
             constraints.video.facingMode = "user";
             setStartCall(false);
-          }
-          console.log("YYYYYYYYYYYYY");
-          if (constraints.video.facingMode === "user") {
-            console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSS");
-            dispatch(setControlSwitchCamera("facingMode", "user"));
           }
         }
       })();
