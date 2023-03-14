@@ -4,7 +4,7 @@ import { initConstraints } from "./function";
 import ControlVideo from "../VideoCall/ControlVideo";
 import StatusBarVideo from "../Status/StatusBarVideo";
 import VideoContent from "./VideoContent";
-import ChatVideo from "../ChatVideo";
+import ChatVideo from "./ChatVideo";
 import useUserAgentCall from "../../hooks/useUserAgentCall";
 
 let constraints = initConstraints();

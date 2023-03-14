@@ -11,7 +11,8 @@ import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 import URLExpired from "../../components/Static/URLExpired";
 import StatusbarGeo from "../../components/Status/StatusBarGeo";
 import Footer from "../../components/Utilities/Footer";
-import UploadComplete from "../../components/Static/UploadComplete";
+import Header from "../../components/Utilities/Header";
+import LinkClose from "../../components/Static/LinkClose";
 
 const DynamicStartRecord = dynamic(() => import("../../components/Record/StartRecord"));
 const DynamicEndCall = dynamic(() => import("../../components/Static/EndCall"));
@@ -38,24 +39,25 @@ export default function UUID() {
     }
   }, [dispatch, isSuccess, data]);
 
-  if (data !== undefined && data.status === "close") {
+  if (data !== undefined && data.status === "expired") {
     return (
       <>
         <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
         <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
-          <UploadComplete uploadProgress={100} textColor={"black"} />
+          <URLExpired />
         </div>
         <Footer />
       </>
     );
   }
-
-  if (data !== undefined && data.status === "expired") {
+  if (data !== undefined && data.status === "close") {
     return (
       <>
         <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
         <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
-          <URLExpired />
+          <LinkClose />
         </div>
         <Footer />
       </>
