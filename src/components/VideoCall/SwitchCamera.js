@@ -34,12 +34,12 @@ export default function SwitchCamera() {
       className="top-[45px] right-0 w-[60px] h-[60px] fixed flex flex-col justify-center items-center cursor-pointer z-50] rounded-md"
       ref={switchCameraRef}
     >
-      {facingMode === "user" ? (
+      {facingMode !== "environment" ? (
         <Image
           src={require("../../assets/videocall/btn_camera_switch_back.png")}
           width={40}
           height={40}
-          alt="cameraback"
+          alt="Camera Back"
           className="switch-camera-image"
         />
       ) : (
@@ -47,7 +47,7 @@ export default function SwitchCamera() {
           src={require("../../assets/videocall/btn_camera_switch_front.png")}
           width={40}
           height={40}
-          alt="camerafront"
+          alt="Camera Front"
           className="switch-camera-image"
         />
       )}
