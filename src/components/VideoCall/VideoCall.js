@@ -8,6 +8,7 @@ import ChatVideo from "./ChatVideo";
 import useUserAgentCall from "../../hooks/useUserAgentCall";
 
 let constraints = initConstraints();
+console.log(constraints);
 
 export default function VideoCall() {
   const localVideoRef = useRef(null);

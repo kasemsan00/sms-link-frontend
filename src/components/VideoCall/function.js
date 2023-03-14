@@ -79,7 +79,6 @@ export const initConstraints = () => {
           min: "240",
           max: "240",
         },
-        // facingMode: { exact: "user" },
       },
     };
   }
