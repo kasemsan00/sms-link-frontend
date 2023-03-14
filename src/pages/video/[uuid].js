@@ -12,8 +12,8 @@ import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 import JsSIP from "jssip";
 import useTranslation from "next-translate/useTranslation";
 
-const DynamicLinkCall = dynamic(() => import("../../components/LinkCall"));
-const DynamicVideoCall = dynamic(() => import("../../components/VideoCall"));
+const DynamicLinkCall = dynamic(() => import("../../components/VideoCall/StartVideoCall"));
+const DynamicVideoCall = dynamic(() => import("../../components/VideoCall/VideoCall"));
 const DynamicEndCall = dynamic(() => import("../../components/Static/EndCall"));
 
 let userAgent = null;

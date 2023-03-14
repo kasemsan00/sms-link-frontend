@@ -9,7 +9,7 @@ import { setLinkDetail } from "../../redux/slices/linkDetailSlice";
 import useTranslation from "next-translate/useTranslation";
 import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 
-const DynamicLocation = dynamic(() => import("../../components/LocationView"));
+const DynamicLocation = dynamic(() => import("../../components/LocationView/LocationView"));
 
 export default function Location() {
   const router = useRouter();
