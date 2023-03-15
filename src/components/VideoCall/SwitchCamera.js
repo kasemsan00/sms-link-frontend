@@ -40,7 +40,6 @@ export default function SwitchCamera() {
   const switchCameraRef = useRef(null);
   const dispatch = useDispatch();
   const { facingMode } = useSelector((state) => state.controlVideo);
-  const { t } = useTranslation("common");
   const openMessage = useSelector((state) => state.controlVideo.openMessage);
 
   useIsomorphicLayoutEffect(() => {

@@ -3,22 +3,20 @@ import { useRef } from "react";
 import { isMobile } from "react-device-detect";
 import { motion } from "framer-motion";
 
-// สลับกล้องเมื่อใช้งานวิดีโอคอลกับ Asterisk
-
 export default function VideoContent({ localVideoRef, remoteVideoRef }) {
-  const remoteVideoSectionRef = useRef(null);
-  const localVideoSectionRef = useRef(null);
+  const remoteVideoDivRef = useRef(null);
+  const localVideoDivRef = useRef(null);
 
   return (
     <div className="bg-video-call h-[calc(100vh)] ">
-      <div className="fixed mt-[0px] z-50" ref={localVideoSectionRef}>
+      <div className="fixed mt-[0px] z-50 rounded-xl" ref={localVideoDivRef}>
         <video ref={localVideoRef} className="max-h-32 max-w-32 pt-[25px]" alt="local video" muted autoPlay playsInline />
         {isMobile ? <SwitchCamera /> : null}
       </div>
       <motion.div
         className="mt-[15vh] fixed flex flex-1 justify-center items-center w-full h-[55vh] mobileSE:h-[55vh]
         mobile:h-[55vh] sm:h-[65vh] md:h-[65vh] xl:h-[70vh] 2xl:h-[70vh] bg-black"
-        ref={remoteVideoSectionRef}
+        ref={remoteVideoDivRef}
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
