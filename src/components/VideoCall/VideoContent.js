@@ -12,7 +12,7 @@ export default function VideoContent({ localVideoRef, remoteVideoRef }) {
       <div className="fixed mt-[0px] z-50" ref={localVideoDivRef}>
         <video
           ref={localVideoRef}
-          className="max-h-32 max-w-32 pt-[25px] rounded-xl"
+          className="max-h-32 max-w-32 pt-[25px] rounded-md"
           alt="local video"
           muted
           autoPlay
