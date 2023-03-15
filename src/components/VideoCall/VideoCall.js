@@ -8,6 +8,7 @@ import ChatVideo from "./ChatVideo";
 import useUserAgentCall from "../../hooks/useUserAgentCall";
 
 let constraints = initConstraints();
+console.log(constraints);
 
 export default function VideoCall() {
   const localVideoRef = useRef(null);
@@ -32,7 +33,6 @@ export default function VideoCall() {
         track.stop();
       });
       constraints.video.facingMode.exact = controlVideo.facingMode;
-      console.log(constraints);
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then((stream) => {
