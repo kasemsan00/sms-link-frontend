@@ -3,17 +3,19 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setControlSwitchCamera } from "../../redux/slices/controlVideoSlice";
 import useTranslation from "next-translate/useTranslation";
+// import useTranslation from "next-translate/useTranslation";
 
-const FrontCamera = () => {
-  const { t } = useTranslation("common");
-  return <></>;
-};
-const BackCamera = () => {
-  const { t } = useTranslation("common");
-  return <></>;
-};
+// const FrontCamera = () => {
+//   const { t } = useTranslation("common");
+//   return <></>;
+// };
+// const BackCamera = () => {
+//   const { t } = useTranslation("common");
+//   return <></>;
+// };
 
 export default function SwitchCamera() {
+  const { t } = useTranslation("common");
   const switchCameraRef = useRef(null);
   const dispatch = useDispatch();
   const { facingMode } = useSelector((state) => state.controlVideo);
