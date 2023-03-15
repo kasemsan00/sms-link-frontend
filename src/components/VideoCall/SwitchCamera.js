@@ -39,7 +39,10 @@ export default function SwitchCamera() {
       ref={switchCameraRef}
     >
       {/*{facingMode === "user" || facingMode === "" ? <BackCamera /> : <FrontCamera />}*/}
-      <div style={{ display: facingMode === "user" || facingMode === "" ? "none" : "" }}>
+      <div
+        className="flex flex-1 justify-center items-center"
+        style={{ display: facingMode === "user" || facingMode === "" ? "none" : "" }}
+      >
         <Image
           src={require("../../assets/videocall/btn_camera_switch_front.png")}
           width={40}
@@ -49,7 +52,10 @@ export default function SwitchCamera() {
         />
         <div className="mt-[3px] text-[13px] text-white text-center">{t("back-camera")}</div>
       </div>
-      <div style={{ display: facingMode === "user" || facingMode === "" ? "" : "none" }}>
+      <div
+        className="flex flex-1 justify-center items-center"
+        style={{ display: facingMode === "user" || facingMode === "" ? "" : "none" }}
+      >
         <Image
           src={require("../../assets/videocall/btn_camera_switch_back.png")}
           width={40}
