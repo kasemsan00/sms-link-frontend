@@ -32,6 +32,7 @@ export default function VideoCall() {
         track.stop();
       });
       constraints.video.facingMode.exact = controlVideo.facingMode;
+      console.log(constraints);
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then((stream) => {
