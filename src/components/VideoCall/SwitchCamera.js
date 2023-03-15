@@ -47,7 +47,7 @@ export default function SwitchCamera() {
           alt="Camera Front"
           className="switch-camera-image"
         />
-        <div className="switch-camera-text">{t("back-camera")}</div>
+        <div className="mt-[3px] text-[13px] text-white text-center">{t("back-camera")}</div>
       </div>
       <div style={{ display: facingMode === "user" || facingMode === "" ? "" : "none" }}>
         <Image
@@ -57,7 +57,7 @@ export default function SwitchCamera() {
           alt="Camera Back"
           className="switch-camera-image"
         />
-        <div className="switch-camera-text">{t("front-camera")}</div>
+        <div className="mt-[3px] text-[13px] text-white text-center">{t("front-camera")}</div>
       </div>
     </div>
   );
