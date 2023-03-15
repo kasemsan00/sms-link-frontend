@@ -43,26 +43,14 @@ export default function SwitchCamera() {
         className="flex flex-1 flex-row justify-center items-center"
         style={{ display: facingMode === "user" || facingMode === "" ? "none" : "" }}
       >
-        <Image
-          src={require("../../assets/videocall/btn_camera_switch_front.png")}
-          width={40}
-          height={40}
-          alt="Camera Front"
-          className="switch-camera-image"
-        />
+        <Image src={require("../../assets/videocall/btn_camera_switch_front.png")} width={40} height={40} alt="Camera Front" />
         <div className="mt-[3px] text-[13px] text-white text-center">{t("back-camera")}</div>
       </div>
       <div
         className="flex flex-1 flex-row justify-center items-center"
         style={{ display: facingMode === "user" || facingMode === "" ? "" : "none" }}
       >
-        <Image
-          src={require("../../assets/videocall/btn_camera_switch_back.png")}
-          width={40}
-          height={40}
-          alt="Camera Back"
-          className="switch-camera-image"
-        />
+        <Image src={require("../../assets/videocall/btn_camera_switch_back.png")} width={40} height={40} alt="Camera Back" />
         <div className="mt-[3px] text-[13px] text-white text-center">{t("front-camera")}</div>
       </div>
     </div>
