@@ -40,7 +40,7 @@ export default function SwitchCamera() {
     >
       {/*{facingMode === "user" || facingMode === "" ? <BackCamera /> : <FrontCamera />}*/}
       <div
-        className="flex flex-1 justify-center items-center"
+        className="flex flex-1 flex-row justify-center items-center"
         style={{ display: facingMode === "user" || facingMode === "" ? "none" : "" }}
       >
         <Image
@@ -53,7 +53,7 @@ export default function SwitchCamera() {
         <div className="mt-[3px] text-[13px] text-white text-center">{t("back-camera")}</div>
       </div>
       <div
-        className="flex flex-1 justify-center items-center"
+        className="flex flex-1 flex-row justify-center items-center"
         style={{ display: facingMode === "user" || facingMode === "" ? "" : "none" }}
       >
         <Image
