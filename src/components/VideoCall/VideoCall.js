@@ -48,7 +48,9 @@ export default function VideoCall() {
               .catch((e) => console.log(e));
           });
         })
-        .catch((e) => console.error(e));
+        .catch((e) => {
+          console.log("Error", e);
+        });
     }
   }, [controlVideo.facingMode, peerConnection]);
 
