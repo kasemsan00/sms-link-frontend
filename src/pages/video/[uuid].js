@@ -15,6 +15,7 @@ import StatusbarGeo from "../../components/Status/StatusBarGeo";
 import Header from "../../components/Utilities/Header";
 import LinkClose from "../../components/Static/LinkClose";
 import Footer from "../../components/Utilities/Footer";
+import CameraAccessWarning from "../../components/Static/CameraAccessWarning";
 
 const DynamicLinkCall = dynamic(() => import("../../components/VideoCall/StartVideoCall"));
 const DynamicVideoCall = dynamic(() => import("../../components/VideoCall/VideoCall"));
@@ -100,6 +101,18 @@ export default function UUID() {
       </>
     );
   }
+
+  if (webStatus === "CameraNotAllow") {
+    return (
+      <>
+        <StatusbarGeo />
+        <Header />
+        <CameraAccessWarning />
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Head>

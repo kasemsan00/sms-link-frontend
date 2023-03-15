@@ -1,6 +1,14 @@
 const convert = require("xml-js");
 import { isAndroid, isDesktop, isFirefox, isIOS } from "react-device-detect";
 
+// const audio = {
+//   echoCancellation: true,
+//   googEchoCancellation: { exact: true },
+//   noiseSuppression: true,
+//   googNoiseSuppression: { exact: true },
+// };
+const audio = true;
+
 export const stopStreamElement = (videoElem) => {
   const stream = videoElem.srcObject;
   const tracks = stream.getTracks();
@@ -12,16 +20,10 @@ export const stopStreamElement = (videoElem) => {
 export const initConstraints = () => {
   if (isFirefox) {
     return {
-      audio: true,
-      // audio: {
-      // echoCancellation: true,
-      // googEchoCancellation: { exact: true },
-      // noiseSuppression: true,
-      // googNoiseSuppression: { exact: true },
-      // },
+      audio: audio,
       video: {
         width: { max: 352 },
-        height: { max: 240 },
+        height: { max: 352 },
         frameRate: {
           min: 15,
           max: 30,
@@ -32,12 +34,6 @@ export const initConstraints = () => {
   if (isDesktop) {
     return {
       audio: true,
-      // audio: {
-      //   echoCancellation: true,
-      //   googEchoCancellation: { exact: true },
-      //   noiseSuppression: true,
-      //   googNoiseSuppression: { exact: true },
-      // },
       video: {
         frameRate: {
           min: "15 ",
@@ -56,13 +52,7 @@ export const initConstraints = () => {
   }
   if (isAndroid || isIOS) {
     return {
-      audio: true,
-      // audio: {
-      //   echoCancellation: true,
-      //   googEchoCancellation: { exact: true },
-      //   noiseSuppression: true,
-      //   googNoiseSuppression: { exact: true },
-      // },
+      audio: audio,
       video: {
         facingMode: {
           exact: "user",
@@ -85,7 +75,7 @@ export const initConstraints = () => {
   // facingMode: { exact: "user" },
   // default
   return {
-    audio: true,
+    audio: audio,
     video: {
       frameRate: {
         min: "15 ",

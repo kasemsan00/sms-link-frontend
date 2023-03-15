@@ -121,9 +121,18 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
           userAgentCall({ stream });
         } catch (error) {
           console.log("error", error);
-          if (error.name === "OverconstrainedError" && error.constraint === "facingMode") {
-            constraints.video.facingMode = "user";
-            setStartCall(false);
+          if (error + "".includes("NotAllowedError")) {
+            dispatch(setWebStatus("CameraNotAllow"));
+          }
+          if (error.name === "OverconstrainedError") {
+            if (error.message === "Constraints could be not satisfied") {
+              return null;
+            }
+            if (error.constraint === "facingMode") {
+              constraints.video.facingMode = "user";
+              setStartCall(false);
+              return null;
+            }
           }
         }
       })();
