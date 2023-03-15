@@ -11,7 +11,6 @@ export default function StartVideoCall({ uuid, extensionStatus }) {
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
   const handleCall = () => {
-    console.log("handleCall", extensionStatus);
     if (extensionStatus !== "close") {
       dispatch(setUserActiveStatus("makecall"));
       dispatch(setWebStatus("makecall"));

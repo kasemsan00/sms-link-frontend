@@ -6,6 +6,7 @@
   "send-location-success": "ส่งพิกัดเรียบร้อย",
   "url-expired": "ลิ้งค์หมดอายุการใช้งาน",
   "please-allow-location": "กรุณาเปิดใช้งานการเรียกตำแหน่งปัจจุบัน",
+  "please-allow-camera-access" : "กรุณาเปิดใช้งานกล้องวิดีโอของเว็บบราเซอร์",
   "search-map-input": "ค้นหา...",
   "start-record": "เริ่มบันทึกวิดีโอ",
   "start-chat": "เริ่มสนทนา",

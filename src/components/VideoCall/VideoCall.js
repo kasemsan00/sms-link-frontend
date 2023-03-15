@@ -1,5 +1,5 @@
 import { useEffect, useRef, useLayoutEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { initConstraints } from "./function";
 import ControlVideo from "../VideoCall/ControlVideo";
 import StatusBarVideo from "../Status/StatusBarVideo";
@@ -48,7 +48,9 @@ export default function VideoCall() {
               .catch((e) => console.log(e));
           });
         })
-        .catch((e) => console.error(e));
+        .catch((e) => {
+          console.log("Error", e);
+        });
     }
   }, [controlVideo.facingMode, peerConnection]);
 

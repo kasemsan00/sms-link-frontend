@@ -15,6 +15,7 @@ import StatusbarGeo from "../../components/Status/StatusBarGeo";
 import Header from "../../components/Utilities/Header";
 import LinkClose from "../../components/Static/LinkClose";
 import Footer from "../../components/Utilities/Footer";
+import CameraAccessWarning from "../../components/Static/CameraAccessWarning";
 
 const DynamicLinkCall = dynamic(() => import("../../components/VideoCall/StartVideoCall"));
 const DynamicVideoCall = dynamic(() => import("../../components/VideoCall/VideoCall"));
@@ -49,7 +50,7 @@ export default function UUID() {
   useEffect(() => {
     if (queryExtension.isSuccess) {
       dispatch(setLinkDetail(data));
-      if (data.status !== "close" && data.status !== "ERROR" && userAgent === null) {
+      if (data.status !== "close" && data.status !== "ERROR" && data.message !== "No data" && userAgent === null) {
         console.log("register", data);
         const socket = new JsSIP.WebSocketInterface(data.wss);
         const configuration = {
@@ -75,6 +76,19 @@ export default function UUID() {
     }
   }, [dispatch, queryExtension.isSuccess, queryExtension, data]);
 
+  if (data !== undefined && data.message === "No data") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <LinkClose />
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   if (data !== undefined && data.status === "close") {
     return (
       <>
@@ -87,6 +101,18 @@ export default function UUID() {
       </>
     );
   }
+
+  if (webStatus === "CameraNotAllow") {
+    return (
+      <>
+        <StatusbarGeo />
+        <Header />
+        <CameraAccessWarning />
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Head>
