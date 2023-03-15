@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setControlSwitchCamera } from "../../redux/slices/controlVideoSlice";
 import useTranslation from "next-translate/useTranslation";
-import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
 
 const FrontCamera = () => {
   const { t } = useTranslation("common");
@@ -42,14 +41,6 @@ export default function SwitchCamera() {
   const { facingMode } = useSelector((state) => state.controlVideo);
   const openMessage = useSelector((state) => state.controlVideo.openMessage);
 
-  useIsomorphicLayoutEffect(() => {
-    if (openMessage === true) {
-      switchCameraRef.current.classList.add("mr-[200px]");
-    } else if (openMessage === false) {
-      switchCameraRef.current.classList.remove("mr-[200px]");
-    }
-  }, [openMessage]);
-
   const handleSwitchCamera = () => {
     if (facingMode === "" || facingMode === "user") {
       dispatch(setControlSwitchCamera("environment"));
@@ -61,6 +52,9 @@ export default function SwitchCamera() {
   return (
     <div
       onClick={handleSwitchCamera}
+      style={{
+        marginRight: openMessage === true ? "200px" : "0px",
+      }}
       className="top-[45px] right-0 w-[60px] h-[60px] fixed flex flex-col justify-center items-center cursor-pointer z-50] rounded-md"
       ref={switchCameraRef}
     >
