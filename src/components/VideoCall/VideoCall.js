@@ -1,6 +1,6 @@
 import { useEffect, useRef, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
-import { initConstraints } from "./function";
+import { initConstraints } from "./Constraints";
 import ControlVideo from "../VideoCall/ControlVideo";
 import StatusBarVideo from "../Status/StatusBarVideo";
 import VideoContent from "./VideoContent";

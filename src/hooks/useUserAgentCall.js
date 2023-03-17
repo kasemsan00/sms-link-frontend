@@ -7,7 +7,7 @@ import { ConvertToRTTEvent } from "../components/Utilities/ConvertToRTTEvent";
 import { setSession } from "../redux/slices/sipSlice";
 import { setWebStatus } from "../redux/slices/webStatusSlice";
 import { addMessageData } from "../redux/slices/messageDataSlice";
-import { initConstraints } from "../components/VideoCall/function";
+import { initConstraints } from "../components/VideoCall/Ultilities";
 // eslint-disable-next-line
 import adapter from "webrtc-adapter";
 
@@ -54,6 +54,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
       if (session === null) {
         userAgent.on("newMessage", async (event) => {
           const messageBody = event.message._request.body;
+          console.log(messageBody);
           if (messageBody.startsWith("@MCU")) {
             setTimeout(() => {
               localVideoRef.current.srcObject.getTracks().forEach(function (track) {

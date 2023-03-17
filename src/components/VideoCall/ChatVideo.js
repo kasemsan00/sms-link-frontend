@@ -31,16 +31,14 @@ const MessageRealTimeView = (props) => {
         <div className="chat-item-left-mobile">{props.messageRealtime}</div>
       </div>
     );
-  } else {
-    return <div></div>;
   }
+  return <div></div>;
 };
 
 export default function ChatVideo({ realtimeText }) {
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const chatRef = useRef(null);
-
   const messageData = useSelector((state) => state.messageData);
   const controlVideo = useSelector((state) => state.controlVideo);
   const { userAgent } = useSelector((state) => state.sip);
@@ -48,6 +46,16 @@ export default function ChatVideo({ realtimeText }) {
   const messagesEndRef = useRef(null);
 
   const [writeMessage, setWriteMessage] = useState("");
+  const [realtimeWriteMessage, setRealtimeWriteMessage] = useState("");
+
+  useEffect(() => {
+    if (writeMessage !== "") {
+      if (eventRtt === "new") {
+        eventRtt = "reset";
+      }
+    }
+    setRealtimeWriteMessage(`<rtt event='${eventRtt}' seq='${sequenceNumber}'><t>${writeMessage}</t></rtt>`);
+  }, [writeMessage, setRealtimeWriteMessage]);
 
   const handleInputSendMessage = (event) => {
     if (event.key === "Enter" && writeMessage.trim() !== "") {
@@ -62,6 +70,7 @@ export default function ChatVideo({ realtimeText }) {
   const sendMessage = ({ text }) => {
     userAgent.sendMessage(`sip:${agent}@${domain}`, text);
     setWriteMessage("");
+    setRealtimeWriteMessage(writeMessage);
     sequenceNumber = initSequenceNumber();
     eventRtt = "new";
   };
