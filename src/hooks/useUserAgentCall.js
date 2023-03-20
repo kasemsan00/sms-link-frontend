@@ -7,13 +7,13 @@ import { ConvertToRTTEvent } from "../components/Utilities/ConvertToRTTEvent";
 import { setSession } from "../redux/slices/sipSlice";
 import { setWebStatus } from "../redux/slices/webStatusSlice";
 import { addMessageData } from "../redux/slices/messageDataSlice";
-import { initConstraints } from "../components/VideoCall/Ultilities";
+import { initConstraints } from "../components/VideoCall/Constraints";
 // eslint-disable-next-line
 import adapter from "webrtc-adapter";
 
 let constraints = initConstraints();
 let session = null;
-
+let type = "remote";
 export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
   const dispatch = useDispatch();
   const { userAgent } = useSelector((state) => state.sip);
@@ -21,12 +21,20 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
   const [connection, setConnection] = useState(false);
   const [peerConnection, setPeerConnection] = useState(null);
   const [startCall, setStartCall] = useState(false);
-  const [realtimeText, setRealtimeText] = useState("");
+  const [realtimeText, setRealtimeText] = useState({
+    type: "",
+    body: "",
+  });
 
   const userAgentCall = useCallback(
     ({ stream }) => {
       const display = new DisplayBuffer((resp) => {
-        if (resp.drained) setRealtimeText(resp.text);
+        if (resp.drained) {
+          setRealtimeText({
+            type: type,
+            body: resp.text,
+          });
+        }
       });
       const stopStream = () => {
         localVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
@@ -53,8 +61,14 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
       };
       if (session === null) {
         userAgent.on("newMessage", async (event) => {
-          const messageBody = event.message._request.body;
-          console.log(messageBody);
+          const { _request } = event.message;
+          const messageBody = _request.body;
+          if (userAgent.configuration.uri.user === _request.from.uri.user) {
+            type = "local";
+          } else {
+            type = "remote";
+          }
+
           if (messageBody.startsWith("@MCU")) {
             setTimeout(() => {
               localVideoRef.current.srcObject.getTracks().forEach(function (track) {
@@ -71,25 +85,28 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
             return null;
           }
           if (messageBody.startsWith("@switch")) {
-            dispatch(setCallNumber({ agent: event.message._request.body.split("|")[1] }));
+            dispatch(setCallNumber({ agent: _request.body.split("|")[1] }));
             return null;
           }
           if (messageBody !== "" && !messageBody.startsWith("<rtt")) {
             display.commit();
             setRealtimeText("");
-            dispatch(addMessageData({ type: "remote", body: messageBody, date: "" }));
+            dispatch(addMessageData({ type, body: messageBody, date: "" }));
             return null;
           }
-          const rttEvent = await ConvertToRTTEvent(messageBody);
-          display.process(rttEvent);
+          if (type === "remote") {
+            const rttEvent = await ConvertToRTTEvent(messageBody);
+            display.process(rttEvent);
+          }
         });
         userAgent.on("newRTCSession", (ev1) => {
           session = ev1.session;
           dispatch(setSession(session));
           if (ev1.originator === "local") {
             ev1.session.connection.addEventListener("addstream", (event) => {
+              const { stream } = event;
               setConnection(true);
-              remoteVideoRef.current.srcObject = event.stream;
+              remoteVideoRef.current.srcObject = stream;
             });
           }
           ev1.session.on("ended", (e) => {

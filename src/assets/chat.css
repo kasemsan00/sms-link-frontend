@@ -183,20 +183,26 @@ body {
   font: 400 13px "Open Sans", sans-serif;
 }
 .chat-item-left-mobile {
-  float: right;
-  clear: both;
-  color: white;
   position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  color: white;
   font: 400 14px "Open Sans", sans-serif;
 }
+.chat-item-left-mobile > div:nth-child(1){
+  width: 125px;
+}
 .chat-item-right-mobile {
-  float: right;
   color: #39acfc;
-  clear: both;
   position: relative;
-  font-weight: 400;
-  font-size: 14px;
-  font-family: "Open Sans", sans-serif;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  font: 400 14px "Open Sans", sans-serif;
+}
+.realtime {
+  font-weight: bold;
 }
 .chat-row {
   display: inline-block;
@@ -215,7 +221,6 @@ body {
   white-space: pre-wrap;
   width: calc(100% - 15px);
   top: 8px;
-  margin: 2px;
   padding-left: 5px;
 }
 .chat-data-pc {

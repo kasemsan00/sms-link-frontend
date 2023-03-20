@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { sendLocation } from "../../request";
 import { addMessageData } from "../../redux/slices/messageDataSlice";
@@ -11,51 +11,45 @@ const initSequenceNumber = () => Math.floor(Math.random() * 100000 + 1);
 let sequenceNumber = initSequenceNumber();
 let eventRtt = "new";
 
-const ResponsiveChatPush = (props) => {
-  let originClass;
-  if (props.origin === "local") {
-    originClass = "chat-item-right-mobile";
-  } else {
-    originClass = "chat-item-left-mobile";
-  }
+const MessageStatic = ({ type, body }) => {
+  const { t } = useTranslation("common");
   return (
-    <div className="chat-row-mobile">
-      <div className={originClass}>{props.message}</div>{" "}
+    <div className="flex flex-1 relative whitespace-pre-wrap w-[100%-15px] top-[8px] pl-[5px]">
+      <div className={`${type === "remote" ? "text-[#39acfc]" : "text-white"}  inline-block w-[40px] min-w-fit text-[14px]`}>
+        {type === "remote" ? t("chat-agent") + ": " : t("chat-client") + ": "}
+      </div>
+      <div className={`${type === "remote" ? "text-[#39acfc]" : "text-white"} text-white inline-block text-[14px]`}>{body}</div>
     </div>
   );
 };
-const MessageRealTimeView = (props) => {
-  if (props.messageRealtime !== "") {
+const MessageRealTime = ({ type, body }) => {
+  const { t } = useTranslation("common");
+  if (body !== "" && body !== undefined) {
     return (
-      <div className="chat-row-mobile">
-        <div className="chat-item-left-mobile">{props.messageRealtime}</div>
+      <div className="flex flex-1 relative whitespace-pre-wrap w-[100%-15px] top-[8px] pl-[5px]">
+        <div
+          className={`${
+            type === "remote" ? "text-[#39acfc]" : "text-white"
+          }  inline-block w-[40px] min-w-fit font-bold text-[14px]`}
+        >
+          {type === "remote" ? t("chat-agent") + ": " : t("chat-client") + ": "}
+        </div>
+        <div className="text-white inline-block font-bold text-[14px]">{body}</div>
       </div>
     );
   }
-  return <div></div>;
+  return <></>;
 };
 
 export default function ChatVideo({ realtimeText }) {
+  const messagesEndRef = useRef(null);
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
-  const chatRef = useRef(null);
   const messageData = useSelector((state) => state.messageData);
-  const controlVideo = useSelector((state) => state.controlVideo);
+  const { openMessage } = useSelector((state) => state.controlVideo);
   const { userAgent } = useSelector((state) => state.sip);
   const { uuid, agent, domain } = useSelector((state) => state.linkDetail);
-  const messagesEndRef = useRef(null);
-
   const [writeMessage, setWriteMessage] = useState("");
-  const [realtimeWriteMessage, setRealtimeWriteMessage] = useState("");
-
-  useEffect(() => {
-    if (writeMessage !== "") {
-      if (eventRtt === "new") {
-        eventRtt = "reset";
-      }
-    }
-    setRealtimeWriteMessage(`<rtt event='${eventRtt}' seq='${sequenceNumber}'><t>${writeMessage}</t></rtt>`);
-  }, [writeMessage, setRealtimeWriteMessage]);
 
   const handleInputSendMessage = (event) => {
     if (event.key === "Enter" && writeMessage.trim() !== "") {
@@ -70,12 +64,16 @@ export default function ChatVideo({ realtimeText }) {
   const sendMessage = ({ text }) => {
     userAgent.sendMessage(`sip:${agent}@${domain}`, text);
     setWriteMessage("");
-    setRealtimeWriteMessage(writeMessage);
     sequenceNumber = initSequenceNumber();
     eventRtt = "new";
   };
   const handleOnChange = (event) => {
     setWriteMessage(event.target.value);
+    if (writeMessage !== "" && eventRtt === "new") {
+      eventRtt = "reset";
+    }
+    const rtt = `<rtt event='${eventRtt}' seq='${sequenceNumber}'><t>${writeMessage}</t></rtt>`;
+    userAgent.sendMessage(`sip:${agent}@${domain}`, rtt);
   };
   const handleSendLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -91,22 +89,13 @@ export default function ChatVideo({ realtimeText }) {
     dispatch(addMessageData({ type: "local", body: "ส่งพิกัดให้เจ้าหน้าที่เรียบร้อย", date: "" }));
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "instant" });
-  };
+  const scrollToBottom = () => messagesEndRef.current.scrollIntoView({ behavior: "instant" });
   useEffect(scrollToBottom, [messageData]);
-  useEffect(scrollToBottom, [controlVideo.show]);
-  useLayoutEffect(() => {
-    if (controlVideo.openMessage) {
-      chatRef.current.classList.remove("hide");
-    } else {
-      chatRef.current.classList.add("hide");
-    }
-  }, [controlVideo.openMessage]);
+  useEffect(scrollToBottom, [realtimeText.body]);
 
   return (
-    <div className="fixed bottom-0 w-full justify-center items-center" ref={chatRef}>
-      <div className="flex flex-1 justify-center items-center w-full">
+    <div className="fixed bottom-0 w-full justify-center items-center">
+      <div className="flex flex-1 justify-center items-center w-full" style={{ display: !openMessage ? "none" : "" }}>
         <div className="form-control w-full">
           <label className="input-group">
             <span className="bg-sky-800 cursor-pointer" style={{ borderRadius: "0" }} onClick={handleSendLocation}>
@@ -133,13 +122,11 @@ export default function ChatVideo({ realtimeText }) {
       </div>
       <div className="fixed top-[21px] right-0 bg-video-control rounded-xl">
         <div className="table-cell align-bottom">
-          <div className="w-[200px] h-[108px] float-right overflow-y-scroll z-50 rounded-xl break-all">
+          <div className="w-[200px] h-[108px] display:grid float-right overflow-y-scroll z-50 rounded-xl break-all">
             {messageData.map((chatData, index) => {
-              return (
-                <ResponsiveChatPush key={index} sender="" origin={chatData.type} date={chatData.date} message={chatData.body} />
-              );
+              return <MessageStatic key={index} sender="" type={chatData.type} date={chatData.date} body={chatData.body} />;
             })}
-            <MessageRealTimeView messageRealtime={realtimeText} />
+            <MessageRealTime type={realtimeText.type} body={realtimeText.body} />
             <div ref={messagesEndRef}></div>
           </div>
         </div>
