@@ -14,7 +14,7 @@
   background: #ffffff;
   width: 6px;
   height: 12px;
-  border-radius: 0px / 0px;
+  border-radius: 0 / 0;
   transform-origin: 3px 26px;
 }
 .ldio-lavc27z27c div:nth-child(1) {
@@ -82,7 +82,7 @@
   height: 27px;
   display: inline-block;
   overflow: hidden;
-  background: rgba(NaN, NaN, NaN, 0);
+  /*background: rgba(NaN, NaN, NaN, 0);*/
 }
 .ldio-lavc27z27c {
   width: 100%;

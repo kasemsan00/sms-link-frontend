@@ -16,6 +16,7 @@ import Header from "../../components/Utilities/Header";
 import LinkClose from "../../components/Static/LinkClose";
 import Footer from "../../components/Utilities/Footer";
 import CameraAccessWarning from "../../components/Static/CameraAccessWarning";
+import Disconnected from "../../components/Static/Disconnected";
 
 const DynamicLinkCall = dynamic(() => import("../../components/VideoCall/StartVideoCall"));
 const DynamicVideoCall = dynamic(() => import("../../components/VideoCall/VideoCall"));
@@ -71,10 +72,25 @@ export default function UUID() {
           console.log("registrationFailed");
           dispatch(setWebStatus("registrationFailed"));
         });
+        userAgent.on("disconnected", (e) => {
+          console.log("disconnected", e);
+          dispatch(setWebStatus("disconnected"));
+        });
         userAgent.start();
       }
     }
   }, [dispatch, queryExtension.isSuccess, queryExtension, data]);
+
+  if (webStatus === "disconnected") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <Disconnected />
+        <Footer />
+      </>
+    );
+  }
 
   if (data !== undefined && data.message === "No data") {
     return (
