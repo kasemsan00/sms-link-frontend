@@ -5,37 +5,64 @@ import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { useQuery } from "react-query";
 import { updateUserActiveStatus, getExtensionDetail } from "../../request";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLinkDetail } from "../../redux/slices/linkDetailSlice";
+import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
+import URLExpired from "../../components/Static/URLExpired";
+import StatusbarGeo from "../../components/Status/StatusBarGeo";
+import Footer from "../../components/Utilities/Footer";
+import Header from "../../components/Utilities/Header";
+import LinkClose from "../../components/Static/LinkClose";
 
 const DynamicStartRecord = dynamic(() => import("../../components/Record/StartRecord"));
-const DynamicEndCall = dynamic(() => import("../../components/LinkCall/EndCall"));
+const DynamicEndCall = dynamic(() => import("../../components/Static/EndCall"));
 
 export default function UUID() {
   const router = useRouter();
   const uuid = router.query.uuid || "";
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
+  const userActiveStatus = useSelector((state) => state.userActiveStatus);
   const { isSuccess, data } = useQuery([uuid], () => getExtensionDetail(uuid), {
     enabled: uuid !== "",
     staleTime: Infinity,
   });
+  useQuery([uuid, userActiveStatus], () => updateUserActiveStatus({ uuid, status: userActiveStatus }), {
+    enabled: uuid !== "" && userActiveStatus !== "",
+    staleTime: Infinity,
+  });
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && data.status !== "expired" && data.status !== "close") {
       dispatch(setLinkDetail(data));
+      dispatch(setUserActiveStatus("open"));
     }
   }, [dispatch, isSuccess, data]);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    updateUserActiveStatus({
-      uuid: uuid,
-      status: "open",
-      signal: controller.signal,
-    }).then((r) => r);
-    return () => controller.abort();
-  }, [uuid]);
+  if (data !== undefined && data.status === "expired") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <URLExpired />
+        </div>
+        <Footer />
+      </>
+    );
+  }
+  if (data !== undefined && data.status === "close") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <LinkClose />
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
@@ -46,12 +73,12 @@ export default function UUID() {
         <link rel="manifest" href="/manifest.json" />
       </Head>
       <main>
-        {isSuccess && data.status !== "close" ? (
+        {isSuccess && data !== undefined && data.status !== "close" ? (
           <Suspense fallback={`Loading...`}>
             <DynamicStartRecord uuid={uuid} />
           </Suspense>
         ) : null}
-        {isSuccess && data.status === "close" ? (
+        {isSuccess && data !== undefined && data.status === "close" ? (
           <>
             <Suspense fallback={`Loading...`}>
               <DynamicEndCall />

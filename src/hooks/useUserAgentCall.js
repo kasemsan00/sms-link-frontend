@@ -6,15 +6,14 @@ import { DisplayBuffer } from "../components/ChatPage/realtime-text";
 import { ConvertToRTTEvent } from "../components/Utilities/ConvertToRTTEvent";
 import { setSession } from "../redux/slices/sipSlice";
 import { setWebStatus } from "../redux/slices/webStatusSlice";
-import { setUserActiveStatus } from "../redux/slices/userActiveStatusSlice";
 import { addMessageData } from "../redux/slices/messageDataSlice";
-import { initConstraints } from "../components/VideoCall/function";
+import { initConstraints } from "../components/VideoCall/Constraints";
 // eslint-disable-next-line
 import adapter from "webrtc-adapter";
 
 let constraints = initConstraints();
 let session = null;
-
+let type = "remote";
 export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
   const dispatch = useDispatch();
   const { userAgent } = useSelector((state) => state.sip);
@@ -22,12 +21,20 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
   const [connection, setConnection] = useState(false);
   const [peerConnection, setPeerConnection] = useState(null);
   const [startCall, setStartCall] = useState(false);
-  const [realtimeText, setRealtimeText] = useState("");
+  const [realtimeText, setRealtimeText] = useState({
+    type: "",
+    body: "",
+  });
 
   const userAgentCall = useCallback(
     ({ stream }) => {
       const display = new DisplayBuffer((resp) => {
-        if (resp.drained) setRealtimeText(resp.text);
+        if (resp.drained) {
+          setRealtimeText({
+            type: type,
+            body: resp.text,
+          });
+        }
       });
       const stopStream = () => {
         localVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
@@ -54,7 +61,14 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
       };
       if (session === null) {
         userAgent.on("newMessage", async (event) => {
-          const messageBody = event.message._request.body;
+          const { _request } = event.message;
+          const messageBody = _request.body;
+          if (userAgent.configuration.uri.user === _request.from.uri.user) {
+            type = "local";
+          } else {
+            type = "remote";
+          }
+
           if (messageBody.startsWith("@MCU")) {
             setTimeout(() => {
               localVideoRef.current.srcObject.getTracks().forEach(function (track) {
@@ -71,25 +85,28 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
             return null;
           }
           if (messageBody.startsWith("@switch")) {
-            dispatch(setCallNumber({ agent: event.message._request.body.split("|")[1] }));
+            dispatch(setCallNumber({ agent: _request.body.split("|")[1] }));
             return null;
           }
           if (messageBody !== "" && !messageBody.startsWith("<rtt")) {
             display.commit();
             setRealtimeText("");
-            dispatch(addMessageData({ type: "remote", body: messageBody, date: "" }));
+            dispatch(addMessageData({ type, body: messageBody, date: "" }));
             return null;
           }
-          const rttEvent = await ConvertToRTTEvent(messageBody);
-          display.process(rttEvent);
+          if (type === "remote") {
+            const rttEvent = await ConvertToRTTEvent(messageBody);
+            display.process(rttEvent);
+          }
         });
         userAgent.on("newRTCSession", (ev1) => {
           session = ev1.session;
           dispatch(setSession(session));
           if (ev1.originator === "local") {
             ev1.session.connection.addEventListener("addstream", (event) => {
+              const { stream } = event;
               setConnection(true);
-              remoteVideoRef.current.srcObject = event.stream;
+              remoteVideoRef.current.srcObject = stream;
             });
           }
           ev1.session.on("ended", (e) => {
@@ -122,9 +139,18 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
           userAgentCall({ stream });
         } catch (error) {
           console.log("error", error);
-          if (error.name === "OverconstrainedError" && error.constraint === "facingMode") {
-            constraints.video.facingMode = "user";
-            setStartCall(false);
+          if (error + "".includes("NotAllowedError")) {
+            dispatch(setWebStatus("CameraNotAllow"));
+          }
+          if (error.name === "OverconstrainedError") {
+            if (error.message === "Constraints could be not satisfied") {
+              return null;
+            }
+            if (error.constraint === "facingMode") {
+              constraints.video.facingMode = "user";
+              setStartCall(false);
+              return null;
+            }
           }
         }
       })();
@@ -132,7 +158,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
     return () => {
       setStartCall(false);
     };
-  }, [startCall, userAgent, userAgentCall]);
+  }, [dispatch, startCall, userAgent, userAgentCall]);
 
   return [realtimeText, connection, peerConnection, setStartCall];
 }

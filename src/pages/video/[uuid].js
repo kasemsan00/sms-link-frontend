@@ -11,10 +11,16 @@ import { setWebStatus } from "../../redux/slices/webStatusSlice";
 import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 import JsSIP from "jssip";
 import useTranslation from "next-translate/useTranslation";
+import StatusbarGeo from "../../components/Status/StatusBarGeo";
+import Header from "../../components/Utilities/Header";
+import LinkClose from "../../components/Static/LinkClose";
+import Footer from "../../components/Utilities/Footer";
+import CameraAccessWarning from "../../components/Static/CameraAccessWarning";
+import Disconnected from "../../components/Static/Disconnected";
 
-const DynamicLinkCall = dynamic(() => import("../../components/LinkCall"));
-const DynamicVideoCall = dynamic(() => import("../../components/VideoCall"));
-const DynamicEndCall = dynamic(() => import("../../components/LinkCall/EndCall"));
+const DynamicLinkCall = dynamic(() => import("../../components/VideoCall/StartVideoCall"));
+const DynamicVideoCall = dynamic(() => import("../../components/VideoCall/VideoCall"));
+const DynamicEndCall = dynamic(() => import("../../components/Static/EndCall"));
 
 let userAgent = null;
 
@@ -29,9 +35,10 @@ export default function UUID() {
     enabled: uuid !== "",
     staleTime: Infinity,
   });
+  let { data } = queryExtension;
 
   useQuery([uuid, userActiveStatus], () => updateUserActiveStatus({ uuid, status: userActiveStatus }), {
-    enabled: uuid !== "" && userActiveStatus !== "" && userActiveStatus !== "close",
+    enabled: uuid !== "" && userActiveStatus !== "",
     staleTime: Infinity,
   });
 
@@ -43,9 +50,8 @@ export default function UUID() {
 
   useEffect(() => {
     if (queryExtension.isSuccess) {
-      let { data } = queryExtension;
       dispatch(setLinkDetail(data));
-      if (data.status !== "close" && data.status !== "ERROR" && userAgent === null) {
+      if (data.status !== "close" && data.status !== "ERROR" && data.message !== "No data" && userAgent === null) {
         console.log("register", data);
         const socket = new JsSIP.WebSocketInterface(data.wss);
         const configuration = {
@@ -66,10 +72,62 @@ export default function UUID() {
           console.log("registrationFailed");
           dispatch(setWebStatus("registrationFailed"));
         });
+        userAgent.on("disconnected", (e) => {
+          console.log("disconnected", e);
+          dispatch(setWebStatus("disconnected"));
+        });
         userAgent.start();
       }
     }
-  }, [dispatch, queryExtension.isSuccess, queryExtension]);
+  }, [dispatch, queryExtension.isSuccess, queryExtension, data]);
+
+  if (webStatus === "disconnected") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <Disconnected />
+        <Footer />
+      </>
+    );
+  }
+
+  if (data !== undefined && data.message === "No data") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <LinkClose />
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (data !== undefined && data.status === "close") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <LinkClose />
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (webStatus === "CameraNotAllow") {
+    return (
+      <>
+        <StatusbarGeo />
+        <Header />
+        <CameraAccessWarning />
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>

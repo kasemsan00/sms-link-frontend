@@ -7,11 +7,10 @@ import Header from "../Utilities/Header";
 import useTranslation from "next-translate/useTranslation";
 import StartCall from "../Utilities/StartCall";
 
-export default function LinkCall({ uuid, extensionStatus }) {
+export default function StartVideoCall({ uuid, extensionStatus }) {
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
   const handleCall = () => {
-    console.log("handleCall", extensionStatus);
     if (extensionStatus !== "close") {
       dispatch(setUserActiveStatus("makecall"));
       dispatch(setWebStatus("makecall"));

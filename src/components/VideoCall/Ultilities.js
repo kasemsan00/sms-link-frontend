@@ -1,5 +1,13 @@
 const convert = require("xml-js");
-import { isFirefox, isDesktop, isAndroid, isIOS } from "react-device-detect";
+import { isAndroid, isDesktop, isFirefox, isIOS } from "react-device-detect";
+
+// const audio = {
+//   echoCancellation: true,
+//   googEchoCancellation: { exact: true },
+//   noiseSuppression: true,
+//   googNoiseSuppression: { exact: true },
+// };
+const audio = true;
 
 export const stopStreamElement = (videoElem) => {
   const stream = videoElem.srcObject;
@@ -8,97 +16,6 @@ export const stopStreamElement = (videoElem) => {
     track.stop();
   });
   videoElem.srcObject = null;
-};
-export const initConstraints = () => {
-  if (isFirefox) {
-    return {
-      audio: {
-        echoCancellation: true,
-        googEchoCancellation: { exact: true },
-        noiseSuppression: true,
-        googNoiseSuppression: { exact: true },
-      },
-      video: {
-        width: { max: 352 },
-        height: { max: 240 },
-        frameRate: {
-          min: 15,
-          max: 30,
-        },
-      },
-    };
-  }
-  if (isDesktop) {
-    return {
-      audio: {
-        echoCancellation: true,
-        googEchoCancellation: { exact: true },
-        noiseSuppression: true,
-        googNoiseSuppression: { exact: true },
-      },
-      video: {
-        frameRate: {
-          min: "15 ",
-          max: "15",
-        },
-        width: {
-          min: "352 ",
-          max: "352 ",
-        },
-        height: {
-          min: "240",
-          max: "240",
-        },
-      },
-    };
-  }
-  if (isAndroid || isIOS) {
-    return {
-      audio: {
-        echoCancellation: true,
-        googEchoCancellation: { exact: true },
-        noiseSuppression: true,
-        googNoiseSuppression: { exact: true },
-      },
-      video: {
-        facingMode: {
-          exact: "user",
-        },
-        frameRate: {
-          min: "15 ",
-          max: "15",
-        },
-        width: {
-          min: "352 ",
-          max: "352 ",
-        },
-        height: {
-          min: "240",
-          max: "240",
-        },
-        // facingMode: { exact: "user" },
-      },
-    };
-  }
-  // facingMode: { exact: "user" },
-  // default
-  return {
-    audio: true,
-    video: {
-      frameRate: {
-        min: "15 ",
-        max: "15",
-      },
-      width: {
-        min: "352 ",
-        max: "352 ",
-      },
-      height: {
-        min: "240",
-        max: "240",
-      },
-    },
-  };
 };
 
 export const adjustScreen = (mediaMatch, controlVideoMessage) => {
@@ -157,8 +74,7 @@ export const previewText = (msgRealtime, message) => {
     } else {
       if (rs.rtt.t._attributes) {
         console.log("else1.1.1");
-        var add = addCharater(msgRealtime, rs.rtt.t._text, rs.rtt.t._attributes.p);
-        return add;
+        return addCharacter(msgRealtime, rs.rtt.t._text, rs.rtt.t._attributes.p);
       } else {
         console.log("else1.2.2");
         if (rs.rtt.t._text === undefined) {
@@ -183,9 +99,8 @@ export const previewText = (msgRealtime, message) => {
     return tmp;
   }
 };
-const addCharater = (str, stradd, char_pos) => {
-  var output = [str.slice(0, char_pos), stradd, str.slice(char_pos)].join("");
-  return output;
+const addCharacter = (str, stradd, char_pos) => {
+  return [str.slice(0, char_pos), stradd, str.slice(char_pos)].join("");
 };
 const removeCharacter = (str, char_pos) => {
   var part1 = str.substring(0, char_pos);

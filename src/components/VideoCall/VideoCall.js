@@ -1,10 +1,10 @@
-import { useEffect, useRef, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { initConstraints } from "./function";
+import { initConstraints } from "./Constraints";
 import ControlVideo from "../VideoCall/ControlVideo";
 import StatusBarVideo from "../Status/StatusBarVideo";
 import VideoContent from "./VideoContent";
-import ChatVideo from "../ChatVideo";
+import ChatVideo from "./ChatVideo";
 import useUserAgentCall from "../../hooks/useUserAgentCall";
 
 let constraints = initConstraints();
@@ -13,7 +13,7 @@ export default function VideoCall() {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
 
-  const controlVideo = useSelector((state) => state.controlVideo);
+  const { openAudio, facingMode } = useSelector((state) => state.controlVideo);
   const [realtimeText, connection, peerConnection, setStartCall] = useUserAgentCall({ localVideoRef, remoteVideoRef });
 
   useEffect(() => {
@@ -22,16 +22,16 @@ export default function VideoCall() {
 
   useLayoutEffect(() => {
     if (remoteVideoRef !== null) {
-      remoteVideoRef.current.muted = controlVideo.openAudio;
+      remoteVideoRef.current.muted = openAudio;
     }
-  }, [controlVideo.openAudio, remoteVideoRef]);
+  }, [openAudio, remoteVideoRef]);
 
   useEffect(() => {
-    if (controlVideo.facingMode !== "") {
+    if (facingMode !== "") {
       localVideoRef.current.srcObject.getTracks().forEach(function (track) {
         track.stop();
       });
-      constraints.video.facingMode.exact = controlVideo.facingMode;
+      constraints.video.facingMode.exact = facingMode;
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then((stream) => {
@@ -48,9 +48,11 @@ export default function VideoCall() {
               .catch((e) => console.log(e));
           });
         })
-        .catch((e) => console.error(e));
+        .catch((e) => {
+          console.log("Error", e);
+        });
     }
-  }, [controlVideo.facingMode, peerConnection]);
+  }, [facingMode, peerConnection]);
 
   return (
     <>

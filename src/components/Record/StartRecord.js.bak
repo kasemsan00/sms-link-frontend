@@ -13,11 +13,11 @@ import { isIOS, isDesktop, isSafari } from "react-device-detect";
 import ControlPanel from "./ControlPanel";
 import SelectCamera from "./SelectCamera";
 import useTranslation from "next-translate/useTranslation";
-// import { initRTC } from "./ReplaceableMediaStream";
+import { initRTC } from "./ReplaceableMediaStream";
 import { updateUserActiveStatus, updateTerminateCall } from "../../request";
 import StartCall from "../Utilities/StartCall";
 
-// let temporaryStream = null;
+let temporaryStream = null;
 let mediaRecorder = null,
   chunks = [];
 let mediaConstraints = {
@@ -68,29 +68,29 @@ export default function Record({ uuid }) {
       });
   });
 
-  // useEffect(() => {
-  //   if (!isSafari && !isIOS && temporaryStream === null) {
-  //     temporaryStream = new MediaStream();
-  //     MediaStream.prototype.constructor = initRTC();
-  //     MediaStream.prototype.replaceVideoTrack = function (track) {
-  //       this.videoSender
-  //         .replaceTrack(track)
-  //         .then((r) => console.log(r))
-  //         .catch((e) => console.log(e));
-  //     };
-  //     MediaStream.prototype.replaceAudioTrack = function (track) {
-  //       this.audioSender
-  //         .replaceTrack(track)
-  //         .then((r) => console.log(r))
-  //         .catch((e) => console.log(e));
-  //     };
-  //   }
-  // }, [localVideoRef]);
+  useEffect(() => {
+    if (!isSafari && !isIOS && temporaryStream === null) {
+      temporaryStream = new MediaStream();
+      MediaStream.prototype.constructor = initRTC();
+      MediaStream.prototype.replaceVideoTrack = function (track) {
+        this.videoSender
+          .replaceTrack(track)
+          .then((r) => console.log(r))
+          .catch((e) => console.log(e));
+      };
+      MediaStream.prototype.replaceAudioTrack = function (track) {
+        this.audioSender
+          .replaceTrack(track)
+          .then((r) => console.log(r))
+          .catch((e) => console.log(e));
+      };
+    }
+  }, [localVideoRef]);
 
   const initCameraStream = ({ facingMode }) => {
-    // if (!isSafari && !isIOS) {
-    //   localVideoRef.current.srcObject = temporaryStream.remoteStream;
-    // }
+    if (!isSafari && !isIOS) {
+      localVideoRef.current.srcObject = temporaryStream.remoteStream;
+    }
     if (isDesktop) {
       mediaConstraints.video.facingMode = {};
     } else {
@@ -100,13 +100,13 @@ export default function Record({ uuid }) {
       .getUserMedia(mediaConstraints)
       .then((stream) => {
         backgroundRef.current.classList.add("bg-gray-800");
-        // if (!isSafari && !isIOS) {
-        //   window.stream = stream;
-        //   localVideoRef.current.srcObject.replaceVideoTrack(stream.getVideoTracks()[0]);
-        //   localVideoRef.current.srcObject.replaceAudioTrack(stream.getAudioTracks()[0]);
-        // } else {
-        localVideoRef.current.srcObject = stream;
-        // }
+        if (!isSafari && !isIOS) {
+          window.stream = stream;
+          localVideoRef.current.srcObject.replaceVideoTrack(stream.getVideoTracks()[0]);
+          localVideoRef.current.srcObject.replaceAudioTrack(stream.getAudioTracks()[0]);
+        } else {
+          localVideoRef.current.srcObject = stream;
+        }
         if (!isStartRecord) setIsStartRecord(true);
         setSwitchEnable("done");
         localVideoRef.current.classList.remove("hidden");
@@ -144,17 +144,11 @@ export default function Record({ uuid }) {
   const handleStartCamera = () => {
     startRecordRef.current.classList.add("hidden");
     startCameraRef.current.classList.add("hidden");
-    // if (!isSafari && !isIOS) {
-    //   initCameraStream({ facingMode: "user" });
-    //   setIsStartRecord(true);
-    // } else {
-    // selectCameraRef.current.classList.add("modal-open");
-    // }
-
-    if (!isDesktop) {
-      selectCameraRef.current.classList.add("modal-open");
-    } else {
+    if (!isSafari && !isIOS) {
       initCameraStream({ facingMode: "user" });
+      setIsStartRecord(true);
+    } else {
+      selectCameraRef.current.classList.add("modal-open");
     }
   };
   const handleStopRecord = () => {
@@ -178,11 +172,11 @@ export default function Record({ uuid }) {
   };
 
   const recorder = () => {
-    // if (!isIOS && !isSafari) {
-    // mediaRecord({ stream: localVideoRef.current.captureStream() });
-    // } else {
-    mediaRecord({ stream: localVideoRef.current.srcObject });
-    // }
+    if (!isIOS && !isSafari) {
+      mediaRecord({ stream: localVideoRef.current.captureStream() });
+    } else {
+      mediaRecord({ stream: localVideoRef.current.srcObject });
+    }
     updateUserActiveStatus({
       uuid: uuid,
       status: "record",
@@ -225,9 +219,7 @@ export default function Record({ uuid }) {
     const blob = new Blob(chunks, {
       type: getMimeType(),
     });
-    const fileExt = getMimeType() === "video/webm" ? "webm" : "mp4";
-    const file = new File([blob], "file_record." + fileExt);
-    mutationUploadFile.mutate({ file: file }),
+    mutationUploadFile.mutate({ file: blob }),
       {
         onSuccess: () => {},
       };

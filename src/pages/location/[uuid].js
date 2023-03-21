@@ -7,8 +7,13 @@ import { useQuery } from "react-query";
 import { getExtensionDetail, updateUserActiveStatus } from "../../request";
 import { setLinkDetail } from "../../redux/slices/linkDetailSlice";
 import useTranslation from "next-translate/useTranslation";
+import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
+import StatusbarGeo from "../../components/Status/StatusBarGeo";
+import Header from "../../components/Utilities/Header";
+import LinkClose from "../../components/Static/LinkClose";
+import Footer from "../../components/Utilities/Footer";
 
-const DynamicLocation = dynamic(() => import("../../components/LocationView"));
+const DynamicLocation = dynamic(() => import("../../components/LocationView/LocationView"));
 
 export default function Location() {
   const router = useRouter();
@@ -20,18 +25,33 @@ export default function Location() {
     enabled: uuid !== "",
     staleTime: Infinity,
   });
-
+  let { data } = queryExtension;
   useQuery([uuid, userActiveStatus], () => updateUserActiveStatus({ uuid, status: userActiveStatus }), {
-    enabled: uuid !== "" && userActiveStatus !== "" && userActiveStatus !== "close",
+    enabled: uuid !== "" && userActiveStatus !== "",
     staleTime: Infinity,
   });
 
   useEffect(() => {
     if (queryExtension.isSuccess) {
-      let { data } = queryExtension;
       dispatch(setLinkDetail(data));
+      if (data.status !== "expired") {
+        dispatch(setUserActiveStatus("open"));
+      }
     }
-  }, [dispatch, queryExtension.isSuccess, queryExtension]);
+  }, [data, dispatch, queryExtension.isSuccess, queryExtension]);
+
+  if (data !== undefined && data.status === "close") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <LinkClose />
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
