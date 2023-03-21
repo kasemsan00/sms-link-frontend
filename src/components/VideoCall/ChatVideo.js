@@ -36,7 +36,7 @@ const MessageRealTime = ({ type, body }) => {
         >
           {type === "remote" ? t("chat-agent") + ": " : t("chat-client") + ": "}
         </div>
-        <div className="text-white inline-block font-bold text-[14px] break-normal">{body}</div>
+        <div className="text-white inline-block font-bold text-[14px] break-words">{body}</div>
       </div>
     );
   }
