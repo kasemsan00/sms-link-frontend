@@ -18,7 +18,9 @@ const MessageStatic = ({ type, body }) => {
       <div className={`${type === "remote" ? "text-[#39acfc]" : "text-white"}  inline-block w-[40px] min-w-fit text-[14px]`}>
         {type === "remote" ? t("chat-agent") + ": " : t("chat-client") + ": "}
       </div>
-      <div className={`${type === "remote" ? "text-[#39acfc]" : "text-white"} text-white inline-block text-[14px]`}>{body}</div>
+      <div className={`${type === "remote" ? "text-[#39acfc]" : "text-white"} text-white inline-block text-[14px] break-normal`}>
+        {body}
+      </div>
     </div>
   );
 };
@@ -34,7 +36,7 @@ const MessageRealTime = ({ type, body }) => {
         >
           {type === "remote" ? t("chat-agent") + ": " : t("chat-client") + ": "}
         </div>
-        <div className="text-white inline-block font-bold text-[14px]">{body}</div>
+        <div className="text-white inline-block font-bold text-[14px] break-normal">{body}</div>
       </div>
     );
   }
@@ -75,18 +77,30 @@ export default function ChatVideo({ realtimeText }) {
     const rtt = `<rtt event='${eventRtt}' seq='${sequenceNumber}'><t>${writeMessage}</t></rtt>`;
     userAgent.sendMessage(`sip:${agent}@${domain}`, rtt);
   };
+
   const handleSendLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      sendLocation({
-        os: browser.os,
-        accuracy: position.coords.accuracy,
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        uuid: uuid,
-      }).then((r) => console.log(r));
-      userAgent.sendMessage(`sip:${agent}@${domain}`, "ส่งพิกัดให้เจ้าหน้าที่เรียบร้อย");
-    });
-    dispatch(addMessageData({ type: "local", body: "ส่งพิกัดให้เจ้าหน้าที่เรียบร้อย", date: "" }));
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        sendLocation({
+          os: browser.os,
+          accuracy: position.coords.accuracy,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          uuid: uuid,
+        }).then((r) => {
+          const latLngText = t("coordinates") + ": " + position.coords.latitude + "," + position.coords.longitude;
+          userAgent.sendMessage(`sip:${agent}@${domain}`, latLngText);
+          userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-success"));
+        });
+      },
+      (err) => {
+        console.log(err);
+        if (err.message === "User denied Geolocation") {
+          userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-error"));
+          alert(t("alert-allow-location-service"));
+        }
+      },
+    );
   };
 
   const scrollToBottom = () => messagesEndRef.current.scrollIntoView({ behavior: "instant" });
