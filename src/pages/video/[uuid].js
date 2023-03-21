@@ -81,16 +81,16 @@ export default function UUID() {
     }
   }, [dispatch, queryExtension.isSuccess, queryExtension, data]);
 
-  if (webStatus === "disconnected") {
-    return (
-      <>
-        <StatusbarGeo show={true} uuid={uuid} />
-        <Header />
-        <Disconnected />
-        <Footer />
-      </>
-    );
-  }
+  // if (webStatus === "disconnected") {
+  //   return (
+  //     <>
+  //       <StatusbarGeo show={true} uuid={uuid} />
+  //       <Header />
+  //       <Disconnected />
+  //       <Footer />
+  //     </>
+  //   );
+  // }
 
   if (data !== undefined && data.message === "No data") {
     return (
@@ -105,7 +105,7 @@ export default function UUID() {
     );
   }
 
-  if (data !== undefined && data.status === "close") {
+  if (data !== undefined && (data.status === "close" || data.status === "disconnected")) {
     return (
       <>
         <StatusbarGeo show={true} uuid={uuid} />

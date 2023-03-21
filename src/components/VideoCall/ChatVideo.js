@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { sendLocation } from "../../request";
-import { addMessageData } from "../../redux/slices/messageDataSlice";
+// import { addMessageData } from "../../redux/slices/messageDataSlice";
 import useTranslation from "next-translate/useTranslation";
 const { detect } = require("detect-browser");
 const browser = detect();
@@ -31,7 +31,7 @@ const MessageRealTime = ({ type, body }) => {
       <div className="flex flex-1 relative whitespace-pre-wrap w-[100%-15px] top-[8px] pl-[5px]">
         <div
           className={`${
-            type === "remote" ? "text-[#39acfc]" : "text-white"
+            type === "remote" ? "text-[#39acfc]" : "text-orange-400"
           }  inline-block w-[40px] min-w-fit font-bold text-[14px]`}
         >
           {type === "remote" ? t("chat-agent") + ": " : t("chat-client") + ": "}
@@ -46,7 +46,6 @@ const MessageRealTime = ({ type, body }) => {
 export default function ChatVideo({ realtimeText }) {
   const messagesEndRef = useRef(null);
   const { t } = useTranslation("common");
-  const dispatch = useDispatch();
   const messageData = useSelector((state) => state.messageData);
   const { openMessage } = useSelector((state) => state.controlVideo);
   const { userAgent } = useSelector((state) => state.sip);
@@ -88,7 +87,7 @@ export default function ChatVideo({ realtimeText }) {
           longitude: position.coords.longitude,
           uuid: uuid,
         }).then((r) => {
-          const latLngText = t("coordinates") + ": " + position.coords.latitude + "," + position.coords.longitude;
+          const latLngText = t("coordinates") + " " + position.coords.latitude + ", " + position.coords.longitude;
           userAgent.sendMessage(`sip:${agent}@${domain}`, latLngText);
           userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-success"));
         });
