@@ -5,10 +5,9 @@ export const initConstraints = () => {
     return {
       audio: true,
       video: {
-        width: { max: 352 },
-        height: { max: 352 },
+        width: { ideal: 400 },
+        height: { ideal: 400 },
         frameRate: {
-          min: 15,
           max: 30,
         },
       },
