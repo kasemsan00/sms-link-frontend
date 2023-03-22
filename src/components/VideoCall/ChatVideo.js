@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { sendLocation } from "../../request";
-import { addMessageData } from "../../redux/slices/messageDataSlice";
 import useTranslation from "next-translate/useTranslation";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 const { detect } = require("detect-browser");
 const browser = detect();
 
@@ -13,9 +13,34 @@ let eventRtt = "new";
 
 const MessageStatic = ({ type, body }) => {
   const { t } = useTranslation("common");
+  const handleOpenMap = (url) => {
+    url = url.replace("@url:https://d1422-icrm.ddc.moph.go.th/map/", "");
+    const latLng = url.split("/");
+    const googleMapUrl = "https://www.google.co.th/maps/@" + latLng[0] + "," + latLng[1];
+    window.open(googleMapUrl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=600,height=600");
+  };
+  if (body.startsWith("@url")) {
+    return (
+      <div className="flex flex-1 relative whitespace-pre-wrap w-[100%-15px] top-[8px] pl-[5px]">
+        <div className="inline-block w-[40px] min-w-fit text-[14px]"></div>
+        <div
+          className={`${type === "remote" ? "text-[#39acfc]" : "text-white"} text-white inline-block text-[14px] break-normal`}
+        >
+          <Image
+            className="cursor-pointer mb-[2px]"
+            onClick={() => handleOpenMap(body)}
+            src={require("../../assets/img/map.png")}
+            alt="map"
+            width={40}
+            height={40}
+          ></Image>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-1 relative whitespace-pre-wrap w-[100%-15px] top-[8px] pl-[5px]">
-      <div className={`${type === "remote" ? "text-[#39acfc]" : "text-white"}  inline-block w-[40px] min-w-fit text-[14px]`}>
+      <div className={`${type === "remote" ? "text-[#39acfc]" : "text-orange-400"}  inline-block w-[40px] min-w-fit text-[14px]`}>
         {type === "remote" ? t("chat-agent") + ": " : t("chat-client") + ": "}
       </div>
       <div className={`${type === "remote" ? "text-[#39acfc]" : "text-white"} text-white inline-block text-[14px] break-normal`}>
@@ -31,12 +56,12 @@ const MessageRealTime = ({ type, body }) => {
       <div className="flex flex-1 relative whitespace-pre-wrap w-[100%-15px] top-[8px] pl-[5px]">
         <div
           className={`${
-            type === "remote" ? "text-[#39acfc]" : "text-white"
+            type === "remote" ? "text-[#39acfc]" : "text-orange-400"
           }  inline-block w-[40px] min-w-fit font-bold text-[14px]`}
         >
           {type === "remote" ? t("chat-agent") + ": " : t("chat-client") + ": "}
         </div>
-        <div className="text-white inline-block font-bold text-[14px] break-normal">{body}</div>
+        <div className="text-white inline-block font-bold text-[14px] break-words">{body}</div>
       </div>
     );
   }
@@ -46,13 +71,12 @@ const MessageRealTime = ({ type, body }) => {
 export default function ChatVideo({ realtimeText }) {
   const messagesEndRef = useRef(null);
   const { t } = useTranslation("common");
-  const dispatch = useDispatch();
   const messageData = useSelector((state) => state.messageData);
   const { openMessage } = useSelector((state) => state.controlVideo);
   const { userAgent } = useSelector((state) => state.sip);
   const { uuid, agent, domain } = useSelector((state) => state.linkDetail);
+  const [isGetLocationLoading, setIsGetLocationLoading] = useState(false);
   const [writeMessage, setWriteMessage] = useState("");
-
   const handleInputSendMessage = (event) => {
     if (event.key === "Enter" && writeMessage.trim() !== "") {
       sendMessage({ text: writeMessage });
@@ -79,8 +103,16 @@ export default function ChatVideo({ realtimeText }) {
   };
 
   const handleSendLocation = () => {
+    const sendUri = `sip:${agent}@${domain}`;
+    setIsGetLocationLoading(true);
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        setIsGetLocationLoading(false);
+        userAgent.sendMessage(
+          sendUri,
+          "@url:" + process.env.NEXT_PUBLIC_ICRM_MAP + "/" + position.coords.latitude + "/" + position.coords.longitude,
+        );
+        userAgent.sendMessage(sendUri, t("send-coordinates-success"));
         sendLocation({
           os: browser.os,
           accuracy: position.coords.accuracy,
@@ -88,12 +120,11 @@ export default function ChatVideo({ realtimeText }) {
           longitude: position.coords.longitude,
           uuid: uuid,
         }).then((r) => {
-          const latLngText = t("coordinates") + ": " + position.coords.latitude + "," + position.coords.longitude;
-          userAgent.sendMessage(`sip:${agent}@${domain}`, latLngText);
-          userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-success"));
+          console.log(r);
         });
       },
       (err) => {
+        setIsGetLocationLoading(false);
         console.log(err);
         if (err.message === "User denied Geolocation") {
           userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-error"));
@@ -112,9 +143,17 @@ export default function ChatVideo({ realtimeText }) {
       <div className="flex flex-1 justify-center items-center w-full" style={{ display: !openMessage ? "none" : "" }}>
         <div className="form-control w-full">
           <label className="input-group">
-            <span className="bg-sky-800 cursor-pointer" style={{ borderRadius: "0" }} onClick={handleSendLocation}>
-              <Image width={30} height={30} alt="place location" src={require("../../assets/img/placeholder.png")} />
-            </span>
+            <button
+              className="bg-sky-800 cursor-pointer w-[60px] flex justify-center items-center"
+              style={{ borderRadius: "0" }}
+              onClick={handleSendLocation}
+            >
+              {isGetLocationLoading ? (
+                <AutorenewIcon className="text-white w-[60px] animate-spin" />
+              ) : (
+                <Image width={30} height={30} alt="place location" src={require("../../assets/img/placeholder.png")} />
+              )}
+            </button>
             <input
               className="input input-bordered w-full"
               style={{ outline: "none" }}
