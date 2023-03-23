@@ -50,7 +50,6 @@ export const getExtensionDetail = async (uuid) => {
 };
 
 export const updateTerminateCall = async ({ uuid, signal = undefined }) => {
-  console.log("Update Terminate Call");
   if (signal !== undefined && signal.aborted) {
     return false;
   }
