@@ -106,8 +106,10 @@ export default function ChatVideo({ realtimeText }) {
   const handleSendLocation = () => {
     const sendUri = `sip:${agent}@${domain}`;
     setIsGetLocationLoading(true);
+    console.log("handleSendLocation", isGetLocationLoading);
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log("getCurrentPosition");
         setIsGetLocationLoading(false);
         userAgent.sendMessage(sendUri, "@url:" + ICRM_MAP_URL + "/" + position.coords.latitude + "/" + position.coords.longitude);
         userAgent.sendMessage(sendUri, t("send-coordinates-success"));
@@ -145,6 +147,7 @@ export default function ChatVideo({ realtimeText }) {
               className="bg-sky-800 cursor-pointer w-[60px] flex justify-center items-center"
               style={{ borderRadius: "0" }}
               onClick={handleSendLocation}
+              disabled={isGetLocationLoading}
             >
               {isGetLocationLoading ? (
                 <AutorenewIcon className="text-white w-[60px] animate-spin" />
