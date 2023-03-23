@@ -61,6 +61,9 @@ const StatusbarGeo = ({ show }) => {
   useEffect(() => {
     const controller = new AbortController();
     if (uuid !== "" && locationName === undefined && navigator.geolocation && location.locationName === null) {
+      localStorage.removeItem("latitude");
+      localStorage.removeItem("longitude");
+      localStorage.removeItem("accuracy");
       navigator.geolocation.watchPosition(
         async (position) => {
           console.log(position);
