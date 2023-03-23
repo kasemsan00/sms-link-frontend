@@ -91,6 +91,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
               return null;
             }
             if (messageBody !== "" && !messageBody.startsWith("<rtt")) {
+              if (messageBody.startsWith("@SMS:")) return;
               display.commit();
               setRealtimeText("");
               dispatch(addMessageData({ type, body: messageBody, date: "" }));
