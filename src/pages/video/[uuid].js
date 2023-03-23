@@ -45,11 +45,9 @@ export default function UUID() {
 
   useEffect(() => {
     if (queryExtension.isSuccess) {
-      console.log("setLinkDetail");
       dispatch(setLinkDetail(data));
       dispatch(setUUID(uuid));
       if (data.status !== "close" && data.status !== "ERROR" && data.message !== "No data" && userAgent === null) {
-        console.log("register", data);
         const socket = new JsSIP.WebSocketInterface(data.wss);
         const configuration = {
           sockets: [socket],
