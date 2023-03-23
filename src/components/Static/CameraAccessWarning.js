@@ -4,9 +4,7 @@ import useTranslation from "next-translate/useTranslation";
 
 export default function CameraAccessWarning() {
   const { t } = useTranslation("common");
-  const handleClick = (e) => {
-    window.location.reload();
-  };
+  const handleClick = () => window.location.reload();
   return (
     <>
       <StatusbarGeo show={true} />
