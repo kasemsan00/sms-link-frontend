@@ -108,32 +108,51 @@ export default function ChatVideo({ realtimeText }) {
   };
 
   const handleSendLocation = () => {
+    const latitude = localStorage.getItem("latitude");
+    const longitude = localStorage.getItem("longitude");
+    const accuracy = localStorage.getItem("accuracy");
+    if (latitude === null) {
+      userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-error"));
+      alert(t("alert-allow-location-service"));
+      return;
+    }
+    sendLocation({
+      os: browser.os,
+      accuracy: parseInt(accuracy),
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude),
+      uuid: uuid,
+    }).then((r) => {
+      console.log(r);
+    });
     const sendUri = `sip:${agent}@${domain}`;
-    setIsGetLocationLoading(true);
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setIsGetLocationLoading(false);
-        userAgent.sendMessage(sendUri, "@URL:" + ICRM_MAP_URL + "/" + position.coords.latitude + "/" + position.coords.longitude);
-        userAgent.sendMessage(sendUri, t("send-coordinates-success"));
-        sendLocation({
-          os: browser.os,
-          accuracy: position.coords.accuracy,
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          uuid: uuid,
-        }).then((r) => {
-          console.log(r);
-        });
-      },
-      (err) => {
-        setIsGetLocationLoading(false);
-        console.log(err);
-        if (err.message === "User denied Geolocation") {
-          userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-error"));
-          alert(t("alert-allow-location-service"));
-        }
-      },
-    );
+    userAgent.sendMessage(sendUri, "@URL:" + ICRM_MAP_URL + "/" + latitude + "/" + longitude);
+    userAgent.sendMessage(sendUri, t("send-coordinates-success"));
+    // setIsGetLocationLoading(true);
+    // navigator.geolocation.getCurrentPosition(
+    //   (position) => {
+    //     setIsGetLocationLoading(false);
+    //     userAgent.sendMessage(sendUri, "@URL:" + ICRM_MAP_URL + "/" + position.coords.latitude + "/" + position.coords.longitude);
+    //     userAgent.sendMessage(sendUri, t("send-coordinates-success"));
+    //     sendLocation({
+    //       os: browser.os,
+    //       accuracy: position.coords.accuracy,
+    //       latitude: position.coords.latitude,
+    //       longitude: position.coords.longitude,
+    //       uuid: uuid,
+    //     }).then((r) => {
+    //       console.log(r);
+    //     });
+    //   },
+    //   (err) => {
+    //     setIsGetLocationLoading(false);
+    //     console.log(err);
+    //     if (err.message === "User denied Geolocation") {
+    //       userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-error"));
+    //       alert(t("alert-allow-location-service"));
+    //     }
+    //   },
+    // );
   };
 
   const scrollToBottom = () => messagesEndRef.current.scrollIntoView({ behavior: "instant" });
