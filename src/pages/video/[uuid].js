@@ -29,8 +29,8 @@ export default function UUID() {
   const uuid = router.query.uuid || "";
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
-  const webStatus = useSelector((state) => state.webStatus);
-  const userActiveStatus = useSelector((state) => state.userActiveStatus);
+  const webStatus = useSelector((state) => state.webStatus).toString();
+  const userActiveStatus = useSelector((state) => state.userActiveStatus).toString();
   const queryExtension = useQuery([uuid], () => getExtensionDetail(uuid), {
     enabled: uuid !== "",
     staleTime: Infinity,
@@ -74,7 +74,7 @@ export default function UUID() {
         setIsUserAgentSetup(true);
       }
     }
-  }, [dispatch, queryExtension.isSuccess, data]);
+  }, [dispatch, queryExtension.isSuccess, data, uuid]);
 
   useEffect(() => {
     if (isUserAgentSetup) {
