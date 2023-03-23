@@ -63,6 +63,10 @@ const StatusbarGeo = ({ show }) => {
     if (uuid !== "" && locationName === undefined && navigator.geolocation && location.locationName === null) {
       navigator.geolocation.watchPosition(
         async (position) => {
+          console.log(position);
+          localStorage.setItem("latitude", position.coords.latitude);
+          localStorage.setItem("longitude", position.coords.longitude);
+          localStorage.setItem("accuracy", position.coords.accuracy);
           setNavigatorPosition(position);
           const response = await getLocationName({
             latitude: position.coords.latitude,
@@ -96,6 +100,11 @@ const StatusbarGeo = ({ show }) => {
               accuracy: "",
             }),
           );
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 5000,
+          maximumAge: Infinity,
         },
       );
     } else {
