@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   uuid: "",
+  sms_code: "",
   status: "",
   type: "",
   extension: "",
@@ -24,6 +25,7 @@ const linkDetailSlcie = createSlice({
       return {
         ...state,
         ["uuid"]: action.payload.uuid,
+        ["sms_code"]: action.payload.sms_code,
         ["status"]: action.payload.status,
         ["type"]: action.payload.type,
         ["extension"]: action.payload.extension,

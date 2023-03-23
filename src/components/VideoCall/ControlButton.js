@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { useRef } from "react";
 import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
+import { badge } from "@mui/icons-material";
 import { motion } from "framer-motion";
 
-export default function ControlButton({ handleClick, isActive, textActive, textUnActive, iconPath }) {
+export default function ControlButton({ handleClick, isActive, textActive, textUnActive, iconPath, badge }) {
   const controlButtonRef = useRef(null);
   const controlTextRef = useRef(null);
 
@@ -34,6 +35,11 @@ export default function ControlButton({ handleClick, isActive, textActive, textU
         ref={controlButtonRef}
         whileTap={{ scale: 0.9 }}
       >
+        {badge ? (
+          <div className="absolute rounded-full w-[20px] h-[20px] bg-red-600 text-white flex flex-1 items-center justify-center top-0 ml-[25px] font-bold w">
+            !
+          </div>
+        ) : null}
         <div className="flex flex-1 justify-center items-center h-[22px] w-[22px] mb-[18px]">
           <Image src={iconPath} alt="video" width="auto" height="auto" />
         </div>

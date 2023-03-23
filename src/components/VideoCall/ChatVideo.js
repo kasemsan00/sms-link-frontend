@@ -20,7 +20,10 @@ const MessageStatic = ({ type, body }) => {
     const googleMapUrl = "https://www.google.co.th/maps/@" + latLng[0] + "," + latLng[1];
     window.open(googleMapUrl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=600,height=600");
   };
-  if (body.startsWith("@URL")) {
+  if (body.startsWith("@SMS:")) {
+    return null;
+  }
+  if (body.startsWith("@URL:")) {
     return (
       <div className="flex flex-1 relative whitespace-pre-wrap w-[100%-15px] top-[8px] pl-[5px]">
         <div className="inline-block w-[40px] min-w-fit text-[14px]"></div>
@@ -66,7 +69,7 @@ const MessageRealTime = ({ type, body }) => {
       </div>
     );
   }
-  return <></>;
+  return null;
 };
 
 export default function ChatVideo({ realtimeText }) {

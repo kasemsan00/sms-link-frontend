@@ -16,120 +16,121 @@ let session = null;
 let type = "remote";
 
 export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
-  const dispatch = useDispatch();
-  const { userAgent } = useSelector((state) => state.sip);
-  const { agent, domain } = useSelector((state) => state.linkDetail);
-  const [connection, setConnection] = useState(false);
-  const [peerConnection, setPeerConnection] = useState(null);
-  const [startCall, setStartCall] = useState(false);
-  const [realtimeText, setRealtimeText] = useState({
-    type: "",
-    body: "",
-  });
-
-  const handleNewMessage = async (event) => {
-    const { _request } = event.message;
-    const messageBody = _request.body;
-    if (userAgent.configuration.uri.user === _request.from.uri.user) {
-      type = "local";
-    } else {
-      type = "remote";
-    }
-    if (messageBody.startsWith("@MCU")) {
-      setTimeout(() => {
-        localVideoRef.current.srcObject.getTracks().forEach(function (track) {
-          if (track.kind === "video") track.enabled = false;
-        });
-      }, 4000);
-      setTimeout(() => {
-        localVideoRef.current.srcObject.getTracks().forEach(function (track) {
-          if (track.kind === "video") track.enabled = true;
-        });
-        dispatch(setControlVideo("typeAsteriskCall", "MCU"));
-        setConnection(true);
-      }, 5000);
-      return null;
-    }
-    if (messageBody.startsWith("@switch")) {
-      dispatch(setCallNumber({ agent: _request.body.split("|")[1] }));
-      return null;
-    }
-    if (messageBody !== "" && !messageBody.startsWith("<rtt")) {
-      display.commit();
-      setRealtimeText("");
-      dispatch(addMessageData({ type, body: messageBody, date: "" }));
-      return null;
-    }
-    if (type === "remote") {
-      const rttEvent = await ConvertToRTTEvent(messageBody);
-      display.process(rttEvent);
-    }
-  };
-
-  const userAgentCall = useCallback(
-    ({ stream }) => {
-      display = new DisplayBuffer((resp) => {
-        if (resp.drained) {
-          setRealtimeText({
-            type: type,
-            body: resp.text,
-          });
-        }
-      });
-      const stopStream = () => {
-        localVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
-        remoteVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
-      };
-      const eventHandlers = {
-        peerconnection: (pc) => {
-          setPeerConnection(pc);
-        },
-      };
-      const options = {
-        eventHandlers: eventHandlers,
-        mediaStream: stream,
-        pcConfig: {
-          iceServers: [
-            {
-              urls: process.env.NEXT_PUBLIC_TURN_DOMAIN,
-              username: process.env.NEXT_PUBLIC_TURN_USERNAME,
-              credential: process.env.NEXT_PUBLIC_TURN_CREDENTIAL,
-            },
-          ],
-        },
-        sessionTimersExpires: 9999,
-      };
-      if (session === null) {
-        userAgent.on("newMessage", handleNewMessage);
-        userAgent.on("newRTCSession", (ev1) => {
-          session = ev1.session;
-          dispatch(setSession(session));
-          if (ev1.originator === "local") {
-            ev1.session.connection.addEventListener("addstream", (event) => {
-              const { stream } = event;
-              setConnection(true);
-              remoteVideoRef.current.srcObject = stream;
+  const dispatch = useDispatch(),
+    { userAgent } = useSelector((state) => state.sip),
+    { agent, domain, sms_code } = useSelector((state) => state.linkDetail),
+    [connection, setConnection] = useState(false),
+    [peerConnection, setPeerConnection] = useState(null),
+    [startCall, setStartCall] = useState(false),
+    [realtimeText, setRealtimeText] = useState({
+      type: "",
+      body: "",
+    }),
+    userAgentCall = useCallback(
+      ({ stream }) => {
+        display = new DisplayBuffer((resp) => {
+          if (resp.drained) {
+            setRealtimeText({
+              type: type,
+              body: resp.text,
             });
           }
-          ev1.session.on("ended", (e) => {
-            console.log(e);
-            stopStream();
-            setStartCall(null);
-            dispatch(setWebStatus("ended"));
-          });
-          ev1.session.on("failed", (e) => {
-            dispatch(setWebStatus(""));
-            console.log("failed", e);
-            stopStream();
-            alert(e.cause, e.message.reason_phrase);
-          });
         });
-      }
-      localVideoRef.current.srcObject = stream;
-      userAgent.call(`sip:${agent}@${domain}`, options);
-    },
-    [dispatch, localVideoRef, remoteVideoRef, userAgent, agent, domain],
-  );
+        const stopStream = () => {
+          localVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
+          remoteVideoRef.current?.srcObject?.getTracks()?.forEach((track) => track.stop());
+        };
+        const eventHandlers = {
+          peerconnection: (pc) => {
+            setPeerConnection(pc);
+          },
+        };
+        const options = {
+          eventHandlers: eventHandlers,
+          mediaStream: stream,
+          pcConfig: {
+            iceServers: [
+              {
+                urls: process.env.NEXT_PUBLIC_TURN_DOMAIN,
+                username: process.env.NEXT_PUBLIC_TURN_USERNAME,
+                credential: process.env.NEXT_PUBLIC_TURN_CREDENTIAL,
+              },
+            ],
+          },
+          sessionTimersExpires: 9999,
+        };
+        if (session === null) {
+          userAgent.on("newMessage", async (event) => {
+            const { _request } = event.message;
+            const messageBody = _request.body;
+            if (userAgent.configuration.uri.user === _request.from.uri.user) {
+              type = "local";
+            } else {
+              type = "remote";
+            }
+            if (messageBody.startsWith("@MCU")) {
+              setTimeout(() => {
+                localVideoRef.current.srcObject.getTracks().forEach(function (track) {
+                  if (track.kind === "video") track.enabled = false;
+                });
+              }, 4000);
+              setTimeout(() => {
+                localVideoRef.current.srcObject.getTracks().forEach(function (track) {
+                  if (track.kind === "video") track.enabled = true;
+                });
+                dispatch(setControlVideo("typeAsteriskCall", "MCU"));
+                setConnection(true);
+              }, 5000);
+              return null;
+            }
+            if (messageBody.startsWith("@switch")) {
+              dispatch(setCallNumber({ agent: _request.body.split("|")[1] }));
+              setTimeout(() => {
+                userAgent.sendMessage(`sip:${agent}@${domain}`, "@SMS:" + sms_code);
+              }, 4000);
+              return null;
+            }
+            if (messageBody !== "" && !messageBody.startsWith("<rtt")) {
+              display.commit();
+              setRealtimeText("");
+              dispatch(addMessageData({ type, body: messageBody, date: "" }));
+              return null;
+            }
+            if (type === "remote") {
+              const rttEvent = await ConvertToRTTEvent(messageBody);
+              display.process(rttEvent);
+            }
+          });
+          userAgent.on("newRTCSession", (ev1) => {
+            session = ev1.session;
+            dispatch(setSession(session));
+            if (ev1.originator === "local") {
+              ev1.session.connection.addEventListener("addstream", (event) => {
+                const { stream } = event;
+                setConnection(true);
+                remoteVideoRef.current.srcObject = stream;
+              });
+            }
+            ev1.session.on("ended", (e) => {
+              console.log(e);
+              stopStream();
+              setStartCall(null);
+              dispatch(setWebStatus("ended"));
+            });
+            ev1.session.on("failed", (e) => {
+              dispatch(setWebStatus(""));
+              console.log("failed", e);
+              stopStream();
+              alert(e.cause, e.message.reason_phrase);
+            });
+          });
+        }
+        localVideoRef.current.srcObject = stream;
+        userAgent.call(`sip:${agent}@${domain}`, options);
+      },
+      [localVideoRef, userAgent, agent, domain, sms_code, remoteVideoRef, dispatch],
+    );
+
   useEffect(() => {
     if (startCall !== null) {
       setStartCall(true);
@@ -161,6 +162,5 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
       setStartCall(false);
     };
   }, [dispatch, startCall, userAgent, userAgentCall]);
-
   return [realtimeText, connection, peerConnection, setStartCall];
 }
