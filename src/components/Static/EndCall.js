@@ -9,7 +9,6 @@ import useTranslation from "next-translate/useTranslation";
 export default function EndCall() {
   const { uuid } = useSelector((state) => state.linkDetail);
   const { t } = useTranslation("common");
-  // const sip = useSelector((state) => state.sip.session);
   useEffect(() => {
     const controller = new AbortController();
     updateTerminateCall({
@@ -19,21 +18,6 @@ export default function EndCall() {
     return () => controller.abort();
   }, [uuid]);
 
-  // useEffect(() => {
-  //   const controller = new AbortController();
-  //   updateUserActiveStatus({
-  //     uuid: uuid,
-  //     status: "close",
-  //     signal: controller.signal,
-  //   }).then((r) => r);
-  //   return () => controller.abort();
-  // }, [uuid]);
-  // useEffect(() => {
-  //   if (sip !== null) {
-  //     sip.session.terminate();
-  //   }
-  // }, [sip]);
-  //
   return (
     <>
       <StatusBarGeo show={true} />

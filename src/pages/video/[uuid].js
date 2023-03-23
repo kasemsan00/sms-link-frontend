@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useEffect, Suspense } from "react";
+import { useEffect, Suspense, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "react-query";
 import { getExtensionDetail, updateUserActiveStatus } from "../../request";
@@ -16,7 +16,7 @@ import Header from "../../components/Utilities/Header";
 import LinkClose from "../../components/Static/LinkClose";
 import Footer from "../../components/Utilities/Footer";
 import CameraAccessWarning from "../../components/Static/CameraAccessWarning";
-import Disconnected from "../../components/Static/Disconnected";
+import EndCall from "../../components/Static/EndCall";
 
 const DynamicLinkCall = dynamic(() => import("../../components/VideoCall/StartVideoCall"));
 const DynamicVideoCall = dynamic(() => import("../../components/VideoCall/VideoCall"));
@@ -36,6 +36,7 @@ export default function UUID() {
     staleTime: Infinity,
   });
   let { data } = queryExtension;
+  const [isUserAgentSetup, setIsUserAgentSetup] = useState(false);
 
   useQuery([uuid, userActiveStatus], () => updateUserActiveStatus({ uuid, status: userActiveStatus }), {
     enabled: uuid !== "" && userActiveStatus !== "",
@@ -43,14 +44,10 @@ export default function UUID() {
   });
 
   useEffect(() => {
-    if (uuid !== "") {
-      dispatch(setUUID(uuid));
-    }
-  }, [dispatch, uuid]);
-
-  useEffect(() => {
     if (queryExtension.isSuccess) {
+      console.log("setLinkDetail");
       dispatch(setLinkDetail(data));
+      dispatch(setUUID(uuid));
       if (data.status !== "close" && data.status !== "ERROR" && data.message !== "No data" && userAgent === null) {
         console.log("register", data);
         const socket = new JsSIP.WebSocketInterface(data.wss);
@@ -76,21 +73,16 @@ export default function UUID() {
           console.log("disconnected", e);
           dispatch(setWebStatus("disconnected"));
         });
-        userAgent.start();
+        setIsUserAgentSetup(true);
       }
     }
-  }, [dispatch, queryExtension.isSuccess, queryExtension, data]);
+  }, [dispatch, queryExtension.isSuccess, data]);
 
-  // if (webStatus === "disconnected") {
-  //   return (
-  //     <>
-  //       <StatusbarGeo show={true} uuid={uuid} />
-  //       <Header />
-  //       <Disconnected />
-  //       <Footer />
-  //     </>
-  //   );
-  // }
+  useEffect(() => {
+    if (isUserAgentSetup) {
+      userAgent.start();
+    }
+  }, [isUserAgentSetup]);
 
   if (data !== undefined && data.message === "No data") {
     return (
@@ -105,17 +97,8 @@ export default function UUID() {
     );
   }
 
-  if (data !== undefined && (data.status === "close" || data.status === "disconnected")) {
-    return (
-      <>
-        <StatusbarGeo show={true} uuid={uuid} />
-        <Header />
-        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
-          <LinkClose />
-        </div>
-        <Footer />
-      </>
-    );
+  if (data !== undefined && webStatus === "disconnected") {
+    return <EndCall />;
   }
 
   if (webStatus === "CameraNotAllow") {
