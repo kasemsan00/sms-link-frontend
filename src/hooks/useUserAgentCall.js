@@ -32,6 +32,8 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
     const messageBody = _request.body;
     if (userAgent.configuration.uri.user === _request.from.uri.user) {
       type = "local";
+    } else {
+      type = "remote";
     }
     if (messageBody.startsWith("@MCU")) {
       setTimeout(() => {
