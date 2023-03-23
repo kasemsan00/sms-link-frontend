@@ -11,7 +11,7 @@ export default function CameraAccessWarning() {
     <>
       <StatusbarGeo show={true} />
       <div className="flex flex-1 h-[calc(100vh-100px)] justify-center items-center" onClick={handleClick}>
-        <div className="text-3xl text-primary text-center font-bold">{t("please-allow-camera-access")}</div>
+        <div className="text-3xl text-end text-center font-bold">{t("please-allow-camera-access")}</div>
       </div>
       <Footer />
     </>
