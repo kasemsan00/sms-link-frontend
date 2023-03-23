@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { sendLocation } from "../../request";
 import useTranslation from "next-translate/useTranslation";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
+// import AutorenewIcon from "@mui/icons-material/Autorenew";
 const { detect } = require("detect-browser");
 const browser = detect();
 
@@ -79,7 +79,6 @@ export default function ChatVideo({ realtimeText }) {
   const { openMessage } = useSelector((state) => state.controlVideo);
   const { userAgent } = useSelector((state) => state.sip);
   const { uuid, agent, domain } = useSelector((state) => state.linkDetail);
-  const [isGetLocationLoading, setIsGetLocationLoading] = useState(false);
   const [writeMessage, setWriteMessage] = useState("");
 
   const handleInputSendMessage = (event) => {
@@ -168,13 +167,13 @@ export default function ChatVideo({ realtimeText }) {
               className="bg-sky-800 cursor-pointer w-[60px] flex justify-center items-center"
               style={{ borderRadius: "0" }}
               onClick={handleSendLocation}
-              disabled={isGetLocationLoading}
+              // disabled={isGetLocationLoading}
             >
-              {isGetLocationLoading ? (
-                <AutorenewIcon className="text-white w-[60px] animate-spin" />
-              ) : (
-                <Image width={30} height={30} alt="place location" src={require("../../assets/img/placeholder.png")} />
-              )}
+              {/*{isGetLocationLoading ? (*/}
+              {/*  <AutorenewIcon className="text-white w-[60px] animate-spin" />*/}
+              {/*) : (*/}
+              <Image width={30} height={30} alt="place location" src={require("../../assets/img/placeholder.png")} />
+              {/*)}*/}
             </button>
             <input
               className="input input-bordered w-full"
