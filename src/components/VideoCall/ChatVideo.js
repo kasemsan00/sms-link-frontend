@@ -173,15 +173,16 @@ export default function ChatVideo({ realtimeText }) {
           </label>
         </div>
       </div>
-      <div className="fixed top-[21px] right-0 bg-video-control rounded-xl" style={{ display: !openMessage ? "none" : "" }}>
-        <div className="table-cell align-bottom">
-          <div className="w-[200px] h-[108px] display:grid float-right overflow-y-scroll z-50 rounded-xl break-all">
-            {messageData.map((chatData, index) => {
-              return <MessageStatic key={index} sender="" type={chatData.type} date={chatData.date} body={chatData.body} />;
-            })}
-            <MessageRealTime type={realtimeText.type} body={realtimeText.body} />
-            <div ref={messagesEndRef}></div>
-          </div>
+      <div
+        className="fixed top-[21px] h-[108px]  overflow-y-scroll right-0 bg-video-control rounded-xl"
+        style={{ display: !openMessage ? "none" : "" }}
+      >
+        <div className="w-[200px] h-[108px] max-h-[108px] table-cell align-bottom overflow-y-scroll z-50 rounded-xl break-all">
+          {messageData.map((chatData, index) => {
+            return <MessageStatic key={index} sender="" type={chatData.type} date={chatData.date} body={chatData.body} />;
+          })}
+          <MessageRealTime type={realtimeText.type} body={realtimeText.body} />
+          <div ref={messagesEndRef}></div>
         </div>
       </div>
     </div>
