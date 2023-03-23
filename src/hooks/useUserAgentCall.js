@@ -10,10 +10,11 @@ import { addMessageData } from "../redux/slices/messageDataSlice";
 import { initConstraints } from "../components/VideoCall/Constraints";
 // eslint-disable-next-line
 import adapter from "webrtc-adapter";
-
+let display = null;
 let constraints = initConstraints();
 let session = null;
 let type = "remote";
+
 export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
   const dispatch = useDispatch();
   const { userAgent } = useSelector((state) => state.sip);
@@ -26,9 +27,46 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
     body: "",
   });
 
+  const handleNewMessage = async (event) => {
+    const { _request } = event.message;
+    const messageBody = _request.body;
+    if (userAgent.configuration.uri.user === _request.from.uri.user) {
+      type = "local";
+    }
+    if (messageBody.startsWith("@MCU")) {
+      setTimeout(() => {
+        localVideoRef.current.srcObject.getTracks().forEach(function (track) {
+          if (track.kind === "video") track.enabled = false;
+        });
+      }, 4000);
+      setTimeout(() => {
+        localVideoRef.current.srcObject.getTracks().forEach(function (track) {
+          if (track.kind === "video") track.enabled = true;
+        });
+        dispatch(setControlVideo("typeAsteriskCall", "MCU"));
+        setConnection(true);
+      }, 5000);
+      return null;
+    }
+    if (messageBody.startsWith("@switch")) {
+      dispatch(setCallNumber({ agent: _request.body.split("|")[1] }));
+      return null;
+    }
+    if (messageBody !== "" && !messageBody.startsWith("<rtt")) {
+      display.commit();
+      setRealtimeText("");
+      dispatch(addMessageData({ type, body: messageBody, date: "" }));
+      return null;
+    }
+    if (type === "remote") {
+      const rttEvent = await ConvertToRTTEvent(messageBody);
+      display.process(rttEvent);
+    }
+  };
+
   const userAgentCall = useCallback(
     ({ stream }) => {
-      const display = new DisplayBuffer((resp) => {
+      display = new DisplayBuffer((resp) => {
         if (resp.drained) {
           setRealtimeText({
             type: type,
@@ -60,45 +98,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
         sessionTimersExpires: 9999,
       };
       if (session === null) {
-        userAgent.on("newMessage", async (event) => {
-          const { _request } = event.message;
-          const messageBody = _request.body;
-          if (userAgent.configuration.uri.user === _request.from.uri.user) {
-            type = "local";
-          } else {
-            type = "remote";
-          }
-
-          if (messageBody.startsWith("@MCU")) {
-            setTimeout(() => {
-              localVideoRef.current.srcObject.getTracks().forEach(function (track) {
-                if (track.kind === "video") track.enabled = false;
-              });
-            }, 4000);
-            setTimeout(() => {
-              localVideoRef.current.srcObject.getTracks().forEach(function (track) {
-                if (track.kind === "video") track.enabled = true;
-              });
-              dispatch(setControlVideo("typeAsteriskCall", "MCU"));
-              setConnection(true);
-            }, 5000);
-            return null;
-          }
-          if (messageBody.startsWith("@switch")) {
-            dispatch(setCallNumber({ agent: _request.body.split("|")[1] }));
-            return null;
-          }
-          if (messageBody !== "" && !messageBody.startsWith("<rtt")) {
-            display.commit();
-            setRealtimeText("");
-            dispatch(addMessageData({ type, body: messageBody, date: "" }));
-            return null;
-          }
-          if (type === "remote") {
-            const rttEvent = await ConvertToRTTEvent(messageBody);
-            display.process(rttEvent);
-          }
-        });
+        userAgent.on("newMessage", handleNewMessage);
         userAgent.on("newRTCSession", (ev1) => {
           session = ev1.session;
           dispatch(setSession(session));

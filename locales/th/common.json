@@ -1,6 +1,7 @@
 {
   "title": "กรมควบคุมโรค",
   "link-call": "กดเพื่อสนทนาวิดีโอ",
+  "link-close": "ลิงค์ถูกปิดการใช้งาน",
   "end-call": "จบการสนทนา",
   "extension-disconnected": "ไม่สามารถเชื่อมต่อได้",
   "registration-failed": "ไม่สามารถใช้งาน Extension นี้ได้",
@@ -13,7 +14,6 @@
   "start-chat": "เริ่มสนทนา",
   "uploading": "อัพโหลด",
   "upload-complete": "อัพโหลดเสร็จสิ้น",
-  "link-close": "ลิงค์ถูกปิดการใช้งาน",
   "front-camera": "กล้องหน้า",
   "back-camera": "กล้องหลัง",
   "chat-input-placeholder": "พิมพ์ข้อความ",
