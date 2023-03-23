@@ -15,7 +15,7 @@ let eventRtt = "new";
 const MessageStatic = ({ type, body }) => {
   const { t } = useTranslation("common");
   const handleOpenMap = (url) => {
-    url = url.replace("@url:" + ICRM_MAP_URL + "/", "");
+    url = url.replace("@URL:" + ICRM_MAP_URL + "/", "");
     const latLng = url.split("/");
     const googleMapUrl = "https://www.google.co.th/maps/@" + latLng[0] + "," + latLng[1];
     window.open(googleMapUrl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=600,height=600");
@@ -110,7 +110,7 @@ export default function ChatVideo({ realtimeText }) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setIsGetLocationLoading(false);
-        userAgent.sendMessage(sendUri, "@url:" + ICRM_MAP_URL + "/" + position.coords.latitude + "/" + position.coords.longitude);
+        userAgent.sendMessage(sendUri, "@URL:" + ICRM_MAP_URL + "/" + position.coords.latitude + "/" + position.coords.longitude);
         userAgent.sendMessage(sendUri, t("send-coordinates-success"));
         sendLocation({
           os: browser.os,
