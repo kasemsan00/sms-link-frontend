@@ -78,6 +78,7 @@ export default function ChatVideo({ realtimeText }) {
   const { uuid, agent, domain } = useSelector((state) => state.linkDetail);
   const [isGetLocationLoading, setIsGetLocationLoading] = useState(false);
   const [writeMessage, setWriteMessage] = useState("");
+
   const handleInputSendMessage = (event) => {
     if (event.key === "Enter" && writeMessage.trim() !== "") {
       sendMessage({ text: writeMessage });
@@ -106,10 +107,8 @@ export default function ChatVideo({ realtimeText }) {
   const handleSendLocation = () => {
     const sendUri = `sip:${agent}@${domain}`;
     setIsGetLocationLoading(true);
-    console.log("handleSendLocation", isGetLocationLoading);
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log("getCurrentPosition");
         setIsGetLocationLoading(false);
         userAgent.sendMessage(sendUri, "@url:" + ICRM_MAP_URL + "/" + position.coords.latitude + "/" + position.coords.longitude);
         userAgent.sendMessage(sendUri, t("send-coordinates-success"));
@@ -174,7 +173,7 @@ export default function ChatVideo({ realtimeText }) {
           </label>
         </div>
       </div>
-      <div className="fixed top-[21px] right-0 bg-video-control rounded-xl">
+      <div className="fixed top-[21px] right-0 bg-video-control rounded-xl" style={{ display: !openMessage ? "none" : "" }}>
         <div className="table-cell align-bottom">
           <div className="w-[200px] h-[108px] display:grid float-right overflow-y-scroll z-50 rounded-xl break-all">
             {messageData.map((chatData, index) => {
