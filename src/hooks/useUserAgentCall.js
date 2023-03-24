@@ -81,21 +81,23 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
                 dispatch(setControlVideo("typeAsteriskCall", "MCU"));
                 setConnection(true);
               }, 5000);
-              return null;
+              return;
             }
             if (messageBody.startsWith("@switch")) {
               dispatch(setCallNumber({ agent: _request.body.split("|")[1] }));
-              setTimeout(() => {
-                userAgent.sendMessage(`sip:${agent}@${domain}`, "@SMS:" + sms_code);
-              }, 4000);
-              return null;
+              if (sms_code !== "") {
+                setTimeout(() => {
+                  userAgent.sendMessage(`sip:${agent}@${domain}`, "@SMS:" + sms_code);
+                }, 4000);
+              }
+              return;
             }
             if (messageBody !== "" && !messageBody.startsWith("<rtt")) {
               if (messageBody.startsWith("@SMS:")) return;
               display.commit();
               setRealtimeText("");
               dispatch(addMessageData({ type, body: messageBody, date: "" }));
-              return null;
+              return;
             }
             if (type === "remote") {
               const rttEvent = await ConvertToRTTEvent(messageBody);
