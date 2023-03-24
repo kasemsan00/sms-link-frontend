@@ -12,8 +12,7 @@ import StatusbarGeo from "../../components/Status/StatusBarGeo";
 import Header from "../../components/Utilities/Header";
 import LinkClose from "../../components/Static/LinkClose";
 import Footer from "../../components/Utilities/Footer";
-
-const DynamicLocation = dynamic(() => import("../../components/LocationView/LocationView"));
+import LocationView from "../../components/LocationView/LocationView";
 
 export default function Location() {
   const router = useRouter();
@@ -61,13 +60,7 @@ export default function Location() {
         <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
       </Head>
-      <main>
-        {queryExtension.isSuccess === true ? (
-          <Suspense fallback="Loading...">
-            <DynamicLocation uuid={uuid} status={queryExtension.data.status} />
-          </Suspense>
-        ) : null}
-      </main>
+      <main>{queryExtension.isSuccess === true ? <LocationView uuid={uuid} status={queryExtension.data.status} /> : null}</main>
     </>
   );
 }
