@@ -58,18 +58,23 @@ const StatusbarGeo = ({ show }) => {
     },
   );
 
+  const setLocalStorageLocation = ({ latitude, longitude, accuracy }) => {
+    localStorage.setItem("latitude", latitude);
+    localStorage.setItem("longitude", longitude);
+    localStorage.setItem("accuracy", accuracy);
+  };
+  const removeLocalStorageLocation = () => {
+    localStorage.removeItem("latitude");
+    localStorage.removeItem("longitude");
+    localStorage.removeItem("accuracy");
+  };
   useEffect(() => {
     const controller = new AbortController();
     if (uuid !== "" && locationName === undefined && navigator.geolocation && location.locationName === null) {
-      localStorage.removeItem("latitude");
-      localStorage.removeItem("longitude");
-      localStorage.removeItem("accuracy");
+      removeLocalStorageLocation();
       navigator.geolocation.watchPosition(
         async (position) => {
-          console.log(position);
-          localStorage.setItem("latitude", position.coords.latitude);
-          localStorage.setItem("longitude", position.coords.longitude);
-          localStorage.setItem("accuracy", position.coords.accuracy);
+          setLocalStorageLocation(position.coords);
           setNavigatorPosition(position);
           const response = await getLocationName({
             latitude: position.coords.latitude,
