@@ -1,6 +1,8 @@
 version: "3.3"
 services:
-  webrtc-location:
+  sms-link-frontend:
     build: .
     container_name: sms-link-frontend
     restart: always
+    ports:
+      - "9100:3000"

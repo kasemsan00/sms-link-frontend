@@ -88,7 +88,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
               if (sms_code !== "") {
                 setTimeout(() => {
                   userAgent.sendMessage(`sip:${agent}@${domain}`, "@SMS:" + sms_code);
-                }, 4000);
+                }, 3000);
               }
               return;
             }
