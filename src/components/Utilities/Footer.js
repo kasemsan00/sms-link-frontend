@@ -7,7 +7,6 @@ export default function Footer() {
   const { isLandscape } = useMobileOrientation();
 
   useLayoutEffect(() => {
-    console.log(isLandscape);
     if (isMobile && isLandscape) {
       footerRef.current.classList.add("hidden");
       return;
