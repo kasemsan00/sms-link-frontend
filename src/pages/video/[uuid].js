@@ -17,10 +17,8 @@ import LinkClose from "../../components/Static/LinkClose";
 import Footer from "../../components/Utilities/Footer";
 import CameraAccessWarning from "../../components/Static/CameraAccessWarning";
 import EndCall from "../../components/Static/EndCall";
-
-const DynamicLinkCall = dynamic(() => import("../../components/VideoCall/StartVideoCall"));
-const DynamicVideoCall = dynamic(() => import("../../components/VideoCall/VideoCall"));
-const DynamicEndCall = dynamic(() => import("../../components/Static/EndCall"));
+import LinkCall from "../../components/VideoCall/StartVideoCall";
+import VideoCall from "../../components/VideoCall/VideoCall";
 
 let userAgent = null;
 
@@ -124,31 +122,36 @@ export default function UUID() {
             {queryExtension.data.status !== "close" && queryExtension.data.type === "webrtc" ? (
               <>
                 {webStatus === "" || webStatus === "open" || webStatus === "registered" ? (
-                  <Suspense fallback={`Loading...`}>
-                    <DynamicLinkCall extensionStatus={queryExtension.data.status} />
-                  </Suspense>
+                  // <Suspense fallback={`Loading...`}>
+                  //   <DynamicLinkCall extensionStatus={queryExtension.data.status} />
+                  // </Suspense>
+                  <LinkCall extensionStatus={queryExtension.data.status} />
                 ) : null}
                 {webStatus === "unregistered" || webStatus === "registrationFailed" ? (
-                  <Suspense fallback="Loading...">
-                    <DynamicEndCall />
-                  </Suspense>
+                  // <Suspense fallback="Loading...">
+                  //   <DynamicEndCall />
+                  // </Suspense>
+                  <EndCall />
                 ) : null}
                 {webStatus === "makecall" ? (
-                  <Suspense fallback="Loading...">
-                    <DynamicVideoCall />
-                  </Suspense>
+                  // <Suspense fallback="Loading...">
+                  //   <DynamicVideoCall />
+                  // </Suspense>
+                  <VideoCall />
                 ) : null}
                 {webStatus === "ended" ? (
-                  <Suspense fallback="Loading...">
-                    <DynamicEndCall />
-                  </Suspense>
+                  // <Suspense fallback="Loading...">
+                  //   <DynamicEndCall />
+                  // </Suspense>
+                  <EndCall />
                 ) : null}
               </>
             ) : null}
             {queryExtension.data.status === "close" ? (
-              <Suspense fallback="Loading...">
-                <DynamicEndCall />
-              </Suspense>
+              // <Suspense fallback="Loading...">
+              //   <DynamicEndCall />
+              // </Suspense>
+              <EndCall />
             ) : null}
           </>
         ) : null}
