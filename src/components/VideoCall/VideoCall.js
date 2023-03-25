@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { initConstraints } from "./Constraints";
 import ControlVideo from "../VideoCall/ControlVideo";
@@ -6,13 +6,47 @@ import StatusBarVideo from "../Status/StatusBarVideo";
 import VideoContent from "./VideoContent";
 import ChatVideo from "./ChatVideo";
 import useUserAgentCall from "../../hooks/useUserAgentCall";
+import DisplayMap from "../Map/DisplayMap";
+import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
 
 let constraints = initConstraints();
+
+const MapModal = ({ displayMap, setDisplayMap }) => {
+  const modalRef = useRef(null);
+  useIsomorphicLayoutEffect(() => {
+    if (displayMap.latitude !== 0 && displayMap.longitude !== 0) {
+      modalRef.current.classList.add("modal-open");
+    }
+  }, [displayMap]);
+  const handleCloseModal = () => {
+    setDisplayMap({
+      latitude: 0,
+      longitude: 0,
+    });
+    modalRef.current.classList.remove("modal-open");
+  };
+  return (
+    <div className="modal z-50 " ref={modalRef}>
+      <div className="modal-box relative p-0">
+        <label className="btn btn-sm btn-circle absolute right-2 top-2 z-50" onClick={handleCloseModal}>
+          ✕
+        </label>
+        <div className="h-[500px]">
+          <DisplayMap latitude={displayMap.latitude} longitude={displayMap.longitude} />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function VideoCall() {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
 
+  const [displayMap, setDisplayMap] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
   const { openAudio, facingMode } = useSelector((state) => state.controlVideo);
   const [realtimeText, connection, peerConnection, setStartCall] = useUserAgentCall({ localVideoRef, remoteVideoRef });
 
@@ -58,8 +92,9 @@ export default function VideoCall() {
     <>
       <StatusBarVideo show={true} start={connection} />
       <VideoContent localVideoRef={localVideoRef} remoteVideoRef={remoteVideoRef} />
-      <ChatVideo realtimeText={realtimeText} />
+      <ChatVideo realtimeText={realtimeText} setDisplayMap={setDisplayMap} />
       <ControlVideo />
+      <MapModal displayMap={displayMap} setDisplayMap={setDisplayMap} />
     </>
   );
 }

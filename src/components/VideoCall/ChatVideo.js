@@ -12,13 +12,17 @@ const initSequenceNumber = () => Math.floor(Math.random() * 100000 + 1);
 let sequenceNumber = initSequenceNumber();
 let eventRtt = "new";
 
-const MessageStatic = ({ type, body }) => {
+const MessageStatic = ({ type, body, setDisplayMap }) => {
   const { t } = useTranslation("common");
   const handleOpenMap = (url) => {
     url = url.replace("@URL:" + ICRM_MAP_URL + "/", "");
     const latLng = url.split("/");
-    const googleMapUrl = "https://www.google.co.th/maps/@" + latLng[0] + "," + latLng[1];
-    window.open(googleMapUrl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=600,height=600");
+    setDisplayMap({
+      latitude: parseFloat(latLng[0]),
+      longitude: parseFloat(latLng[1]),
+    });
+    // const googleMapUrl = "https://www.google.co.th/maps/@" + latLng[0] + "," + latLng[1];
+    // window.open(googleMapUrl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=600,height=600");
   };
   if (body.startsWith("@SMS:")) {
     return null;
@@ -72,7 +76,7 @@ const MessageRealTime = ({ type, body }) => {
   return null;
 };
 
-export default function ChatVideo({ realtimeText }) {
+export default function ChatVideo({ realtimeText, setDisplayMap }) {
   const messagesEndRef = useRef(null);
   const { t } = useTranslation("common");
   const messageData = useSelector((state) => state.messageData);
@@ -198,9 +202,9 @@ export default function ChatVideo({ realtimeText }) {
         className="fixed top-[21px] h-[108px]  overflow-y-scroll right-0 bg-video-control rounded-xl"
         style={{ display: !openMessage ? "none" : "" }}
       >
-        <div className="w-[200px] h-[108px] max-h-[108px] table-cell align-bottom overflow-y-scroll z-50 rounded-xl break-all">
+        <div className="w-[200px] h-[108px] max-h-[108px] table-cell align-bottom  z-50 rounded-xl break-all">
           {messageData.map((chatData, index) => {
-            return <MessageStatic key={index} sender="" type={chatData.type} date={chatData.date} body={chatData.body} />;
+            return <MessageStatic key={index} type={chatData.type} body={chatData.body} setDisplayMap={setDisplayMap} />;
           })}
           <MessageRealTime type={realtimeText.type} body={realtimeText.body} />
           <div ref={messagesEndRef}></div>

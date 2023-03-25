@@ -16,11 +16,13 @@ import Header from "../../components/Utilities/Header";
 import LinkClose from "../../components/Static/LinkClose";
 import Footer from "../../components/Utilities/Footer";
 import CameraAccessWarning from "../../components/Static/CameraAccessWarning";
-import EndCall from "../../components/Static/EndCall";
-import LinkCall from "../../components/VideoCall/StartVideoCall";
+// import EndCall from "../../components/Static/EndCall";
+// import LinkCall from "../../components/VideoCall/StartVideoCall";
 import VideoCall from "../../components/VideoCall/VideoCall";
 
 let userAgent = null;
+const DynamicLinkCall = dynamic(() => import("../../components/VideoCall/StartVideoCall"));
+const DynamicEndCall = dynamic(() => import("../../components/Static/EndCall"));
 
 export default function UUID() {
   const router = useRouter();
@@ -94,7 +96,11 @@ export default function UUID() {
   }
 
   if (data !== undefined && webStatus === "disconnected") {
-    return <EndCall />;
+    return (
+      <Suspense fallback="Loading...">
+        <DynamicEndCall />
+      </Suspense>
+    );
   }
 
   if (webStatus === "CameraNotAllow") {
@@ -122,17 +128,16 @@ export default function UUID() {
             {queryExtension.data.status !== "close" && queryExtension.data.type === "webrtc" ? (
               <>
                 {webStatus === "" || webStatus === "open" || webStatus === "registered" ? (
-                  // <Suspense fallback={`Loading...`}>
-                  //   <DynamicLinkCall extensionStatus={queryExtension.data.status} />
-                  // </Suspense>
-                  <LinkCall extensionStatus={queryExtension.data.status} />
+                  <Suspense fallback={`Loading...`}>
+                    <DynamicLinkCall extensionStatus={queryExtension.data.status} />
+                  </Suspense>
                 ) : null}
                 {webStatus === "unregistered" || webStatus === "registrationFailed" ? (
-                  // <Suspense fallback="Loading...">
-                  //   <DynamicEndCall />
-                  // </Suspense>
-                  <EndCall />
-                ) : null}
+                  <Suspense fallback="Loading...">
+                    <DynamicEndCall />
+                  </Suspense>
+                ) : // <EndCall />
+                null}
                 {webStatus === "makecall" ? (
                   // <Suspense fallback="Loading...">
                   //   <DynamicVideoCall />
@@ -140,19 +145,19 @@ export default function UUID() {
                   <VideoCall />
                 ) : null}
                 {webStatus === "ended" ? (
-                  // <Suspense fallback="Loading...">
-                  //   <DynamicEndCall />
-                  // </Suspense>
-                  <EndCall />
-                ) : null}
+                  <Suspense fallback="Loading...">
+                    <DynamicEndCall />
+                  </Suspense>
+                ) : // <EndCall />
+                null}
               </>
             ) : null}
             {queryExtension.data.status === "close" ? (
-              // <Suspense fallback="Loading...">
-              //   <DynamicEndCall />
-              // </Suspense>
-              <EndCall />
-            ) : null}
+              <Suspense fallback="Loading...">
+                <DynamicEndCall />
+              </Suspense>
+            ) : // <EndCall />
+            null}
           </>
         ) : null}
       </main>

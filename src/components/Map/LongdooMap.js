@@ -18,7 +18,7 @@ export default function LongdooMap({ setLocation }) {
     const existingScript = document.getElementById("longdoMapScript");
     if (!existingScript) {
       const script = document.createElement("script");
-      script.src = `https://api.longdo.com/map/?key=bdc40b23d652f25c9dd581e48d473760`;
+      script.src = `https://api.longdo.com/map/?key=` + process.env.NEXT_PUBLIC_LONGDOO_KEY;
       script.id = "longdoMapScript";
       document.body.appendChild(script);
 
