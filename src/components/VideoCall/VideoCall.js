@@ -11,12 +11,42 @@ import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
 
 let constraints = initConstraints();
 
-export default function VideoCall() {
+const MapModal = ({ displayMap, setDisplayMap }) => {
   const modalRef = useRef(null);
+  useIsomorphicLayoutEffect(() => {
+    if (displayMap.latitude !== 0 && displayMap.longitude !== 0) {
+      modalRef.current.classList.add("modal-open");
+    }
+  }, [displayMap]);
+  const handleCloseModal = () => {
+    setDisplayMap({
+      latitude: 0,
+      longitude: 0,
+    });
+    modalRef.current.classList.remove("modal-open");
+  };
+  return (
+    <div className="modal z-50 " ref={modalRef}>
+      <div className="modal-box relative p-0">
+        <label className="btn btn-sm btn-circle absolute right-2 top-2 z-50" onClick={handleCloseModal}>
+          ✕
+        </label>
+        <div className="h-[500px]">
+          <DisplayMap latitude={displayMap.latitude} longitude={displayMap.longitude} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function VideoCall() {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
 
-  const [isDisplayMap, setIsDisplayMap] = useState(false);
+  const [displayMap, setDisplayMap] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
   const { openAudio, facingMode } = useSelector((state) => state.controlVideo);
   const [realtimeText, connection, peerConnection, setStartCall] = useUserAgentCall({ localVideoRef, remoteVideoRef });
 
@@ -29,11 +59,6 @@ export default function VideoCall() {
       remoteVideoRef.current.muted = openAudio;
     }
   }, [openAudio, remoteVideoRef]);
-  useIsomorphicLayoutEffect(() => {
-    if (isDisplayMap) {
-      modalRef.current.classList.add("modal-open");
-    }
-  }, [isDisplayMap]);
 
   useEffect(() => {
     if (facingMode !== "") {
@@ -63,26 +88,13 @@ export default function VideoCall() {
     }
   }, [facingMode, peerConnection]);
 
-  const handleCloseModal = () => {
-    setIsDisplayMap(false);
-    modalRef.current.classList.remove("modal-open");
-  };
   return (
     <>
       <StatusBarVideo show={true} start={connection} />
       <VideoContent localVideoRef={localVideoRef} remoteVideoRef={remoteVideoRef} />
-      <ChatVideo realtimeText={realtimeText} />
+      <ChatVideo realtimeText={realtimeText} setDisplayMap={setDisplayMap} />
       <ControlVideo />
-      <div className="modal " ref={modalRef}>
-        <div className="modal-box relative p-0">
-          <label className="btn btn-sm btn-circle absolute right-2 top-2 z-50" onClick={handleCloseModal}>
-            ✕
-          </label>
-          <div className="h-[500px]">
-            <DisplayMap latitude={"13"} longitude={"100"} />
-          </div>
-        </div>
-      </div>
+      <MapModal displayMap={displayMap} setDisplayMap={setDisplayMap} />
     </>
   );
 }

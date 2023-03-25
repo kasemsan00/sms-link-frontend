@@ -7,6 +7,7 @@ let map;
 export default function DisplayMap({ latitude, longitude }) {
   const { lang } = useTranslation();
   const mapRef = useRef(null);
+
   useEffect(() => {
     const existingScript = document.getElementById("longdoMapScript");
     if (!existingScript) {
@@ -23,18 +24,17 @@ export default function DisplayMap({ latitude, longitude }) {
         });
         map.zoom(16, false);
         map.location(longDo.LocationMode.Geolocation);
-        map.Event.bind("suggest", function (result) {
-          if (result.data.length > 0) {
-            setSuggestionData(result);
-          }
-        });
-        map.location({ lon: longitude, lat: latitude });
       };
     }
   }, [lang]);
+  useEffect(() => {
+    if (map !== undefined) {
+      map.location({ lon: longitude.toString(), lat: latitude.toString() });
+    }
+  }, [latitude, longitude]);
   return (
     <>
-      <div className="w-full h-screen" ref={mapRef}></div>
+      <div className="h-full" ref={mapRef}></div>
     </>
   );
 }
