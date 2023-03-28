@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useEffect, Suspense } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "react-query";
 import { getExtensionDetail, updateUserActiveStatus } from "../../request/request";

@@ -6,7 +6,7 @@ export default function ChangeLanguage() {
   const router = useRouter();
   const { lang } = useTranslation("header");
   const handleSetLanguage = (lang) => {
-    window.location.href = "/" + lang + "/" + router.asPath;
+    window.location.href = "/" + lang + router.asPath;
   };
 
   return (
