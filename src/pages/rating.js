@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Head from "next/head";
 import useTranslation from "next-translate/useTranslation";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -8,18 +8,17 @@ import { submitRating } from "../request/request";
 import StatusbarGeo from "../components/Status/StatusBarGeo";
 import Header from "../components/Utilities/Header";
 import Footer from "../components/Utilities/Footer";
+import { motion } from "framer-motion";
 
 const SurveyButton = ({ rate, selectRate, setRate }) => {
   return (
-    <>
-      <button onClick={() => setRate(rate)}>
-        {selectRate >= rate ? (
-          <StarIcon style={{ fontSize: "50px", color: "green" }} />
-        ) : (
-          <StarBorderIcon style={{ fontSize: "50px", color: "green" }} />
-        )}
-      </button>
-    </>
+    <motion.button whileHover={{ scale: 1.3 }} onHoverStart={(e) => {}} onHoverEnd={(e) => {}} onClick={() => setRate(rate)}>
+      {selectRate >= rate ? (
+        <StarIcon style={{ fontSize: "60px", color: "green" }} />
+      ) : (
+        <StarBorderIcon style={{ fontSize: "60px", color: "green" }} />
+      )}
+    </motion.button>
   );
 };
 
@@ -56,24 +55,26 @@ export default function Rating() {
       <main>
         <StatusbarGeo show={true} uuid={uuid} />
         <Header />
-        <div className="h-screen w-screen ">
+        <div className="h-screen w-screen">
           <div
             className="w-full h-full flex flex-1 flex-col justify-center items-center"
             style={{ display: mutationSubmitRating.isSuccess ? "none" : "flex" }}
           >
             <div className="text-3xl font-bold text-end mb-12">ประเมินความพึงพอใจ</div>
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               <SurveyButton rate={1} selectRate={selectRate} setRate={handleClickSetRate} />
               <SurveyButton rate={2} selectRate={selectRate} setRate={handleClickSetRate} />
               <SurveyButton rate={3} selectRate={selectRate} setRate={handleClickSetRate} />
               <SurveyButton rate={4} selectRate={selectRate} setRate={handleClickSetRate} />
               <SurveyButton rate={5} selectRate={selectRate} setRate={handleClickSetRate} />
             </div>
-            <button className="btn btn-warning mt-12 w-[80%]" onClick={handleSubmitRate}>
+            <button className="btn btn-warning mt-12 w-[50%]" onClick={handleSubmitRate}>
               SubmitRate
             </button>
           </div>
-          <div className="w-full h-full flex flex-1 flex-col justify-center items-center">Thank You</div>
+          <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
+            <div className="text-3xl font-bold text-end mb-12">Tank you</div>
+          </div>
         </div>
         {typeof window === undefined ? <Footer /> : null}
       </main>
