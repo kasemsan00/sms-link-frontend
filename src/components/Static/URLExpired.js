@@ -16,7 +16,7 @@ export default function URLExpired() {
         </div>
       </div>
       <div className="flex flex-1 justify-center items-center flex-col space-x-3 w-46">
-        <div className="text-2xl text-center">{t("url-expired")}</div>
+        <div className="text-2xl text-center text-primary-text font-bold">{t("url-expired")}</div>
       </div>
     </motion.div>
   );
