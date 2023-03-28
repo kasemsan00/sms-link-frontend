@@ -122,28 +122,22 @@ export default function UUID() {
                     <DynamicLinkCall extensionStatus={queryExtension.data.status} />
                   </Suspense>
                 ) : null}
-                {webStatus === "unregistered" || webStatus === "registrationFailed" ? (
-                  <Suspense fallback="Loading...">
-                    <DynamicEndCall />
-                  </Suspense>
-                ) : null}
                 {webStatus === "makecall" ? (
                   // <Suspense fallback="Loading...">
                   //   <DynamicVideoCall />
                   // </Suspense>
                   <VideoCall />
                 ) : null}
-                {webStatus === "ended" || webStatus === "disconnected" ? (
+                {webStatus === "close" ||
+                webStatus === "ended" ||
+                webStatus === "disconnected" ||
+                webStatus === "unregistered" ||
+                webStatus === "registrationFailed" ? (
                   <Suspense fallback="Loading...">
                     <DynamicEndCall />
                   </Suspense>
                 ) : null}
               </>
-            ) : null}
-            {queryExtension.data.status === "close" ? (
-              <Suspense fallback="Loading...">
-                <DynamicEndCall />
-              </Suspense>
             ) : null}
           </>
         ) : null}
