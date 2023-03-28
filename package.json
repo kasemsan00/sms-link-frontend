@@ -24,7 +24,7 @@
     "framer-motion": "^10.9.1",
     "jssip": "^3.10.0",
     "next": "^13.2.4",
-    "next-translate": "^2.0.3",
+    "next-translate": "^2.0.4",
     "punycode": "^2.3.0",
     "react": "18.2.0",
     "react-device-detect": "^2.2.3",
