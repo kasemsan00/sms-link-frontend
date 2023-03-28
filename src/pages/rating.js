@@ -73,7 +73,7 @@ export default function Rating() {
             </button>
           </div>
           <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
-            <div className="text-3xl font-bold text-end mb-12">Tank you</div>
+            <div className="text-3xl font-bold text-end mb-12">Thank you</div>
           </div>
         </div>
         {typeof window === undefined ? <Footer /> : null}
