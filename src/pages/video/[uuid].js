@@ -138,7 +138,11 @@ export default function UUID() {
                   </Suspense>
                 ) : null}
               </>
-            ) : null}
+            ) : (
+              <Suspense fallback="Loading...">
+                <DynamicEndCall />
+              </Suspense>
+            )}
           </>
         ) : null}
       </main>
