@@ -21,7 +21,7 @@ export default function Rating({ uuid }) {
   return (
     <>
       <div
-        className="w-full h-full flex flex-1 flex-col justify-center items-center"
+        className="w-full h-full flex flex-1 flex-col justify-center items-center text-center text-bold"
         style={{ display: mutationSubmitRating.isSuccess ? "none" : "flex" }}
       >
         <div className="text-3xl font-bold text-end mb-12">{tRate("rating-title")}</div>

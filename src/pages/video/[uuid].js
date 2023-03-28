@@ -47,12 +47,22 @@ export default function UUID() {
       dispatch(setLinkDetail(data));
       dispatch(setUUID(uuid));
       if (data.status !== "close" && data.status !== "ERROR" && data.message !== "No data" && userAgent === null) {
-        const socket = new JsSIP.WebSocketInterface(data.wss);
+        // const socket = new JsSIP.WebSocketInterface(data.wss);
+        // const configuration = {
+        //   sockets: [socket],
+        //   uri: "sip:" + data.extension + "@" + data.domain,
+        //   password: data.password,
+        // };
+
+        const socket = new JsSIP.WebSocketInterface("wss://d1422-api-ippbx.ddc.moph.go.th/wss");
         const configuration = {
           sockets: [socket],
-          uri: "sip:" + data.extension + "@" + data.domain,
-          password: data.password,
+          uri: "sip:1582172498@d1422-sip.ddc.moph.go.th",
+          password: "test1234",
         };
+        console.log(socket);
+        console.log(configuration);
+
         userAgent = new JsSIP.UA(configuration);
         userAgent.on("unregistered", () => {
           dispatch(setWebStatus("unregistered"));
@@ -77,6 +87,7 @@ export default function UUID() {
 
   useEffect(() => {
     if (isUserAgentSetup) {
+      console.log("userAgentStart");
       userAgent.start();
     }
   }, [isUserAgentSetup]);

@@ -111,6 +111,7 @@ export default function ChatVideo({ realtimeText, setDisplayMap }) {
   };
 
   const handleSendLocation = () => {
+    console.log("handleSendLocation");
     const latitude = localStorage.getItem("latitude");
     const longitude = localStorage.getItem("longitude");
     const accuracy = localStorage.getItem("accuracy");
@@ -188,13 +189,13 @@ export default function ChatVideo({ realtimeText, setDisplayMap }) {
               onChange={handleOnChange}
               value={writeMessage}
             />
-            <span
-              className="bg-sky-800 text-white cursor-pointer"
+            <button
+              className="bg-sky-800 text-white cursor-pointer w-[60px]"
               style={{ borderRadius: "0" }}
               onClick={handleButtonSendMessage}
             >
               {t("chat-send-button")}
-            </span>
+            </button>
           </label>
         </div>
       </div>
