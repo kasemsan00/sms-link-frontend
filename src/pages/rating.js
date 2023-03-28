@@ -26,6 +26,7 @@ const uuid = "135bc1";
 
 export default function Rating() {
   const { t } = useTranslation("common");
+  const { t: tRate } = useTranslation("rating");
   const [selectRate, setSelectRate] = useState(null);
   const mutationSubmitRating = useMutation(submitRating);
 
@@ -34,14 +35,7 @@ export default function Rating() {
   };
   const handleSubmitRate = () => {
     if (selectRate !== null) {
-      mutationSubmitRating.mutate(
-        { uuid: uuid, rate: selectRate },
-        {
-          onSuccess: () => {
-            console.log("submitSuccess");
-          },
-        },
-      );
+      mutationSubmitRating.mutate({ uuid: uuid, rate: selectRate });
     }
   };
   return (
@@ -60,7 +54,7 @@ export default function Rating() {
             className="w-full h-full flex flex-1 flex-col justify-center items-center"
             style={{ display: mutationSubmitRating.isSuccess ? "none" : "flex" }}
           >
-            <div className="text-3xl font-bold text-end mb-12">ประเมินความพึงพอใจ</div>
+            <div className="text-3xl font-bold text-end mb-12">{tRate("rating-title")}</div>
             <div className="flex gap-2">
               <SurveyButton rate={1} selectRate={selectRate} setRate={handleClickSetRate} />
               <SurveyButton rate={2} selectRate={selectRate} setRate={handleClickSetRate} />
@@ -69,11 +63,14 @@ export default function Rating() {
               <SurveyButton rate={5} selectRate={selectRate} setRate={handleClickSetRate} />
             </div>
             <button className="btn btn-warning mt-12 w-[50%]" onClick={handleSubmitRate}>
-              SubmitRate
+              {tRate("rating-submit")}
             </button>
           </div>
-          <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
-            <div className="text-3xl font-bold text-end mb-12">Thank you</div>
+          <div
+            className="w-full h-full flex flex-1 flex-col justify-center items-center"
+            style={{ display: !mutationSubmitRating.isSuccess ? "none" : "flex" }}
+          >
+            <div className="text-3xl font-bold text-end mb-12">{tRate("rating-success")}</div>
           </div>
         </div>
         {typeof window === undefined ? <Footer /> : null}

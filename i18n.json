@@ -3,7 +3,7 @@
   "defaultLocale": "th",
   "localeDetection": false,
   "pages": {
-    "*": ["common", "header", "footer", "control"],
-    "/": ["common", "header", "footer", "control"]
+    "*": ["common", "header", "footer", "control", "rating"],
+    "/": ["common", "header", "footer", "control", "rating"]
   }
 }
