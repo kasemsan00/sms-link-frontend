@@ -93,14 +93,6 @@ export default function UUID() {
     );
   }
 
-  // if (data !== undefined && webStatus === "disconnected") {
-  //   return (
-  //     <Suspense fallback="Loading...">
-  //       <DynamicEndCall />
-  //     </Suspense>
-  //   );
-  // }
-
   if (webStatus === "CameraNotAllow") {
     return (
       <>
@@ -141,7 +133,7 @@ export default function UUID() {
                   // </Suspense>
                   <VideoCall />
                 ) : null}
-                {webStatus === "ended" ? (
+                {webStatus === "ended" || webStatus === "disconnected" ? (
                   <Suspense fallback="Loading...">
                     <DynamicEndCall />
                   </Suspense>
