@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useState } from "react";
-import { getLocationName, sendLocation } from "../../request";
+import { getLocationName, sendLocation } from "../../request/request";
 import { useDispatch, useSelector } from "react-redux";
 import { setLocation } from "../../redux/slices/locationSlice";
 import { useQuery } from "react-query";
