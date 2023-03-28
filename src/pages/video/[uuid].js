@@ -17,6 +17,7 @@ import LinkClose from "../../components/Static/LinkClose";
 import Footer from "../../components/Utilities/Footer";
 import CameraAccessWarning from "../../components/Static/CameraAccessWarning";
 import VideoCall from "../../components/VideoCall/VideoCall";
+import URLExpired from "../../components/Static/URLExpired";
 
 let userAgent = null;
 const DynamicLinkCall = dynamic(() => import("../../components/VideoCall/StartVideoCall"));
@@ -42,7 +43,7 @@ export default function UUID() {
   });
 
   useEffect(() => {
-    if (queryExtension.isSuccess) {
+    if (queryExtension.isSuccess && queryExtension.data.status !== "expired") {
       dispatch(setLinkDetail(data));
       dispatch(setUUID(uuid));
       if (data.status !== "close" && data.status !== "ERROR" && data.message !== "No data" && userAgent === null) {
@@ -92,7 +93,18 @@ export default function UUID() {
       </>
     );
   }
-
+  if (data !== undefined && data.status === "expired") {
+    return (
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <URLExpired />
+        </div>
+        <Footer />
+      </>
+    );
+  }
   if (webStatus === "CameraNotAllow") {
     return (
       <>
@@ -122,12 +134,7 @@ export default function UUID() {
                     <DynamicLinkCall extensionStatus={queryExtension.data.status} />
                   </Suspense>
                 ) : null}
-                {webStatus === "makecall" ? (
-                  // <Suspense fallback="Loading...">
-                  //   <DynamicVideoCall />
-                  // </Suspense>
-                  <VideoCall />
-                ) : null}
+                {webStatus === "makecall" ? <VideoCall /> : null}
                 {webStatus === "close" ||
                 webStatus === "ended" ||
                 webStatus === "disconnected" ||
