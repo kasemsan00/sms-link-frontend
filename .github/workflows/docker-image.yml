@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ["develop"]
 
 jobs:
   docker:
@@ -21,4 +21,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: thspinsoft/sms-link-frontend:develop-1.0.1
+          tags: thspinsoft/sms-link-frontend:develop-1.0.2

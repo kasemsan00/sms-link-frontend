@@ -16,8 +16,6 @@ import Header from "../../components/Utilities/Header";
 import LinkClose from "../../components/Static/LinkClose";
 import Footer from "../../components/Utilities/Footer";
 import CameraAccessWarning from "../../components/Static/CameraAccessWarning";
-// import EndCall from "../../components/Static/EndCall";
-// import LinkCall from "../../components/VideoCall/StartVideoCall";
 import VideoCall from "../../components/VideoCall/VideoCall";
 
 let userAgent = null;
@@ -136,8 +134,7 @@ export default function UUID() {
                   <Suspense fallback="Loading...">
                     <DynamicEndCall />
                   </Suspense>
-                ) : // <EndCall />
-                null}
+                ) : null}
                 {webStatus === "makecall" ? (
                   // <Suspense fallback="Loading...">
                   //   <DynamicVideoCall />
@@ -148,16 +145,14 @@ export default function UUID() {
                   <Suspense fallback="Loading...">
                     <DynamicEndCall />
                   </Suspense>
-                ) : // <EndCall />
-                null}
+                ) : null}
               </>
             ) : null}
             {queryExtension.data.status === "close" ? (
               <Suspense fallback="Loading...">
                 <DynamicEndCall />
               </Suspense>
-            ) : // <EndCall />
-            null}
+            ) : null}
           </>
         ) : null}
       </main>

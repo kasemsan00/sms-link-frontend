@@ -5,9 +5,10 @@ import { updateTerminateCall } from "../../request/request";
 import Header from "../Utilities/Header";
 import Footer from "../Utilities/Footer";
 import useTranslation from "next-translate/useTranslation";
+import Rating from "../Rating/Rating";
 
 export default function EndCall() {
-  const { uuid } = useSelector((state) => state.linkDetail);
+  const { uuid, rate } = useSelector((state) => state.linkDetail);
   const { t } = useTranslation("common");
   useEffect(() => {
     const controller = new AbortController();
@@ -23,7 +24,7 @@ export default function EndCall() {
       <StatusBarGeo show={true} />
       <Header />
       <div className="flex flex-1 h-[calc(100vh-64px)] justify-center items-center landscape:mt-10">
-        <div className="text-3xl text-end font-bold">{t("end-call")}</div>
+        {rate !== 0 ? <div className="text-3xl text-end font-bold">{t("end-call")}</div> : <Rating uuid={uuid} />}
       </div>
       <Footer />
     </>
