@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import StatusBarGeo from "../Status/StatusBarGeo";
-import { updateTerminateCall } from "../../request";
+import { updateTerminateCall } from "../../request/request";
 import Header from "../Utilities/Header";
 import Footer from "../Utilities/Footer";
 import useTranslation from "next-translate/useTranslation";

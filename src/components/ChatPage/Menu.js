@@ -3,7 +3,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { motion } from "framer-motion";
 import { setWebStatus } from "../../redux/slices/webStatusSlice";
 import { useMutation } from "react-query";
-import { updateTerminateCall, updateUserActiveStatus } from "../../request";
+import { updateTerminateCall, updateUserActiveStatus } from "../../request/request";
 import { useDispatch, useSelector } from "react-redux";
 import useTranslation from "next-translate/useTranslation";
 

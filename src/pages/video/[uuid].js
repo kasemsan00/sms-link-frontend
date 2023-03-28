@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useEffect, Suspense, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "react-query";
-import { getExtensionDetail, updateUserActiveStatus } from "../../request";
+import { getExtensionDetail, updateUserActiveStatus } from "../../request/request";
 import { setLinkDetail, setUUID } from "../../redux/slices/linkDetailSlice";
 import { setUserAgent } from "../../redux/slices/sipSlice";
 import { setWebStatus } from "../../redux/slices/webStatusSlice";

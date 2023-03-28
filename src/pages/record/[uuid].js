@@ -4,7 +4,7 @@ import { useEffect, Suspense } from "react";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { useQuery } from "react-query";
-import { updateUserActiveStatus, getExtensionDetail } from "../../request";
+import { updateUserActiveStatus, getExtensionDetail } from "../../request/request";
 import { useDispatch, useSelector } from "react-redux";
 import { setLinkDetail } from "../../redux/slices/linkDetailSlice";
 import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";

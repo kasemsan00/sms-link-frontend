@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useTransition } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addMessageData } from "../../redux/slices/messageDataSlice";
-import { reverseGeocode } from "../../request";
+import { reverseGeocode } from "../../request/request";
 import StatusBarGeo from "../Status/StatusBarGeo";
 import Input from "./Input";
 import Content from "./Content";
@@ -11,7 +11,7 @@ import StartChat from "./StartChat";
 import Header from "../Utilities/Header";
 import Footer from "../Utilities/Footer";
 import Menu from "./Menu";
-import { updateUserActiveStatus } from "../../request";
+import { updateUserActiveStatus } from "../../request/request";
 import { ConvertToRTTEvent } from "../Utilities/ConvertToRTTEvent";
 import { DisplayBuffer } from "./realtime-text";
 

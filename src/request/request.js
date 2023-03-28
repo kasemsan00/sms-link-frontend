@@ -1,21 +1,20 @@
-import axios from "axios";
-
 export const URL_API = process.env.NEXT_PUBLIC_URL_API;
 
-export const uploadFile = async ({ file }) => {
-  const formData = new FormData();
-  formData.append("files", file);
-  axios
-    .post(`${URL_API}/upload/file`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      onUploadProgress: (progressEvent) => {
-        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-        console.log(percentCompleted);
-      },
-    })
-    .then(({ data }) => console.log(data));
+export const submitRating = async ({ uuid, rate }) => {
+  const response = await fetch(`${URL_API}/rate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      uuid,
+      rate,
+    }),
+  });
+  if (!response.ok) {
+    throw new Error("Send Location Error");
+  }
+  return response.json();
 };
 
 export const updateUserActiveStatus = async ({ uuid, status, signal = undefined }) => {

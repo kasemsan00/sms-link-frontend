@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { useEffect, Suspense } from "react";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
-import { getExtensionDetail, updateUserActiveStatus } from "../../request";
+import { getExtensionDetail, updateUserActiveStatus } from "../../request/request";
 import { setLinkDetail } from "../../redux/slices/linkDetailSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserAgent } from "../../redux/slices/sipSlice";

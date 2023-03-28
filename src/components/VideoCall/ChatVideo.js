@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { sendLocation } from "../../request";
+import { sendLocation } from "../../request/request";
 import useTranslation from "next-translate/useTranslation";
 // import AutorenewIcon from "@mui/icons-material/Autorenew";
 const { detect } = require("detect-browser");
