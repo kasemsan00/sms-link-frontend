@@ -93,13 +93,13 @@ export default function UUID() {
     );
   }
 
-  if (data !== undefined && webStatus === "disconnected") {
-    return (
-      <Suspense fallback="Loading...">
-        <DynamicEndCall />
-      </Suspense>
-    );
-  }
+  // if (data !== undefined && webStatus === "disconnected") {
+  //   return (
+  //     <Suspense fallback="Loading...">
+  //       <DynamicEndCall />
+  //     </Suspense>
+  //   );
+  // }
 
   if (webStatus === "CameraNotAllow") {
     return (
