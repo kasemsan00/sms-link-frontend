@@ -7,13 +7,15 @@ import Header from "../Utilities/Header";
 import useTranslation from "next-translate/useTranslation";
 import StartCall from "../Utilities/StartCall";
 
-export default function StartVideoCall({ uuid, extensionStatus }) {
+export default function StartVideoCall({ uuid, extensionStatus, isRegistered }) {
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
   const handleCall = () => {
-    if (extensionStatus !== "close") {
+    if (extensionStatus !== "close" && isRegistered) {
       dispatch(setUserActiveStatus("makecall"));
       dispatch(setWebStatus("makecall"));
+    } else {
+      console.log("registered failed");
     }
   };
 

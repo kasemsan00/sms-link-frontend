@@ -36,6 +36,7 @@ export default function UUID() {
   });
   let { data } = queryExtension;
   const [isUserAgentSetup, setIsUserAgentSetup] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   useQuery([uuid, userActiveStatus], () => updateUserActiveStatus({ uuid, status: userActiveStatus }), {
     enabled: uuid !== "" && userActiveStatus !== "",
@@ -47,7 +48,7 @@ export default function UUID() {
       dispatch(setLinkDetail(data));
       dispatch(setUUID(uuid));
       if (data.status !== "close" && data.status !== "ERROR" && data.message !== "No data" && userAgent === null) {
-        const socket = new JsSIP.WebSocketInterface("wss://d1422-api-ippbx.ddc.moph.go.th:8002/ws");
+        const socket = new JsSIP.WebSocketInterface(data.wss);
         const configuration = {
           sockets: [socket],
           uri: "sip:" + data.extension + "@" + data.domain,
@@ -65,25 +66,29 @@ export default function UUID() {
 
         userAgent = new JsSIP.UA(configuration);
         userAgent.on("unregistered", () => {
-          dispatch(setWebStatus("unregistered"));
+          // dispatch(setWebStatus("unregistered"));
+          setIsRegistered(false);
         });
         userAgent.on("registered", () => {
           dispatch(setUserAgent(userAgent));
-          dispatch(setWebStatus("registered"));
-          dispatch(setUserActiveStatus("open"));
+          setIsRegistered(true);
+          // dispatch(setWebStatus("registered"));
+          // dispatch(setUserActiveStatus("open"));
         });
         userAgent.on("registrationFailed", () => {
           console.log("registrationFailed");
-          dispatch(setWebStatus("registrationFailed"));
+          setIsRegistered(false);
+          // dispatch(setWebStatus("registrationFailed"));
         });
         userAgent.on("disconnected", (e) => {
           console.log("disconnected", e);
-          dispatch(setWebStatus("disconnected"));
+          setIsRegistered(false);
+          // dispatch(setWebStatus("disconnected"));
         });
         setIsUserAgentSetup(true);
       }
     }
-  }, [dispatch, queryExtension.isSuccess, data, uuid]);
+  }, [dispatch, data, uuid, queryExtension.isSuccess, queryExtension?.data?.status]);
 
   useEffect(() => {
     if (isUserAgentSetup) {
@@ -142,7 +147,7 @@ export default function UUID() {
               <>
                 {webStatus === "" || webStatus === "open" || webStatus === "registered" ? (
                   <Suspense fallback={`Loading...`}>
-                    <DynamicLinkCall extensionStatus={queryExtension.data.status} />
+                    <DynamicLinkCall uuid={uuid} extensionStatus={queryExtension.data.status} isRegistered={isRegistered} />
                   </Suspense>
                 ) : null}
                 {webStatus === "makecall" ? <VideoCall /> : null}
