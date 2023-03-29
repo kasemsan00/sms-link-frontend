@@ -59,7 +59,7 @@ export default function Chat() {
         });
         userAgent.on("registrationFailed", () => {
           console.log("registrationFailed");
-          dispatch(setWebStatus("registrationFailed"));
+          // dispatch(setWebStatus("registrationFailed"));
         });
         userAgent.start();
       }
