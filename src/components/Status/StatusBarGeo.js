@@ -110,7 +110,7 @@ const StatusbarGeo = ({ show }) => {
         },
         {
           enableHighAccuracy: false,
-          timeout: 5000,
+          timeout: 20000,
           maximumAge: Infinity,
         },
       );
