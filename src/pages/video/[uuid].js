@@ -57,11 +57,11 @@ export default function UUID() {
         // const socket = new JsSIP.WebSocketInterface("wss://d1422-api-ippbx.ddc.moph.go.th/wss");
         // const configuration = {
         //   sockets: [socket],
-        //   uri: "sip:1582172498@d1422-sip.ddc.moph.go.th",
-        //   password: "test1234",
+        //   uri: "sip:168005819131610@203.113.70.69",
+        //   password: "rrT3rpHdvjjcY7hBxMm5",
         // };
-        // console.log(socket);
-        // console.log(configuration);
+        console.log(socket);
+        console.log(configuration);
 
         userAgent = new JsSIP.UA(configuration);
         userAgent.on("unregistered", () => {
