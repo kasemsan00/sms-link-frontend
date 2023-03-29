@@ -16,9 +16,8 @@ import Header from "../../components/Utilities/Header";
 import LinkClose from "../../components/Static/LinkClose";
 import Footer from "../../components/Utilities/Footer";
 import CameraAccessWarning from "../../components/Static/CameraAccessWarning";
-// import EndCall from "../../components/Static/EndCall";
-// import LinkCall from "../../components/VideoCall/StartVideoCall";
 import VideoCall from "../../components/VideoCall/VideoCall";
+import URLExpired from "../../components/Static/URLExpired";
 
 let userAgent = null;
 const DynamicLinkCall = dynamic(() => import("../../components/VideoCall/StartVideoCall"));
@@ -44,7 +43,7 @@ export default function UUID() {
   });
 
   useEffect(() => {
-    if (queryExtension.isSuccess) {
+    if (queryExtension.isSuccess && queryExtension.data.status !== "expired") {
       dispatch(setLinkDetail(data));
       dispatch(setUUID(uuid));
       if (data.status !== "close" && data.status !== "ERROR" && data.message !== "No data" && userAgent === null) {
@@ -54,6 +53,16 @@ export default function UUID() {
           uri: "sip:" + data.extension + "@" + data.domain,
           password: data.password,
         };
+
+        // const socket = new JsSIP.WebSocketInterface("wss://d1422-api-ippbx.ddc.moph.go.th/wss");
+        // const configuration = {
+        //   sockets: [socket],
+        //   uri: "sip:168005819131610@203.113.70.69",
+        //   password: "rrT3rpHdvjjcY7hBxMm5",
+        // };
+        console.log(socket);
+        console.log(configuration);
+
         userAgent = new JsSIP.UA(configuration);
         userAgent.on("unregistered", () => {
           dispatch(setWebStatus("unregistered"));
@@ -78,6 +87,7 @@ export default function UUID() {
 
   useEffect(() => {
     if (isUserAgentSetup) {
+      console.log("userAgentStart");
       userAgent.start();
     }
   }, [isUserAgentSetup]);
@@ -94,15 +104,18 @@ export default function UUID() {
       </>
     );
   }
-
-  if (data !== undefined && webStatus === "disconnected") {
+  if (data !== undefined && data.status === "expired") {
     return (
-      <Suspense fallback="Loading...">
-        <DynamicEndCall />
-      </Suspense>
+      <>
+        <StatusbarGeo show={true} uuid={uuid} />
+        <Header />
+        <div className="flex flex-1 h-[calc(100vh-80px)] justify-center items-center landscape:mt-10">
+          <URLExpired />
+        </div>
+        <Footer />
+      </>
     );
   }
-
   if (webStatus === "CameraNotAllow") {
     return (
       <>
@@ -132,32 +145,22 @@ export default function UUID() {
                     <DynamicLinkCall extensionStatus={queryExtension.data.status} />
                   </Suspense>
                 ) : null}
-                {webStatus === "unregistered" || webStatus === "registrationFailed" ? (
+                {webStatus === "makecall" ? <VideoCall /> : null}
+                {webStatus === "close" ||
+                webStatus === "ended" ||
+                webStatus === "disconnected" ||
+                webStatus === "unregistered" ||
+                webStatus === "registrationFailed" ? (
                   <Suspense fallback="Loading...">
                     <DynamicEndCall />
                   </Suspense>
-                ) : // <EndCall />
-                null}
-                {webStatus === "makecall" ? (
-                  // <Suspense fallback="Loading...">
-                  //   <DynamicVideoCall />
-                  // </Suspense>
-                  <VideoCall />
                 ) : null}
-                {webStatus === "ended" ? (
-                  <Suspense fallback="Loading...">
-                    <DynamicEndCall />
-                  </Suspense>
-                ) : // <EndCall />
-                null}
               </>
-            ) : null}
-            {queryExtension.data.status === "close" ? (
+            ) : (
               <Suspense fallback="Loading...">
                 <DynamicEndCall />
               </Suspense>
-            ) : // <EndCall />
-            null}
+            )}
           </>
         ) : null}
       </main>

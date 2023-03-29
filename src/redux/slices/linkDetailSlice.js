@@ -10,6 +10,7 @@ const initialState = {
   conference: 0,
   domain: "",
   wss: "",
+  rate: 0,
 };
 const linkDetailSlcie = createSlice({
   name: "linkDetail",
@@ -34,6 +35,7 @@ const linkDetailSlcie = createSlice({
         ["confernce"]: action.payload.conference,
         ["domain"]: action.payload.domain,
         ["wss"]: action.payload.wss,
+        ["rate"]: action.payload.rate,
       };
     },
     resetLinkDetail() {

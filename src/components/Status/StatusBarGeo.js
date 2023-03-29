@@ -6,7 +6,6 @@ import { setLocation } from "../../redux/slices/locationSlice";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
-import Head from "next/head";
 import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
 const { detect } = require("detect-browser");
 const browser = detect();
@@ -132,7 +131,6 @@ const StatusbarGeo = ({ show }) => {
 
   return (
     <>
-      {/*<Head>{show ? <meta name="theme-color" content="#2D683E" /> : null}</Head>*/}
       <div className="flex flex-1 items-center justify-center h-[24px] bg-primary" ref={statusBarRef}>
         {locationName === undefined ? <LoadingLocation /> : null}
         <div className="text-white ml-1" ref={locationNameRef} />
