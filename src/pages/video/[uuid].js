@@ -47,7 +47,7 @@ export default function UUID() {
       dispatch(setLinkDetail(data));
       dispatch(setUUID(uuid));
       if (data.status !== "close" && data.status !== "ERROR" && data.message !== "No data" && userAgent === null) {
-        const socket = new JsSIP.WebSocketInterface(data.wss);
+        const socket = new JsSIP.WebSocketInterface("wss://d1422-api-ippbx.ddc.moph.go.th:8002/ws");
         const configuration = {
           sockets: [socket],
           uri: "sip:" + data.extension + "@" + data.domain,
