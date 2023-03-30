@@ -43,7 +43,7 @@ export default function Rating({ uuid }) {
         className="w-full h-full flex flex-1 flex-col justify-center items-center"
         style={{ display: !mutationSubmitRating.isSuccess ? "none" : "flex" }}
       >
-        <div className="text-3xl font-bold text-end mb-12">{tRate("rating-success")}</div>
+        <div className="text-3xl font-bold text-end mb-12 text-center">{tRate("rating-success")}</div>
       </div>
     </>
   );
