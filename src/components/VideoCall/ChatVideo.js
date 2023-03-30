@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { sendLocation } from "../../request/request";
 import useTranslation from "next-translate/useTranslation";
-// import AutorenewIcon from "@mui/icons-material/Autorenew";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 const { detect } = require("detect-browser");
 const browser = detect();
 
@@ -84,6 +84,7 @@ export default function ChatVideo({ realtimeText, setDisplayMap }) {
   const { userAgent } = useSelector((state) => state.sip);
   const { uuid, agent, domain } = useSelector((state) => state.linkDetail);
   const [writeMessage, setWriteMessage] = useState("");
+  const [isGetLocationLoading, setIsGetLocationLoading] = useState(false);
 
   const handleInputSendMessage = (event) => {
     if (event.key === "Enter" && writeMessage.trim() !== "") {
@@ -112,51 +113,51 @@ export default function ChatVideo({ realtimeText, setDisplayMap }) {
 
   const handleSendLocation = () => {
     console.log("handleSendLocation");
-    const latitude = localStorage.getItem("latitude");
-    const longitude = localStorage.getItem("longitude");
-    const accuracy = localStorage.getItem("accuracy");
-    if (latitude === null) {
-      userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-error"));
-      alert(t("alert-allow-location-service"));
-      return;
-    }
-    sendLocation({
-      os: browser.os,
-      accuracy: parseInt(accuracy),
-      latitude: parseFloat(latitude),
-      longitude: parseFloat(longitude),
-      uuid: uuid,
-    }).then((r) => {
-      console.log(r);
-    });
+    // const latitude = localStorage.getItem("latitude");
+    // const longitude = localStorage.getItem("longitude");
+    // const accuracy = localStorage.getItem("accuracy");
+    // if (latitude === null) {
+    //   userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-error"));
+    //   alert(t("alert-allow-location-service"));
+    //   return;
+    // }
+    // sendLocation({
+    //   os: browser.os,
+    //   accuracy: parseInt(accuracy),
+    //   latitude: parseFloat(latitude),
+    //   longitude: parseFloat(longitude),
+    //   uuid: uuid,
+    // }).then((r) => {
+    //   console.log(r);
+    // });
     const sendUri = `sip:${agent}@${domain}`;
-    userAgent.sendMessage(sendUri, "@URL:" + ICRM_MAP_URL + "/" + latitude + "/" + longitude);
-    userAgent.sendMessage(sendUri, t("send-coordinates-success"));
-    // setIsGetLocationLoading(true);
-    // navigator.geolocation.getCurrentPosition(
-    //   (position) => {
-    //     setIsGetLocationLoading(false);
-    //     userAgent.sendMessage(sendUri, "@URL:" + ICRM_MAP_URL + "/" + position.coords.latitude + "/" + position.coords.longitude);
-    //     userAgent.sendMessage(sendUri, t("send-coordinates-success"));
-    //     sendLocation({
-    //       os: browser.os,
-    //       accuracy: position.coords.accuracy,
-    //       latitude: position.coords.latitude,
-    //       longitude: position.coords.longitude,
-    //       uuid: uuid,
-    //     }).then((r) => {
-    //       console.log(r);
-    //     });
-    //   },
-    //   (err) => {
-    //     setIsGetLocationLoading(false);
-    //     console.log(err);
-    //     if (err.message === "User denied Geolocation") {
-    //       userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-error"));
-    //       alert(t("alert-allow-location-service"));
-    //     }
-    //   },
-    // );
+    // userAgent.sendMessage(sendUri, "@URL:" + ICRM_MAP_URL + "/" + latitude + "/" + longitude);
+    // userAgent.sendMessage(sendUri, t("send-coordinates-success"));
+    setIsGetLocationLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setIsGetLocationLoading(false);
+        userAgent.sendMessage(sendUri, "@URL:" + ICRM_MAP_URL + "/" + position.coords.latitude + "/" + position.coords.longitude);
+        userAgent.sendMessage(sendUri, t("send-coordinates-success"));
+        sendLocation({
+          os: browser.os,
+          accuracy: position.coords.accuracy,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          uuid: uuid,
+        }).then((r) => {
+          console.log(r);
+        });
+      },
+      (err) => {
+        setIsGetLocationLoading(false);
+        console.log(err);
+        if (err.message === "User denied Geolocation") {
+          userAgent.sendMessage(`sip:${agent}@${domain}`, t("send-coordinates-error"));
+          alert(t("alert-allow-location-service"));
+        }
+      },
+    );
   };
 
   const scrollToBottom = () => messagesEndRef.current.scrollIntoView({ behavior: "instant" });
@@ -174,11 +175,11 @@ export default function ChatVideo({ realtimeText, setDisplayMap }) {
               onClick={handleSendLocation}
               // disabled={isGetLocationLoading}
             >
-              {/*{isGetLocationLoading ? (*/}
-              {/*  <AutorenewIcon className="text-white w-[60px] animate-spin" />*/}
-              {/*) : (*/}
-              <Image width={30} height={30} alt="place location" src={require("../../assets/img/placeholder.png")} />
-              {/*)}*/}
+              {isGetLocationLoading ? (
+                <AutorenewIcon className="text-white w-[60px] animate-spin" />
+              ) : (
+                <Image width={30} height={30} alt="place location" src={require("../../assets/img/placeholder.png")} />
+              )}
             </button>
             <input
               className="input input-bordered w-full"
