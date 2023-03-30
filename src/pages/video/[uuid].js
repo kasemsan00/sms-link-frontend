@@ -7,8 +7,8 @@ import { useQuery } from "react-query";
 import { getExtensionDetail, updateUserActiveStatus } from "../../request/request";
 import { setLinkDetail, setUUID } from "../../redux/slices/linkDetailSlice";
 import { setUserAgent } from "../../redux/slices/sipSlice";
-import { setWebStatus } from "../../redux/slices/webStatusSlice";
-import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
+// import { setWebStatus } from "../../redux/slices/webStatusSlice";
+// import { setUserActiveStatus } from "../../redux/slices/userActiveStatusSlice";
 import JsSIP from "jssip";
 import useTranslation from "next-translate/useTranslation";
 import StatusbarGeo from "../../components/Status/StatusBarGeo";
@@ -61,8 +61,8 @@ export default function UUID() {
         //   uri: "sip:168005819131610@203.113.70.69",
         //   password: "rrT3rpHdvjjcY7hBxMm5",
         // };
-        console.log(socket);
-        console.log(configuration);
+        // console.log(socket);
+        // console.log(configuration);
 
         userAgent = new JsSIP.UA(configuration);
         userAgent.on("unregistered", () => {

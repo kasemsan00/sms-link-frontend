@@ -22,8 +22,9 @@ body {
   margin: 0;
   height: 100%;
   overflow: hidden;
-  background-image: radial-gradient(var(--secondary), var(--primary));
+  /*background-image: radial-gradient(var(--secondary), var(--primary));*/
   /*background-image: radial-gradient(rgb(97 197 238 / 57%), #037fe1);*/
+  background-image: radial-gradient(var(--secondary), rgb(255 187 206));
 }
 .body {
   height: 100vh;
@@ -155,5 +156,5 @@ body {
   }
 }
 .animation {
-    transition: all 0.3s;
+  transition: all 0.3s;
 }
