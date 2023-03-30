@@ -1,17 +1,16 @@
 import { motion } from "framer-motion";
-import StarIcon from "@mui/icons-material/Star";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
+import Image from "next/image";
 
-export default function RatingButton({ rate, selectRate, setRate }) {
+export default function SurveyButton({ rate, selectRate, setRate }) {
   return (
-    <>
-      <motion.button whileHover={{ scale: 1.3 }} onHoverStart={(e) => {}} onHoverEnd={(e) => {}} onClick={() => setRate(rate)}>
-        {selectRate >= rate ? (
-          <StarIcon style={{ fontSize: "60px", color: "green" }} />
-        ) : (
-          <StarBorderIcon style={{ fontSize: "60px", color: "green" }} />
-        )}
-      </motion.button>
-    </>
+    <motion.button whileHover={{ scale: 1.3 }} onClick={() => setRate(rate)}>
+      {selectRate >= rate ? (
+        // <StarIcon style={{ fontSize: "60px", color: "green" }} />
+        <Image src={require("../../assets/img/star-checked.png")} width={60} height={60} alt="start" />
+      ) : (
+        // <StarBorderIcon style={{ fontSize: "60px", color: "black" }} />
+        <Image src={require("../../assets/img/star-uncheck.png")} width={60} height={60} alt="start" />
+      )}
+    </motion.button>
   );
 }

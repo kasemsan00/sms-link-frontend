@@ -24,7 +24,7 @@ export default function Rating({ uuid }) {
         className="w-full h-full flex flex-1 flex-col justify-center items-center text-center text-bold"
         style={{ display: mutationSubmitRating.isSuccess ? "none" : "flex" }}
       >
-        <div className="text-3xl font-bold text-end mb-12">{tRate("rating-title")}</div>
+        <div className="text-2xl font-bold text-end mb-12">{tRate("rating-title")}</div>
         <div className="flex gap-2">
           <RatingButton rate={1} selectRate={selectRate} setRate={handleClickSetRate} />
           <RatingButton rate={2} selectRate={selectRate} setRate={handleClickSetRate} />
@@ -32,7 +32,10 @@ export default function Rating({ uuid }) {
           <RatingButton rate={4} selectRate={selectRate} setRate={handleClickSetRate} />
           <RatingButton rate={5} selectRate={selectRate} setRate={handleClickSetRate} />
         </div>
-        <button className="btn btn-warning mt-12 w-[50%]" onClick={handleSubmitRate}>
+        <button
+          className="btn btn-warning mt-12 w-[50%] border-solid border-1 border-yellow-800 focus:border-solid focus:border-1 focus:border-yellow-800"
+          onClick={handleSubmitRate}
+        >
           {tRate("rating-submit")}
         </button>
       </div>
