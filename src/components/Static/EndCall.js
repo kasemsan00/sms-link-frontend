@@ -24,7 +24,7 @@ export default function EndCall() {
       <StatusBarGeo show={true} />
       <Header />
       <div className="flex flex-1 h-[calc(100vh-64px)] justify-center items-center landscape:mt-10">
-        {rate !== 0 ? <div className="text-3xl text-end font-bold">{t("end-call")}</div> : <Rating uuid={uuid} />}
+        {rate !== 0 ? <div className="text-2xl text-primaryGreen font-bold">{t("end-call")}</div> : <Rating uuid={uuid} />}
       </div>
       <Footer />
     </>

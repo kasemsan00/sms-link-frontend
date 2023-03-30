@@ -5,6 +5,7 @@ module.exports = {
       colors: {
         primary: "rgb(219 56 102)",
         end: "rgb(31 77 46)",
+        primaryGreen: "rgb(31 77 46)",
         "primary-text": "#1f4d2e",
         secondary: "rgb(251 235 241)",
         "nstda-color": "rgb(48, 106, 179)",
