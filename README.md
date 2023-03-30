@@ -1,4 +1,4 @@
-SMS Link Frontend
+SMS Link WebRTC Frontend 
 
 Develop
 
