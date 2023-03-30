@@ -131,8 +131,8 @@ export default function ChatVideo({ realtimeText, setDisplayMap }) {
     //   console.log(r);
     // });
     const sendUri = `sip:${agent}@${domain}`;
-    // userAgent.sendMessage(sendUri, "@URL:" + ICRM_MAP_URL + "/" + latitude + "/" + longitude);
-    // userAgent.sendMessage(sendUri, t("send-coordinates-success"));
+    // // userAgent.sendMessage(sendUri, "@URL:" + ICRM_MAP_URL + "/" + latitude + "/" + longitude);
+    // // userAgent.sendMessage(sendUri, t("send-coordinates-success"));
     setIsGetLocationLoading(true);
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -173,7 +173,7 @@ export default function ChatVideo({ realtimeText, setDisplayMap }) {
               className="bg-sky-800 cursor-pointer w-[60px] flex justify-center items-center"
               style={{ borderRadius: "0" }}
               onClick={handleSendLocation}
-              // disabled={isGetLocationLoading}
+              disabled={isGetLocationLoading}
             >
               {isGetLocationLoading ? (
                 <AutorenewIcon className="text-white w-[60px] animate-spin" />
