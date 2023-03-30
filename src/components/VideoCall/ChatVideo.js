@@ -112,7 +112,7 @@ export default function ChatVideo({ realtimeText, setDisplayMap }) {
   };
 
   const handleSendLocation = () => {
-    console.log("handleSendLocation");
+    console.log("Send Location");
     // const latitude = localStorage.getItem("latitude");
     // const longitude = localStorage.getItem("longitude");
     // const accuracy = localStorage.getItem("accuracy");
