@@ -3,6 +3,7 @@ import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { submitRating } from "../../request/request";
+import { useSelector } from "react-redux";
 
 export default function Rating({ uuid }) {
   const { t: tRate } = useTranslation("rating");
