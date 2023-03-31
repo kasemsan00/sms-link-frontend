@@ -124,7 +124,7 @@ export default function UUID() {
   if (webStatus === "CameraNotAllow") {
     return (
       <>
-        <StatusbarGeo />
+        <StatusbarGeo show={true} uuid={uuid} />
         <Header />
         <CameraAccessWarning />
         <Footer />
