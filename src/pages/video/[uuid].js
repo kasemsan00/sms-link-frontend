@@ -54,36 +54,23 @@ export default function UUID() {
           uri: "sip:" + data.extension + "@" + data.domain,
           password: data.password,
         };
-
-        // const socket = new JsSIP.WebSocketInterface("wss://d1422-api-ippbx.ddc.moph.go.th/wss");
-        // const configuration = {
-        //   sockets: [socket],
-        //   uri: "sip:168005819131610@203.113.70.69",
-        //   password: "rrT3rpHdvjjcY7hBxMm5",
-        // };
-        // console.log(socket);
-        // console.log(configuration);
-
         userAgent = new JsSIP.UA(configuration);
         userAgent.on("unregistered", () => {
-          // dispatch(setWebStatus("unregistered"));
+          console.log("unregistered");
           setIsRegistered(false);
         });
         userAgent.on("registered", () => {
+          console.log("registered");
           dispatch(setUserAgent(userAgent));
           setIsRegistered(true);
-          // dispatch(setWebStatus("registered"));
-          // dispatch(setUserActiveStatus("open"));
         });
         userAgent.on("registrationFailed", () => {
           console.log("registrationFailed");
           setIsRegistered(false);
-          // dispatch(setWebStatus("registrationFailed"));
         });
         userAgent.on("disconnected", (e) => {
           console.log("disconnected", e);
           setIsRegistered(false);
-          // dispatch(setWebStatus("disconnected"));
         });
         setIsUserAgentSetup(true);
       }
@@ -92,7 +79,7 @@ export default function UUID() {
 
   useEffect(() => {
     if (isUserAgentSetup) {
-      console.log("userAgentStart");
+      console.log("UserAgentStart");
       userAgent.start();
     }
   }, [isUserAgentSetup]);

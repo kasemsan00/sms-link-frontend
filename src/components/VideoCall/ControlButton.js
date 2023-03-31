@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useRef } from "react";
 import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
-import { badge } from "@mui/icons-material";
 import { motion } from "framer-motion";
 
 export default function ControlButton({ handleClick, isActive, textActive, textUnActive, iconPath, badge }) {

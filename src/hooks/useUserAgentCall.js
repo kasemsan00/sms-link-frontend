@@ -105,6 +105,7 @@ export default function useInitUserAgent({ localVideoRef, remoteVideoRef }) {
             }
           });
           userAgent.on("newRTCSession", (ev1) => {
+            console.log("New Session");
             session = ev1.session;
             dispatch(setSession(session));
             if (ev1.originator === "local") {
