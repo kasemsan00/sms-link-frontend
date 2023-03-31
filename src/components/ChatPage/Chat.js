@@ -15,6 +15,8 @@ import { updateUserActiveStatus } from "../../request/request";
 import { ConvertToRTTEvent } from "../Utilities/ConvertToRTTEvent";
 import { DisplayBuffer } from "./realtime-text";
 
+const ICRM_MAP_URL = process.env.NEXT_PUBLIC_ICRM_MAP_URL;
+
 export default function Chat() {
   const dispatch = useDispatch();
   const chatRef = useRef(null);
@@ -57,9 +59,9 @@ export default function Chat() {
       res.province = res.province === undefined ? "" : res.province;
       res.subdistrict = res.subdistrict === undefined ? "" : res.subdistrict;
       res.road = res.road === undefined ? "" : res.road;
-      let textView;
+      let textLocation;
       if (res) {
-        textView =
+        textLocation =
           location?.lat +
           ", " +
           location?.lon +
@@ -76,9 +78,12 @@ export default function Chat() {
           " " +
           res.road;
       } else {
-        textView = location?.lat + ", " + location?.lon;
+        textLocation = location?.lat + ", " + location?.lon;
       }
-      dispatch(addMessageData({ type: "local", body: textView, date: "" }));
+      dispatch(
+        addMessageData({ type: "local", body: "@URL:" + ICRM_MAP_URL + "/" + location?.lat + "/" + location?.lon, date: "" }),
+      );
+      dispatch(addMessageData({ type: "local", body: textLocation, date: "" }));
     }
   };
 
@@ -103,9 +108,8 @@ export default function Chat() {
       mediaConstraints: { audio: true, video: false },
       sessionTimersExpires: 9999,
     };
-    console.log("userAgent Call", 1006);
     userAgent.call("sip:" + agent + "@" + domain, options);
-    console.log("initial UA Message");
+    console.log("Initial UserAgent");
     const display = new DisplayBuffer((resp) => {
       if (resp.drained === true) {
         setRealtimeText(resp.text);

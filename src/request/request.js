@@ -41,6 +41,7 @@ export const updateUserActiveStatus = async ({ uuid, status, signal = undefined 
 };
 
 export const getExtensionDetail = async (uuid) => {
+  console.log("GetExtension Detail");
   const response = await fetch(`${URL_API}/linkdetail/${uuid}`);
   if (!response.ok) {
     throw new Error("Network response was not ok");
