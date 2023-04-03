@@ -4,7 +4,7 @@ import useTranslation from "next-translate/useTranslation";
 let longDo;
 let map;
 
-export default function LongdooMap({ setLocation }) {
+export default function MapModalSelect({ setLocation }) {
   const mapRef = useRef(null);
   const handleMapRef = useRef(null);
   const searchResultRef = useRef(null);

@@ -5,7 +5,7 @@ import { reverseGeocode } from "../../request/request";
 import StatusBarGeo from "../Status/StatusBarGeo";
 import Input from "./Input";
 import Content from "./Content";
-import LongdooMap from "../Map/LongdooMap";
+import MapModalSelect from "../Map/MapModalSelect";
 import useIsomorphicLayoutEffect from "use-isomorphic-layout-effect";
 import StartChat from "./StartChat";
 import Header from "../Utilities/Header";
@@ -147,7 +147,7 @@ export default function Chat() {
                 ✕
               </label>
               <div className="h-[500px]">
-                <LongdooMap setLocation={setLocation} />
+                <MapModalSelect setLocation={setLocation} />
               </div>
             </div>
           </div>

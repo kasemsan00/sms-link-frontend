@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function MessageRight({ text }) {
+export default function MessageRight({ text, setDisplayMap }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
